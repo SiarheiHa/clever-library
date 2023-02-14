@@ -1,4 +1,4 @@
-import { Category, NavItem } from '../types/types';
+import { NavItem } from '../types/types';
 
 const userControllItems: NavItem[] = [
   {

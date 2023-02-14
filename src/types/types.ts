@@ -17,20 +17,20 @@ export type SubMenu = {
 
 export type View = 'table' | 'list';
 
-export type Book = {
-  id: string;
-  cover: string;
-  images: string[];
-  title: string;
-  category: string;
-  path: string;
-  rating: number;
-  author: string;
-  year: number;
-  booked: boolean;
-  endDate: string;
-  review: number;
-};
+// export type Book = {
+//   id: string;
+//   cover: string;
+//   images: string[];
+//   title: string;
+//   category: string;
+//   path: string;
+//   rating: number;
+//   author: string;
+//   year: number;
+//   booked: boolean;
+//   endDate: string;
+//   review: number;
+// };
 
 export type Feature =
   | 'publishing'
@@ -81,7 +81,7 @@ export interface BookDetail {
 export interface Booking {
   id: number;
   order: boolean;
-  dateOrder: Date;
+  dateOrder: string;
   customerId: number;
   customerFirstName: string;
   customerLastName: string;
@@ -91,7 +91,7 @@ export interface Comment {
   id: number;
   rating: number;
   text: string;
-  createdAt: Date;
+  createdAt: string;
   user: User;
 }
 
@@ -105,8 +105,8 @@ export interface User {
 export interface Delivery {
   id: number;
   handed: boolean;
-  dateHandedFrom: Date;
-  dateHandedTo: Date;
+  dateHandedFrom: string;
+  dateHandedTo: string;
   recipientId: number;
   recipientFirstName: string;
   recipientLastName: string;
@@ -123,18 +123,18 @@ export interface Image {
 
 // BOOKS
 
-// export interface Book {
-//   issueYear: string;
-//   rating: number | null;
-//   title: string;
-//   authors: string[];
-//   image: Image | null;
-//   categories: string[];
-//   id: number;
-//   booking: Booking | null;
-//   delivery: Delivery | null;
-//   histories: History[] | null;
-// }
+export interface Book {
+  issueYear: string;
+  rating: number | null;
+  title: string;
+  authors: string[];
+  image: Image | null;
+  categories: string[];
+  id: number;
+  booking: Booking | null;
+  delivery: Delivery | null;
+  histories: History[] | null;
+}
 
 export interface ServerError {
   data: null;

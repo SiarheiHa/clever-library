@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 
 import coverPlaceHolder from '../../assets/images/cat.svg';
+import { BASE_URL } from '../../constants';
 import { Book } from '../../types/types';
 import { truncateText } from '../../utils';
 import { BookButton } from '../book-button';
@@ -14,11 +15,11 @@ interface BookCardProps {
 }
 
 const BookCard: React.FC<BookCardProps> = ({ book, variant }) => {
-  const { author, cover, rating, title, year } = book;
+  const { authors, image, rating, title, issueYear } = book;
 
   const cardClasses = classNames(styles.card, styles[variant]);
 
-  const imgSrc = cover || coverPlaceHolder;
+  const imgSrc = image?.url ? `${BASE_URL}${image.url}` : coverPlaceHolder;
   const titleForRender = variant === 'large' ? title : truncateText(title, 54);
 
   return (
@@ -27,11 +28,11 @@ const BookCard: React.FC<BookCardProps> = ({ book, variant }) => {
         <img src={imgSrc} alt='cover' className={styles.cover} />
       </div>
       <div className={styles.flex}>
-        <Rating value={rating} starsize={variant === 'large' ? 'm' : 'l'} />
+        <Rating value={rating || 0} starsize={variant === 'large' ? 'm' : 'l'} />
         <div className={styles.description}>
           <p className={styles.title}>{titleForRender}</p>
           <p className={styles.subtitle}>
-            {author}, {year}
+            {authors.join(', ')}, {issueYear}
           </p>
         </div>
         <BookButton onClick={() => {}} className={styles.button} book={book} />

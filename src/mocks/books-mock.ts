@@ -1,7 +1,6 @@
 import { Book } from '../types/types';
 
-// const BOOKS_MOCK: Book[] = [
-const BOOKS_MOCK = [
+const BOOKS_MOCK: Book[] = [
   {
     issueYear: '2019',
     rating: 3,

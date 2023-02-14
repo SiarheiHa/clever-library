@@ -2,7 +2,8 @@ import { Book } from '../types/types';
 
 const COVER_MOCK = './cover-mock.jpg';
 
-const BOOKS_MOCK: Book[] = [
+// const BOOKS_MOCK: Book[] = [
+const BOOKS = [
   {
     id: '1',
     cover: '',
@@ -145,4 +146,4 @@ const BOOKS_MOCK: Book[] = [
   },
 ];
 
-export { BOOKS_MOCK };
+export { BOOKS };

@@ -14,13 +14,16 @@ interface BookCardProps {
 }
 
 const BookButton: React.FC<BookCardProps> = ({ book, className, ...restProps }) => {
-  const { booked, endDate } = book;
+  const { delivery, booking } = book;
 
   const getButtonText = () => {
-    if (booked && endDate) {
+    if (delivery?.handed) {
+      const date = new Date(delivery.dateHandedTo);
+      const endDate = `${date.getDay() + 1}.${date.getMonth() + 1}`;
+
       return `ЗАНЯТА ДО ${endDate}`;
     }
-    if (booked) {
+    if (booking?.order) {
       return 'ЗАБРОНИРОВАНА';
     }
 
@@ -28,14 +31,14 @@ const BookButton: React.FC<BookCardProps> = ({ book, className, ...restProps }) 
   };
 
   const getButtonProps = () => {
-    if (booked && endDate) {
+    if (delivery?.handed) {
       return {
         bordered: true,
         disabled: true,
         className: classNames(styles.busy, className),
       };
     }
-    if (booked) {
+    if (booking?.order) {
       return {
         bordered: true,
         disabled: true,
