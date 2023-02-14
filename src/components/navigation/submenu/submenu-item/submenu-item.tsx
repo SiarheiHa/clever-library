@@ -24,7 +24,9 @@ const SubmenuItem = ({ item, testIdPrefix }: SubmenuItemProps) => {
     testIdprops['data-test-id'] = `${testIdPrefix}-books`;
   }
 
-  const { amount, name, path } = item;
+  const { name, path } = item;
+  // TODO Посчитать кол-во книг в каждой категории
+  const amount = Math.ceil(Math.random() * 10);
   const { pathname } = useLocation();
   const dispatch = useAppDispatch();
   const menuMode = useAppSelector(selectMenuMode);
@@ -38,7 +40,7 @@ const SubmenuItem = ({ item, testIdPrefix }: SubmenuItemProps) => {
   };
 
   return (
-    <NavLink to={path} className={setActive} onClick={closeMenu} {...testIdprops}>
+    <NavLink to={`books/${path}`} className={setActive} onClick={closeMenu} {...testIdprops}>
       <p>
         {name}
         <span className={styles.amount}>{amount}</span>

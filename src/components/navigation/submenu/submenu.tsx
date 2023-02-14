@@ -23,8 +23,8 @@ const Submenu = ({ submenu, testIdPrefix, className }: SubmenuProps) => {
         <SubmenuItem
           item={{
             name: subtitle,
-            path: 'books/all',
-            amount: '',
+            path: 'all',
+            id: -1,
           }}
           testIdPrefix={testIdPrefix}
         />
