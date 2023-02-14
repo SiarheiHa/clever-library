@@ -1,0 +1,69 @@
+@use '../../styles/style.scss' as *;
+
+.block {
+  padding-bottom: 62px;
+  &:last-child {
+    padding-bottom: 0;
+  }
+  @include for-tablet {
+    padding-bottom: 52px;
+  }
+  @include for-phone {
+    padding-bottom: 24px;
+  }
+}
+
+.main {
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  @include font-title-l;
+  @include for-tablet {
+    @include font-text-bold;
+  }
+  @include for-phone {
+    @include font-title-l;
+  }
+}
+
+.badge {
+  display: inline-block;
+  padding-left: 6px;
+  color: $grey-black-40;
+  @include font-text-400-s;
+}
+
+.line {
+  background-color: $grey-black-10;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  height: 1px;
+  width: 350px;
+  @include for-tablet {
+    width: 307px;
+  }
+  @include for-phone {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    width: 100%;
+  }
+}
+
+.button {
+  margin-left: 24px;
+}
+
+.children {
+  height: auto;
+}
+
+.hide {
+  height: 0;
+  overflow: hidden;
+}
+
+.revert {
+  transform: rotateX(180deg);
+}

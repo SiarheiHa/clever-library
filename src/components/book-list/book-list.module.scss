@@ -1,0 +1,40 @@
+@use '../../styles/style.scss' as *;
+
+.main {
+  display: flex;
+  margin-top: 32px;
+  @include for-tablet {
+    margin-top: 24px;
+  }
+  @include for-phone {
+    margin-top: 19px;
+  }
+}
+
+.list {
+  flex-direction: column;
+  row-gap: 16px;
+  @include for-phone {
+    row-gap: 8px;
+  }
+}
+
+.table {
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  row-gap: 24px;
+  column-gap: 21.5px;
+  li {
+    &:last-child {
+      content: '';
+      flex-grow: 1;
+    }
+  }
+  @include for-tablet {
+    row-gap: 32px;
+  }
+  @include for-phone {
+    row-gap: 16px;
+  }
+}

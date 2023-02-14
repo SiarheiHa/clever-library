@@ -1,0 +1,19 @@
+@use '../../styles/style.scss' as *;
+
+.main {
+  display: flex;
+  align-items: flex-start;
+  flex-grow: 1;
+  padding-top: 30px;
+  padding-bottom: 62px;
+  @include for-tablet {
+    padding-top: 22px;
+  }
+  @include for-phone {
+    padding-top: 11px;
+  }
+}
+
+.column {
+  flex-direction: column;
+}

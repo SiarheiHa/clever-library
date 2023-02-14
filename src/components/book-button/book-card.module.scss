@@ -1,0 +1,6 @@
+@use '../../styles/style.scss' as *;
+
+.busy {
+  background-color: $grey-black-5;
+  color: $grey-black-40;
+}

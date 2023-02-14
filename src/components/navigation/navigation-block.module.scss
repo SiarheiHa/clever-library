@@ -1,0 +1,19 @@
+@use '../../styles/style.scss' as *;
+
+.nav {
+  margin-right: 6px;
+  width: 279px;
+}
+
+.item {
+  margin-bottom: 42px;
+  &:last-child {
+    margin-bottom: 52px;
+  }
+}
+
+.line {
+  background-color: $grey-black-20;
+  height: 1px;
+  width: 100%;
+}

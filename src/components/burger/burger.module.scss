@@ -1,0 +1,48 @@
+@use '../../styles/style.scss' as *;
+
+.burger {
+  width: 32px;
+  height: 32px;
+  padding: 6.67px 2.67px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  @include for-phone {
+    width: 24px;
+    height: 24px;
+    padding: 5px 2px;
+  }
+}
+
+.line {
+  height: 2.67px;
+  width: 100%;
+  background-color: $main-dark;
+  border-radius: 1px;
+  transition: all 0.2s;
+}
+
+.open {
+  .line {
+    background: $gradient-active;
+    &:nth-child(2) {
+      background: transparent;
+    }
+    &:nth-child(1) {
+      -webkit-transform: rotate(-45deg) translate(-6px, 4px);
+      transform: rotate(-45deg) translate(-6px, 4px);
+      @include for-phone {
+        -webkit-transform: rotate(-45deg) translate(-4px, 3px);
+        transform: rotate(-45deg) translate(-4px, 3px);
+      }
+    }
+    &:nth-child(3) {
+      -webkit-transform: rotate(45deg) translate(-7px, -5px);
+      transform: rotate(45deg) translate(-7px, -5px);
+      @include for-phone {
+        -webkit-transform: rotate(45deg) translate(-4px, -4px);
+        transform: rotate(45deg) translate(-4px, -4px);
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+@use '../../../../styles/style.scss' as *;
+
+.link {
+  @include font-text-400-l;
+  display: inline-block;
+  transition: all 0.1s;
+  max-width: 259px;
+  padding-left: 4px;
+}
+
+.active {
+  @include gradient-active;
+  @include font-title-l;
+  padding-left: 0px;
+}
+
+.amount {
+  @include font-text-400-s;
+  color: $grey-black-40;
+  padding-left: 6px;
+}

@@ -1,0 +1,27 @@
+$main-accent: #ff5253;
+$main-dark: #363636;
+$main-white: #ffffff;
+$other-warning: #ffbc1f;
+$other-positive: #00ca71;
+$other-negative: #f42c4f;
+$other-negative-background: #feebea;
+$other-positive-background: #ebf9f1;
+$grey-black-70: #727272;
+$grey-black-40: #a7a7a7;
+$grey-black-20: #bfc4c9;
+$grey-black-5: #f9f9fa;
+$grey-black-10: #ebebeb;
+$brand-main: #6e76f1;
+
+$gradient-active: linear-gradient(231.58deg, #f83600 -53.35%, #f9d423 297.76%);
+
+@mixin gradient-active {
+  background-image: $gradient-active;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+$shadow: 0px 2px 4px rgba(191, 196, 201, 0.2), 0px 3px 4px rgba(191, 196, 201, 0.18),
+  0px 1px 5px rgba(191, 196, 201, 0.24);

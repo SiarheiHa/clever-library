@@ -1,0 +1,42 @@
+@use '../../styles/style.scss' as *;
+
+.header {
+  position: relative;
+  padding-top: 32px;
+  padding-bottom: 16px;
+  display: flex;
+  align-items: center;
+
+  @include for-phone {
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+}
+
+.title {
+  @include font-title-xxl;
+  @include for-phone {
+    @include font-title-l;
+  }
+}
+
+.logo {
+  margin-right: 120px;
+  @include for-tablet {
+    display: none;
+  }
+}
+
+.burger {
+  display: none;
+  margin-right: 24px;
+  @include for-tablet {
+    display: flex;
+  }
+}
+
+.person {
+  @include for-tablet {
+    display: none;
+  }
+}

@@ -1,0 +1,36 @@
+@use '../../styles/style.scss' as *;
+
+.controls {
+  display: flex;
+}
+
+.icon {
+  display: inline-flex;
+  margin-right: 8px;
+}
+
+.button_sort {
+  @include font-text-subtitle-l;
+  color: $grey-black-40;
+  padding: 10px 15.1px;
+  @include for-phone {
+    width: 32px;
+    height: 32px;
+    padding: 0 0;
+  }
+}
+
+.button_text {
+  @include for-phone {
+    display: none;
+  }
+}
+
+.input {
+  margin-right: 16.9px;
+}
+
+.button_view {
+  margin-left: auto;
+  margin-right: 16px;
+}

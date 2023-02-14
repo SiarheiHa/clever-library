@@ -1,0 +1,160 @@
+@use '../../styles/style.scss' as *;
+
+.card {
+  box-shadow: $shadow;
+  border-radius: 10px;
+}
+
+.img_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.small {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 8px 16px;
+  width: 190px;
+  @include for-phone {
+    padding: 8px 16px 16px;
+    width: 287px;
+  }
+  .img_wrapper {
+    width: 174px;
+    height: 242px;
+    margin: 0 auto 16px;
+  }
+  .title {
+    @include font-title-m;
+    @include for-tablet {
+      @include font-title-s;
+    }
+    @include for-phone {
+      @include font-title-m;
+    }
+  }
+  .subtitle {
+    color: $grey-black-40;
+    @include font-text-subtitle-l;
+    @include for-tablet {
+      @include font-title-s;
+    }
+    @include for-phone {
+      @include font-text-subtitle-m;
+    }
+  }
+
+  .button {
+    width: 166px;
+    height: 40px;
+    margin: 0 auto;
+    @include for-phone {
+      width: 256px;
+    }
+  }
+
+  .button_busy {
+    background-color: $grey-black-5;
+    color: $grey-black-40;
+  }
+  .description {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 89px;
+    margin-top: 16px;
+    margin-bottom: 19px;
+  }
+}
+
+.large {
+  display: flex;
+  padding: 24px 24px 24px 16px;
+  @include for-tablet {
+    padding: 16px 24px 16px 16px;
+  }
+  @include for-phone {
+    padding: 16px 16px 16px 8px;
+  }
+
+  .img_wrapper {
+    width: 120px;
+    height: 170px;
+    min-width: 120px;
+    min-height: 170px;
+    margin-right: 16px;
+    @include for-tablet {
+      width: 120px;
+      height: 172px;
+      min-width: 120px;
+      min-height: 172px;
+    }
+    @include for-phone {
+      width: 70px;
+      height: 100px;
+      min-width: 70px;
+      min-height: 100px;
+      margin-right: 8px;
+    }
+  }
+
+  .flex {
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    justify-content: space-between;
+    align-content: space-between;
+    padding-bottom: 10px;
+    @include for-tablet {
+      padding-bottom: 16px;
+    }
+    @include for-phone {
+      padding-bottom: 0;
+    }
+  }
+
+  .description {
+    order: -1;
+    flex-basis: 100%;
+    padding-bottom: 24px;
+    @include for-tablet {
+      padding-bottom: 16px;
+    }
+    @include for-phone {
+      padding-bottom: 3px;
+    }
+  }
+  .title {
+    @include font-title-add;
+    padding-bottom: 8px;
+    @include for-tablet {
+      @include font-title-xl;
+    }
+    @include for-phone {
+      padding-bottom: 3px;
+      @include font-title-m;
+    }
+  }
+  .subtitle {
+    color: $grey-black-70;
+    @include font-text-400-l;
+    @include for-tablet {
+    }
+    @include for-phone {
+      @include font-text-subtitle-m;
+    }
+  }
+  .button {
+    width: 174px;
+    height: 40px;
+    @include for-phone {
+      width: 186px;
+      margin-top: 16px;
+    }
+  }
+}
+
+.cover {
+  max-width: 100%;
+}

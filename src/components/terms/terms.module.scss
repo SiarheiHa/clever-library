@@ -1,0 +1,24 @@
+@use '../../styles/style.scss' as *;
+
+.title {
+  @include font-title-xxl;
+  @include for-phone {
+    @include font-title-l;
+  }
+}
+
+.item {
+  @include font-text-bold;
+  color: $main-dark;
+  margin-top: 32px;
+}
+
+.subitem {
+  @include font-text-400-l;
+  color: $main-dark;
+  margin-top: 16px;
+  margin-left: 30px;
+  @include for-phone {
+    line-height: 20px;
+  }
+}

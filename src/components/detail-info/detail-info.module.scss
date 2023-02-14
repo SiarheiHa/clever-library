@@ -1,0 +1,56 @@
+@use '../../styles/style.scss' as *;
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  @include for-phone {
+    flex-direction: column;
+  }
+}
+
+.column {
+  min-width: 329px;
+  max-width: 635px;
+  @include for-tablet {
+    min-width: 300px;
+    max-width: 305px;
+  }
+  @include for-phone {
+    min-width: none;
+    max-width: none;
+    width: 100%;
+  }
+}
+
+.feature {
+  display: flex;
+  padding-bottom: 16px;
+  &:last-child {
+    padding-bottom: 0;
+  }
+}
+
+.feature__name {
+  display: inline-block;
+  min-width: 190px;
+  color: $grey-black-40;
+  @include font-text-bold;
+  @include for-tablet {
+    min-width: 138px;
+    @include font-title-m;
+  }
+  @include for-phone {
+    min-width: 129px;
+    @include font-text-subtitle-s;
+  }
+}
+
+.feature__value {
+  @include font-text-400-l;
+  @include for-tablet {
+    @include font-text-subtitle-l;
+  }
+  @include for-phone {
+    @include font-text-xs;
+  }
+}

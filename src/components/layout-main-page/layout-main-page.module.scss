@@ -1,0 +1,13 @@
+@use '../../styles/style.scss' as *;
+.main {
+  margin-top: 16px;
+  @include for-phone {
+    margin-top: 0;
+  }
+}
+
+.nav {
+  @include for-tablet {
+    display: none;
+  }
+}

@@ -1,0 +1,72 @@
+@use '../../styles/style.scss' as *;
+
+.wrapper {
+  padding: 10px 16px;
+  box-shadow: $shadow;
+  border-radius: 599px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 350px;
+  @include for-tablet {
+    min-width: 274px;
+  }
+  @include for-phone {
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    min-width: auto;
+  }
+}
+
+.open {
+  @include for-phone {
+    width: 100%;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+}
+
+.input {
+  flex-grow: 1;
+  border: none;
+  &::placeholder {
+    color: $grey-black-40;
+  }
+  &:focus {
+    outline: none;
+  }
+  @include for-phone {
+    display: none;
+  }
+}
+
+.show {
+  @include for-phone {
+    display: block;
+  }
+}
+
+.button {
+  margin-right: 8px;
+  @include for-phone {
+    margin-right: 0;
+    padding: 8px;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.disabled {
+  pointer-events: none;
+  @include for-phone {
+    pointer-events: initial;
+  }
+}
