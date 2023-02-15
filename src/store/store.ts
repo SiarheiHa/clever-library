@@ -1,12 +1,16 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 
+import { api } from '../api';
+
 import { menuReducer } from './menu-slice';
 
 export const store = configureStore({
   reducer: {
     menu: menuReducer,
+    [api.reducerPath]: api.reducer,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

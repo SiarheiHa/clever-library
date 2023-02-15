@@ -1,32 +1,13 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
 
+import { useGetCategoriesQuery } from '../../api';
 import { userControllItems } from '../../data';
-import { CATEGORIES_MOCK } from '../../mocks';
 import { NavItem } from '../../types/types';
 
 import { MenuItem } from './menu-item';
 
 import styles from './navigation-block.module.scss';
-
-const navItems: NavItem[] = [
-  {
-    name: 'Витрина книг',
-    path: 'books/all',
-    submenu: {
-      subtitle: 'Все книги',
-      items: CATEGORIES_MOCK,
-    },
-  },
-  {
-    name: 'Правила пользования',
-    path: 'terms',
-  },
-  {
-    name: 'Договор оферты',
-    path: 'contract',
-  },
-];
 
 interface NavigationBlockProps {
   userControlls?: boolean;
@@ -35,7 +16,25 @@ interface NavigationBlockProps {
 }
 
 const NavigationBlock: React.FC<NavigationBlockProps> = ({ className, userControlls, testIdPrefix }) => {
-  const items = navItems;
+  const { data: categories, error: categoriesError } = useGetCategoriesQuery('');
+  const items: NavItem[] = [
+    {
+      name: 'Витрина книг',
+      path: 'books/all',
+      submenu: {
+        subtitle: 'Все книги',
+        items: categories || [],
+      },
+    },
+    {
+      name: 'Правила пользования',
+      path: 'terms',
+    },
+    {
+      name: 'Договор оферты',
+      path: 'contract',
+    },
+  ];
 
   const classes = classNames(styles.nav, className);
 

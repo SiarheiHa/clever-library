@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 
+import { useGetBookByIdQuery } from '../../api';
 import coverPlaceHolder from '../../assets/images/cat.svg';
-import { BOOK_DETAILED_MOCK } from '../../mocks';
 import { getURI } from '../../utils';
 import { BookButton } from '../book-button';
 import { Button } from '../button';
@@ -15,8 +15,12 @@ import { Slider } from '../slider';
 import styles from './book-info.module.scss';
 
 const BookInfo = () => {
-  const { bookId } = useParams();
-  const book = BOOK_DETAILED_MOCK;
+  const bookId = useParams()?.bookId as string;
+  const { data: book, error } = useGetBookByIdQuery(bookId);
+
+  if (!book) {
+    return null;
+  }
 
   const { authors, comments, description, images, title, issueYear, rating } = book;
 
@@ -61,7 +65,7 @@ const BookInfo = () => {
           <DetailInfo book={book} />
         </InfoBlock>
 
-        <InfoBlock title='Отзывы' badge={String(comments?.length)} dropdown={true} className={styles.comments}>
+        <InfoBlock title='Отзывы' badge={String(comments?.length || 0)} dropdown={true} className={styles.comments}>
           <CommentsBlock comments={comments ?? []} />
         </InfoBlock>
         <Button
