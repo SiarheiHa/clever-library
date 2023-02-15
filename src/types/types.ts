@@ -9,52 +9,18 @@ export type SubMenu = {
   items: Category[];
 };
 
-// export type Category = {
-//   name: string;
-//   path: string;
-//   amount: string;
-// };
-
 export type View = 'table' | 'list';
 
-// export type Book = {
-//   id: string;
-//   cover: string;
-//   images: string[];
-//   title: string;
-//   category: string;
-//   path: string;
-//   rating: number;
-//   author: string;
-//   year: number;
-//   booked: boolean;
-//   endDate: string;
-//   review: number;
-// };
-
 export type Feature =
-  | 'publishing'
-  | 'year'
+  | 'publish'
+  | 'issueYear'
   | 'pages'
-  | 'coverType'
+  | 'cover'
   | 'format'
-  | 'genre'
+  | 'categories'
   | 'weight'
-  | 'isbn'
-  | 'coverType'
-  | 'manufacturer';
-
-export interface Review {
-  id: string;
-  user: string;
-  date: string;
-  rating: number;
-  text: string;
-}
-
-// real types
-
-// BOOK DETAIL
+  | 'ISBN'
+  | 'producer';
 
 export interface BookDetail {
   id: number;
@@ -121,8 +87,6 @@ export interface Image {
   url: string;
 }
 
-// BOOKS
-
 export interface Book {
   issueYear: string;
   rating: number | null;
@@ -151,15 +115,3 @@ export interface Category {
   path: string;
   id: number;
 }
-
-// export enum Category {
-//   Бизнес = 'Бизнес',
-//   Детские = 'Детские',
-//   Дизайн = 'Дизайн',
-//   НонФикшн = 'Нон-фикшн',
-//   Программирование = 'Программирование',
-//   Психология = 'Психология',
-//   Родителям = 'Родителям',
-//   Хобби = 'Хобби',
-//   ХудожественнаяЛитература = 'Художественная литература',
-// }

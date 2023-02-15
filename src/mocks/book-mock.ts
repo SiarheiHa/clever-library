@@ -1,4 +1,6 @@
-const booksDetailed = [
+import { BookDetail } from '../types/types';
+
+const booksDetailed: BookDetail[] = [
   {
     id: 11,
     title: '101 способ раскрутки личного бренда. Как сделать себе имя',
@@ -303,6 +305,6 @@ const booksDetailed = [
   },
 ];
 
-const DETAILED_BOOK_MOCK = booksDetailed.at(-1);
+const BOOK_DETAILED_MOCK = booksDetailed.at(-1) as BookDetail;
 
-export { DETAILED_BOOK_MOCK };
+export { BOOK_DETAILED_MOCK };

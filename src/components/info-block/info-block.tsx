@@ -38,7 +38,7 @@ const InfoBlock: React.FC<InfoBlockProps> = ({ title, className, children, badge
             shadowed={false}
             bordered={false}
             filtered={false}
-            testId='button-hide-reviews'
+            testId='button-hide-comments'
           >
             <img src={сhevron} className={styles.icon} alt='close' />
           </Button>

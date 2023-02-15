@@ -1,9 +1,8 @@
 import classNames from 'classnames';
 
 import coverPlaceHolder from '../../assets/images/cat.svg';
-import { BASE_URL } from '../../constants';
 import { Book } from '../../types/types';
-import { truncateText } from '../../utils';
+import { getURI, truncateText } from '../../utils';
 import { BookButton } from '../book-button';
 import { Rating } from '../rating';
 
@@ -19,7 +18,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, variant }) => {
 
   const cardClasses = classNames(styles.card, styles[variant]);
 
-  const imgSrc = image?.url ? `${BASE_URL}${image.url}` : coverPlaceHolder;
+  const imgSrc = image?.url ? getURI(image.url) : coverPlaceHolder;
   const titleForRender = variant === 'large' ? title : truncateText(title, 54);
 
   return (

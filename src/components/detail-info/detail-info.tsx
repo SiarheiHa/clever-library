@@ -1,16 +1,16 @@
 import React from 'react';
 
-import { BOOK_FEATURES_MOCK, vocabulary } from '../../data';
-import { Book, Feature } from '../../types/types';
+import { vocabulary } from '../../data';
+import { BookDetail, Feature } from '../../types/types';
 
 import styles from './detail-info.module.scss';
 
 interface DetailInfoProps {
-  book: Book;
+  book: BookDetail;
 }
 
-const columnFirst: Feature[] = ['publishing', 'year', 'pages', 'coverType', 'format'];
-const columnSecond: Feature[] = ['genre', 'weight', 'isbn', 'manufacturer'];
+const columnFirst: Feature[] = ['publish', 'issueYear', 'pages', 'cover', 'format'];
+const columnSecond: Feature[] = ['categories', 'weight', 'ISBN', 'producer'];
 const columns = [columnFirst, columnSecond];
 
 const DetailInfo: React.FC<DetailInfoProps> = ({ book }) => (
@@ -20,7 +20,9 @@ const DetailInfo: React.FC<DetailInfoProps> = ({ book }) => (
         {column.map((feature) => (
           <li key={feature} className={styles.feature}>
             <span className={styles.feature__name}>{vocabulary[feature]}</span>
-            <span className={styles.feature__value}>{BOOK_FEATURES_MOCK[feature]}</span>
+            <span className={styles.feature__value}>
+              {Array.isArray(book[feature]) ? (book[feature] as string[]).join(', ') : book[feature]}
+            </span>
           </li>
         ))}
       </ul>

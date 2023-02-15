@@ -1,13 +1,13 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import { Book } from '../../types/types';
+import { Book, BookDetail } from '../../types/types';
 import { Button } from '../button';
 
 import styles from './book-card.module.scss';
 
 interface BookCardProps {
-  book: Book;
+  book: Book | BookDetail;
   onClick: () => void;
   className?: string;
   testId?: string;
