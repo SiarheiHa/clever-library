@@ -23,7 +23,7 @@ const Toast = () => {
 
   return (
     <Container className={styles.container}>
-      <div className={styles.toast}>
+      <div className={styles.toast} data-test-id='error'>
         <div className={styles.message}>
           <WarningIcon />
           <p className={styles.text}>{TEXT}</p>

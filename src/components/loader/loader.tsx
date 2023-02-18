@@ -14,7 +14,7 @@ const Loader = () => {
   }
 
   return (
-    <div className={styles.backdrop}>
+    <div className={styles.backdrop} data-test-id='loader'>
       <Lottie animationData={spinner} loop={true} rendererSettings={{ className: styles.spinner }} />
     </div>
   );
