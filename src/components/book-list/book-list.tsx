@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { useGetBooksQuery, useGetCategoriesQuery } from '../../api';
@@ -14,6 +14,7 @@ interface BookListProps {
 }
 
 const BookList: React.FC<BookListProps> = ({ view }) => {
+  const { category: categoryParam } = useParams();
   const { data: books, error: booksError, isLoading: isBookLoading } = useGetBooksQuery('');
   const { data: categories, error: categoriesError, isLoading: isCategoriesLoading } = useGetCategoriesQuery('');
   const dispatch = useAppDispatch();
@@ -32,14 +33,6 @@ const BookList: React.FC<BookListProps> = ({ view }) => {
     }
   }, [books, categories, dispatch, isBookLoading, isCategoriesLoading]);
 
-  const getPathByCategoryName = (name: string) => {
-    if (categories) {
-      return categories.find((category) => category.name === name)?.path;
-    }
-
-    return '';
-  };
-
   const classes = classNames(styles.main, view === 'list' ? styles.list : styles.table);
 
   return (
@@ -48,7 +41,7 @@ const BookList: React.FC<BookListProps> = ({ view }) => {
         !booksError &&
         !categoriesError &&
         books.map((book) => {
-          const categoryPath = getPathByCategoryName(book.categories[0]);
+          const categoryPath = categoryParam ?? 'all';
 
           return (
             <li key={book.id}>
