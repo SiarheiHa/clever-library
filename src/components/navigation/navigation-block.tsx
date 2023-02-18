@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 
 import { useGetCategoriesQuery } from '../../api';
 import { userControllItems } from '../../data';
+import { useAppDispatch } from '../../store';
+import { showToast } from '../../store/toast-slice';
 import { NavItem } from '../../types/types';
 
 import { MenuItem } from './menu-item';
@@ -17,6 +19,14 @@ interface NavigationBlockProps {
 
 const NavigationBlock: React.FC<NavigationBlockProps> = ({ className, userControlls, testIdPrefix }) => {
   const { data: categories, error: categoriesError } = useGetCategoriesQuery('');
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (categoriesError) {
+      dispatch(showToast());
+    }
+  }, [categoriesError, dispatch]);
+
   const items: NavItem[] = [
     {
       name: 'Витрина книг',
