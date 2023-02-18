@@ -1,6 +1,6 @@
 @use '../../styles/style.scss' as *;
 
-.review {
+.comment {
   padding-bottom: 42px;
   @include for-phone {
     padding-bottom: 32px;
@@ -59,4 +59,10 @@
   @include for-phone {
     gap: 8px;
   }
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
 }

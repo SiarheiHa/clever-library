@@ -54,13 +54,13 @@ const BookInfo = () => {
 
   const { authors, comments, description, images, title, issueYear, rating } = book;
 
-  const imagesSrcArr = images.length ? images.map((img) => getURI(img.url)) : [coverPlaceHolder];
+  const imagesSrcArr = images && images.length ? images.map((img) => getURI(img.url)) : [coverPlaceHolder];
 
   return (
     <Container>
       <div className={styles.wrapper}>
         <div className={styles.info}>
-          <Slider arrOfPaths={imagesSrcArr} />
+          <Slider arrOfPaths={imagesSrcArr} placeholder={!(images && images.length)} />
           <div className={styles.info__wrapper}>
             <div className={styles.main_info}>
               <h3 className={styles.title}>{title}</h3>

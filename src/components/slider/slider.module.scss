@@ -37,9 +37,8 @@
 }
 
 .slide {
-  background-color: $grey-black-5;
   height: 593px;
-  border: 1px solid $grey-black-40;
+  border: 1px solid transparent;
   border-radius: 10px;
 
   @include for-tablet {
@@ -50,6 +49,11 @@
     height: 260px;
     border-radius: 10px;
   }
+}
+
+.placeholder {
+  background-color: $grey-black-5;
+  border-color: $grey-black-40;
 }
 
 .sliderbottom {

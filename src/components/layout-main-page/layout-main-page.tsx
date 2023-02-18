@@ -7,7 +7,7 @@ import { NavigationBlock } from '../navigation';
 import styles from './layout-main-page.module.scss';
 
 const LayoutMainPage = () => (
-  <Container>
+  <Container className={styles.container}>
     <Main className={styles.main}>
       <aside>
         <NavigationBlock className={styles.nav} testIdPrefix='navigation' />

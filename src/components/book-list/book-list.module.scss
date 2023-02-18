@@ -1,7 +1,21 @@
 @use '../../styles/style.scss' as *;
 
+$width-grid-column-3: 1010px;
+$width-grid-column-1: 640px;
+
+@mixin for-grid-3-col {
+  @media (max-width: $width-grid-column-3) {
+    @content;
+  }
+}
+
+@mixin for-grid-1-col {
+  @media (max-width: $width-grid-column-1) {
+    @content;
+  }
+}
+
 .main {
-  display: flex;
   margin-top: 32px;
   @include for-tablet {
     margin-top: 24px;
@@ -12,6 +26,7 @@
 }
 
 .list {
+  display: flex;
   flex-direction: column;
   row-gap: 16px;
   @include for-phone {
@@ -20,21 +35,27 @@
 }
 
 .table {
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   row-gap: 24px;
   column-gap: 21.5px;
   li {
-    &:last-child {
-      content: '';
-      flex-grow: 1;
-    }
+    display: flex;
+    justify-content: center;
   }
+
+  @include for-grid-3-col {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
   @include for-tablet {
     row-gap: 32px;
   }
   @include for-phone {
+    grid-template-columns: repeat(2, 1fr);
     row-gap: 16px;
+  }
+  @include for-grid-1-col {
+    grid-template-columns: repeat(1, 1fr);
   }
 }

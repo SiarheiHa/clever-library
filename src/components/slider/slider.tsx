@@ -4,6 +4,7 @@ import { useState } from 'react';
 import SwiperClass from 'swiper/types/swiper-class';
 import { Navigation, Pagination, Scrollbar, Thumbs } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import classNames from 'classnames';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -14,10 +15,12 @@ import styles from './slider.module.scss';
 
 interface SliderProps {
   arrOfPaths: string[];
+  placeholder: boolean;
 }
 
-const Slider = ({ arrOfPaths }: SliderProps) => {
+const Slider = ({ arrOfPaths, placeholder }: SliderProps) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass>();
+  const classes = classNames(styles.slide, placeholder && styles.placeholder);
 
   return (
     <div className={styles.container}>
@@ -36,7 +39,7 @@ const Slider = ({ arrOfPaths }: SliderProps) => {
         data-test-id='slide-big'
       >
         {arrOfPaths.map((path, i) => (
-          <SwiperSlide key={i} className={styles.slide}>
+          <SwiperSlide key={i} className={classes}>
             <img src={path} alt='preview' className={styles.cover} />
           </SwiperSlide>
         ))}

@@ -36,7 +36,7 @@ export interface BookDetail {
   ISBN: string;
   producer: string;
   authors: string[];
-  images: Image[];
+  images: Image[] | null;
   categories: string[];
   comments: Comment[] | null;
   booking: Booking | null;

@@ -1,4 +1,9 @@
 @use '../../styles/style.scss' as *;
+
+.container {
+  flex-grow: 1;
+}
+
 .main {
   margin-top: 16px;
   @include for-phone {
