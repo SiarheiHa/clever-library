@@ -3,6 +3,7 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import { api } from '../api';
 
+import { loaderReducer } from './loader-slice';
 import { menuReducer } from './menu-slice';
 import { toastReducer } from './toast-slice';
 
@@ -11,6 +12,7 @@ export const store = configureStore({
     menu: menuReducer,
     [api.reducerPath]: api.reducer,
     toast: toastReducer,
+    loader: loaderReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),
 });

@@ -3,8 +3,7 @@ import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { useGetBooksQuery, useGetCategoriesQuery } from '../../api';
-import { useAppDispatch } from '../../store';
-import { showToast } from '../../store/toast-slice';
+import { hideLoader, showLoader, showToast, useAppDispatch } from '../../store';
 import { View } from '../../types/types';
 import { BookCard } from '../book-card';
 
@@ -15,8 +14,8 @@ interface BookListProps {
 }
 
 const BookList: React.FC<BookListProps> = ({ view }) => {
-  const { data: books, error: booksError } = useGetBooksQuery('');
-  const { data: categories, error: categoriesError } = useGetCategoriesQuery('');
+  const { data: books, error: booksError, isLoading: isBookLoading } = useGetBooksQuery('');
+  const { data: categories, error: categoriesError, isLoading: isCategoriesLoading } = useGetCategoriesQuery('');
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -24,6 +23,14 @@ const BookList: React.FC<BookListProps> = ({ view }) => {
       dispatch(showToast());
     }
   }, [booksError, categoriesError, dispatch]);
+
+  useEffect(() => {
+    if (isBookLoading || isCategoriesLoading) {
+      dispatch(showLoader());
+    } else if (books && categories) {
+      dispatch(hideLoader());
+    }
+  }, [books, categories, dispatch, isBookLoading, isCategoriesLoading]);
 
   const getPathByCategoryName = (name: string) => {
     if (categories) {

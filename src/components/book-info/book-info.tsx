@@ -3,8 +3,15 @@ import { useParams } from 'react-router-dom';
 
 import { useGetBookByIdQuery } from '../../api';
 import coverPlaceHolder from '../../assets/images/cat.svg';
-import { useAppDispatch, useAppSelector } from '../../store';
-import { hideToast, selectToastVisibility, showToast } from '../../store/toast-slice';
+import {
+  hideLoader,
+  hideToast,
+  selectToastVisibility,
+  showLoader,
+  showToast,
+  useAppDispatch,
+  useAppSelector,
+} from '../../store';
 import { getURI } from '../../utils';
 import { BookButton } from '../book-button';
 import { Button } from '../button';
@@ -19,11 +26,19 @@ import styles from './book-info.module.scss';
 
 const BookInfo = () => {
   const bookId = useParams()?.bookId as string;
-  const { data: book, error } = useGetBookByIdQuery(bookId);
+  const { data: book, error, isLoading } = useGetBookByIdQuery(bookId);
 
   const dispatch = useAppDispatch();
 
   const isToastVisible = useAppSelector(selectToastVisibility);
+
+  useEffect(() => {
+    if (isLoading) {
+      dispatch(showLoader());
+    } else if (book) {
+      dispatch(hideLoader());
+    }
+  }, [book, dispatch, isLoading]);
 
   useEffect(() => {
     if (error) {

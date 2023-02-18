@@ -3,8 +3,7 @@ import classNames from 'classnames';
 
 import { useGetCategoriesQuery } from '../../api';
 import { userControllItems } from '../../data';
-import { useAppDispatch } from '../../store';
-import { showToast } from '../../store/toast-slice';
+import { showLoader, showToast, useAppDispatch } from '../../store';
 import { NavItem } from '../../types/types';
 
 import { MenuItem } from './menu-item';
@@ -18,7 +17,7 @@ interface NavigationBlockProps {
 }
 
 const NavigationBlock: React.FC<NavigationBlockProps> = ({ className, userControlls, testIdPrefix }) => {
-  const { data: categories, error: categoriesError } = useGetCategoriesQuery('');
+  const { data: categories, error: categoriesError, isLoading } = useGetCategoriesQuery('');
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -26,6 +25,12 @@ const NavigationBlock: React.FC<NavigationBlockProps> = ({ className, userContro
       dispatch(showToast());
     }
   }, [categoriesError, dispatch]);
+
+  useEffect(() => {
+    if (isLoading) {
+      dispatch(showLoader());
+    }
+  }, [dispatch, isLoading]);
 
   const items: NavItem[] = [
     {

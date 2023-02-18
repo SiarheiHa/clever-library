@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 
-import { useAppDispatch, useAppSelector } from '../../store';
-import { hideToast, selectToastVisibility } from '../../store/toast-slice';
+import { hideToast, selectToastVisibility, useAppDispatch, useAppSelector } from '../../store';
 
 import styles from './terms.module.scss';
 
