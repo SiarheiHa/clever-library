@@ -1,0 +1,60 @@
+@use '../../styles/style.scss' as *;
+
+.container {
+  position: absolute;
+  z-index: 4;
+  top: 64px;
+  left: 0;
+  right: 0;
+  @include for-tablet {
+    top: 62px;
+  }
+  @include for-phone {
+    top: 56px;
+  }
+}
+
+.toast {
+  display: flex;
+  justify-content: space-between;
+  background-color: $other-negative-background;
+  border: 1.5px solid $other-negative;
+  border-radius: 5px;
+  padding: 24px 32px;
+  @include for-tablet {
+    padding: 24px 16px;
+    align-items: start;
+  }
+  @include for-phone {
+    padding: 12px 16px;
+  }
+}
+
+.message {
+  display: flex;
+  align-items: center;
+}
+
+.text {
+  padding-left: 24px;
+  padding-right: 16px;
+  @include font-text-bold;
+  @include for-tablet {
+    padding-left: 12px;
+    padding-right: 10px;
+    @include font-title-m;
+  }
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  filter: invert(18%) sepia(1%) saturate(19%) hue-rotate(338deg) brightness(95%) contrast(87%);
+  &:hover {
+    filter: none;
+  }
+  @include for-tablet {
+    width: 16px;
+    height: 16px;
+  }
+}
