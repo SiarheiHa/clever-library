@@ -18,6 +18,7 @@ interface NavigationBlockProps {
 
 const NavigationBlock: React.FC<NavigationBlockProps> = ({ className, userControlls, testIdPrefix }) => {
   const { data: categories, error: categoriesError, isLoading } = useGetCategoriesQuery('');
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {

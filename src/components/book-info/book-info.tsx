@@ -34,6 +34,7 @@ const BookInfo = () => {
 
   useEffect(() => {
     if (isLoading) {
+      dispatch(hideToast());
       dispatch(showLoader());
     } else if (book) {
       dispatch(hideLoader());
@@ -41,12 +42,13 @@ const BookInfo = () => {
   }, [book, dispatch, isLoading]);
 
   useEffect(() => {
-    if (error) {
+    if (error && !isLoading) {
+      dispatch(hideLoader());
       dispatch(showToast());
     } else if (isToastVisible) {
       dispatch(hideToast());
     }
-  }, [error, dispatch, isToastVisible]);
+  }, [error, dispatch, isToastVisible, isLoading]);
 
   if (!book || error) {
     return null;
