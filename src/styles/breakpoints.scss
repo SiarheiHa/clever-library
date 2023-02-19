@@ -1,0 +1,14 @@
+$tablet-width: 1439px;
+$phone-width: 767px;
+
+@mixin for-tablet {
+  @media (max-width: $tablet-width) {
+    @content;
+  }
+}
+
+@mixin for-phone {
+  @media (max-width: $phone-width) {
+    @content;
+  }
+}

@@ -1,0 +1,34 @@
+@use '../../../styles/style.scss' as *;
+
+.link {
+  @include font-title-l;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0;
+  transition: all 0.3s;
+  max-width: 255px;
+}
+
+.active {
+  @include gradient-active;
+  padding-bottom: 8px;
+  border-bottom: 1px solid;
+  border-image: $gradient-active;
+  border-image-slice: 1;
+}
+
+.button {
+  margin-right: 12px;
+  @include gradient-active;
+}
+
+.revert {
+  transform: rotateX(180deg);
+}
+
+.hide {
+  display: none;
+  height: 0;
+  overflow: hidden;
+}

@@ -1,0 +1,22 @@
+@use '../../styles/style.scss' as *;
+
+.footer {
+  border-top: 1px solid $grey-black-20;
+  padding: 16px 0;
+  display: flex;
+  justify-content: space-between;
+  @include for-phone {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+}
+
+.copyright {
+  @include font-text-400-l;
+  @include for-phone {
+    @include font-text-400-m;
+    text-align: center;
+    max-width: 200px;
+  }
+}

@@ -1,0 +1,68 @@
+@use '../../styles/style.scss' as *;
+
+.comment {
+  padding-bottom: 42px;
+  @include for-phone {
+    padding-bottom: 32px;
+    &:last-child {
+      padding-bottom: 20px;
+    }
+  }
+  &:last-child {
+    padding-bottom: 0;
+  }
+}
+
+.data {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  padding-bottom: 16px;
+  @include for-phone {
+    gap: 18px;
+    padding-bottom: 8px;
+  }
+}
+
+.data__user {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  @include for-phone {
+    flex-direction: column;
+    padding: 0 4px;
+    gap: 3px;
+    align-items: flex-start;
+  }
+}
+
+.subtitle {
+  @include font-text-400-l;
+  color: $grey-black-70;
+  @include for-phone {
+    @include font-text-400-m;
+  }
+}
+
+.text {
+  max-width: 730px;
+  padding-top: 16px;
+  @include font-text-400-l;
+  @include for-phone {
+    @include font-text-400-m;
+    padding-top: 8px;
+  }
+}
+
+.rating {
+  gap: 10px;
+  @include for-phone {
+    gap: 8px;
+  }
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
