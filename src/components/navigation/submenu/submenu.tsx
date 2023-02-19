@@ -1,4 +1,3 @@
-import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { SubMenu } from '../../../types/types';
@@ -31,7 +30,7 @@ const Submenu = ({ submenu, testIdPrefix, className }: SubmenuProps) => {
       </li>
       {items.map((item) => (
         <li key={item.name}>
-          <SubmenuItem item={item} />
+          <SubmenuItem item={item} badge={true} />
         </li>
       ))}
     </ul>

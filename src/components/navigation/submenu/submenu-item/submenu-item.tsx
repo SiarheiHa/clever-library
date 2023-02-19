@@ -9,6 +9,7 @@ import styles from './submenu-item.module.scss';
 interface SubmenuItemProps {
   item: Category;
   testIdPrefix?: 'burger' | 'navigation';
+  badge?: boolean;
 }
 
 const setActive = ({ isActive }: { isActive: boolean }) => {
@@ -17,7 +18,7 @@ const setActive = ({ isActive }: { isActive: boolean }) => {
   return classes;
 };
 
-const SubmenuItem = ({ item, testIdPrefix }: SubmenuItemProps) => {
+const SubmenuItem = ({ item, testIdPrefix, badge = false }: SubmenuItemProps) => {
   const testIdprops: Record<string, string> = {};
 
   if (testIdPrefix) {
@@ -43,7 +44,7 @@ const SubmenuItem = ({ item, testIdPrefix }: SubmenuItemProps) => {
     <NavLink to={`books/${path}`} className={setActive} onClick={closeMenu} {...testIdprops}>
       <p>
         {name}
-        <span className={styles.amount}>{amount}</span>
+        {badge && <span className={styles.amount}>{amount}</span>}
       </p>
     </NavLink>
   );
