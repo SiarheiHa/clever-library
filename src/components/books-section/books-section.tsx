@@ -6,6 +6,7 @@ import { hideLoader, hideToast, showLoader, showToast, useAppDispatch } from '..
 import { View } from '../../types/types';
 import { BookList } from '../book-list';
 import { Controls } from '../controls';
+import { SearchMessage } from '../search-message';
 
 import styles from './books-section.module.scss';
 
@@ -45,7 +46,7 @@ const BooksSection = () => {
   return (
     <section className={styles.books}>
       <Controls selectedButton={view} onViewClick={onViewSelect} />
-      <BookList view={view} books={books} />
+      {books.length ? <BookList view={view} books={books} /> : <SearchMessage text='В этой категории книг ещё нет' />}
     </section>
   );
 };

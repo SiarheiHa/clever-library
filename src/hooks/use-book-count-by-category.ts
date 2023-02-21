@@ -18,8 +18,6 @@ const useBookCountByCategory = () => {
     });
   });
 
-  console.log(booksCountObj);
-
   return booksCountObj;
 };
 

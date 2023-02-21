@@ -23,7 +23,7 @@ const filterBooks = (books: Book[], categoryName: string) => {
   return filteredBooks;
 };
 
-const useGetFilteredBooksQuery = (): ReturnType<typeof useGetBooksQuery> => {
+const useGetFilteredBooksQuery = () => {
   const useQueryHookResult = useGetBooksQuery('');
   const { data: books } = useQueryHookResult;
   const { data: categories } = useGetCategoriesQuery('');
