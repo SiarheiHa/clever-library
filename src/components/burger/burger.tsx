@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 
-import { useScrollBlock } from '../../hooks';
 import { selectMenuMode, setMenuMode, useAppDispatch, useAppSelector } from '../../store';
 import { Button } from '../button';
 

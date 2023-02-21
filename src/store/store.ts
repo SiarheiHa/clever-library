@@ -5,6 +5,7 @@ import { api } from '../api';
 
 import { loaderReducer } from './loader-slice';
 import { menuReducer } from './menu-slice';
+import { sortingReducer } from './sorting-slice';
 import { toastReducer } from './toast-slice';
 
 export const store = configureStore({
@@ -13,6 +14,7 @@ export const store = configureStore({
     [api.reducerPath]: api.reducer,
     toast: toastReducer,
     loader: loaderReducer,
+    sort: sortingReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),
 });

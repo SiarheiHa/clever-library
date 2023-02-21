@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 
 import { useGetBooksQuery, useGetCategoriesQuery } from '../api';
+import { selectSortingType, useAppSelector } from '../store';
 import { Book, Category } from '../types/types';
 
 const getCategoryNameByPath = (categories: Category[], path: string) =>
@@ -9,7 +10,16 @@ const getCategoryNameByPath = (categories: Category[], path: string) =>
 const filterBooksByCategory = (books: Book[], categoryName: string) =>
   books.filter((book) => book.categories.includes(categoryName));
 
-const filterBooks = (books: Book[], categoryName: string) => {
+const sortBooks = (books: Book[], sort: 'asc' | 'desc') =>
+  books.sort((a, b) => {
+    if (sort === 'asc') {
+      return Number(a.rating) - Number(b.rating);
+    }
+
+    return Number(b.rating) - Number(a.rating);
+  });
+
+const filterAndSortBooks = (books: Book[], categoryName: string, sort: 'asc' | 'desc') => {
   if (!books.length) {
     return books;
   }
@@ -20,7 +30,7 @@ const filterBooks = (books: Book[], categoryName: string) => {
     filteredBooks = filterBooksByCategory(books, categoryName);
   }
 
-  return filteredBooks;
+  return sortBooks(filteredBooks, sort);
 };
 
 const useGetFilteredBooksQuery = () => {
@@ -28,6 +38,7 @@ const useGetFilteredBooksQuery = () => {
   const { data: books } = useQueryHookResult;
   const { data: categories } = useGetCategoriesQuery('');
   const { category } = useParams();
+  const sort = useAppSelector(selectSortingType);
 
   if (books === undefined) {
     return useQueryHookResult;
@@ -36,7 +47,7 @@ const useGetFilteredBooksQuery = () => {
   const categoryName =
     category === 'all' || category === undefined ? '' : getCategoryNameByPath(categories ?? [], category);
 
-  const booksForRender = filterBooks(books, categoryName);
+  const booksForRender = filterAndSortBooks(books, categoryName, sort);
 
   return { ...useQueryHookResult, data: booksForRender };
 };
