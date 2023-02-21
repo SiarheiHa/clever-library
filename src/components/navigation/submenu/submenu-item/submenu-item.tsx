@@ -10,6 +10,7 @@ interface SubmenuItemProps {
   item: Category;
   testIdPrefix?: 'burger' | 'navigation';
   badge?: boolean;
+  badgeText?: string;
 }
 
 const setActive = ({ isActive }: { isActive: boolean }) => {
@@ -18,7 +19,7 @@ const setActive = ({ isActive }: { isActive: boolean }) => {
   return classes;
 };
 
-const SubmenuItem = ({ item, testIdPrefix, badge = false }: SubmenuItemProps) => {
+const SubmenuItem = ({ item, testIdPrefix, badge = false, badgeText = '' }: SubmenuItemProps) => {
   const testIdprops: Record<string, string> = {};
 
   if (testIdPrefix) {
@@ -26,8 +27,6 @@ const SubmenuItem = ({ item, testIdPrefix, badge = false }: SubmenuItemProps) =>
   }
 
   const { name, path } = item;
-  // TODO Посчитать кол-во книг в каждой категории
-  const amount = Math.ceil(Math.random() * 10);
   const { pathname } = useLocation();
   const dispatch = useAppDispatch();
   const menuMode = useAppSelector(selectMenuMode);
@@ -44,7 +43,7 @@ const SubmenuItem = ({ item, testIdPrefix, badge = false }: SubmenuItemProps) =>
     <NavLink to={`books/${path}`} className={setActive} onClick={closeMenu} {...testIdprops}>
       <p>
         {name}
-        {badge && <span className={styles.amount}>{amount}</span>}
+        {badge && <span className={styles.amount}>{badgeText}</span>}
       </p>
     </NavLink>
   );

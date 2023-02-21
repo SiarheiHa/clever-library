@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import { useGetBooksQuery, useGetCategoriesQuery } from '../../api';
+import { useGetCategoriesQuery } from '../../api';
+import { useGetFilteredBooksQuery } from '../../hooks';
 import { hideLoader, hideToast, showLoader, showToast, useAppDispatch } from '../../store';
 import { View } from '../../types/types';
 import { BookList } from '../book-list';
@@ -12,7 +13,7 @@ const BooksSection = () => {
   const [view, setView] = useState<View>('table');
   const onViewSelect = (newView: View) => setView(newView);
   const dispatch = useAppDispatch();
-  const { data: books, error: booksError, isLoading: isBookLoading } = useGetBooksQuery('');
+  const { data: books, error: booksError, isLoading: isBookLoading } = useGetFilteredBooksQuery();
   const { data: categories, error: categoriesError, isLoading: isCategoriesLoading } = useGetCategoriesQuery('');
   const error = booksError || categoriesError;
   const isLoading = isBookLoading || isCategoriesLoading;
