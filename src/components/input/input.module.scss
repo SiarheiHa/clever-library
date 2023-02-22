@@ -35,6 +35,9 @@
 .input {
   flex-grow: 1;
   border: none;
+  caret-color: $caret-color;
+  @include font-text-subtitle-l;
+  color: $main-dark;
   &::placeholder {
     color: $grey-black-40;
   }
@@ -43,6 +46,7 @@
   }
   @include for-phone {
     display: none;
+    @include font-text-subtitle-m;
   }
 }
 

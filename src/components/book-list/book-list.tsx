@@ -1,8 +1,11 @@
+import React from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import classNames from 'classnames';
 
+import { selectSearchString, useAppSelector } from '../../store';
 import { Book, View } from '../../types/types';
 import { BookCard } from '../book-card';
+import { SearchMessage } from '../search-message';
 
 import styles from './book-list.module.scss';
 
@@ -13,11 +16,15 @@ interface BookListProps {
 
 const BookList: React.FC<BookListProps> = ({ books, view }) => {
   const { category: categoryParam } = useParams();
+  const searchString = useAppSelector(selectSearchString);
+
+  const booksForRender = books.filter((book) => book.title.toLowerCase().includes(searchString.toLowerCase().trim()));
+
   const classes = classNames(styles.main, view === 'list' ? styles.list : styles.table);
 
-  return (
+  return booksForRender.length ? (
     <ul className={classes}>
-      {books.map((book) => {
+      {booksForRender.map((book) => {
         const categoryPath = categoryParam ?? 'all';
 
         return (
@@ -29,6 +36,8 @@ const BookList: React.FC<BookListProps> = ({ books, view }) => {
         );
       })}
     </ul>
+  ) : (
+    <SearchMessage text='По запросу ничего не найдено' />
   );
 };
 

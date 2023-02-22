@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { useGetCategoriesQuery } from '../../api';
 import { useGetFilteredBooksQuery } from '../../hooks';
-import { hideLoader, hideToast, showLoader, showToast, useAppDispatch } from '../../store';
+import { hideLoader, hideToast, setSearchString, showLoader, showToast, useAppDispatch } from '../../store';
 import { View } from '../../types/types';
 import { BookList } from '../book-list';
 import { Controls } from '../controls';
@@ -38,6 +38,13 @@ const BooksSection = () => {
       dispatch(hideLoader());
     }
   }, [error, dispatch]);
+
+  useEffect(
+    () => () => {
+      dispatch(setSearchString({ searchString: '' }));
+    },
+    [dispatch]
+  );
 
   if (!books || error) {
     return null;

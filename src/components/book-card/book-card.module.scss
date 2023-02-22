@@ -26,14 +26,21 @@
     margin: 0 auto 16px;
   }
   .title {
+    overflow: hidden;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
     @include font-title-m;
     @include for-tablet {
       @include font-title-s;
+      -webkit-line-clamp: 2;
     }
     @include for-phone {
       @include font-title-m;
+      -webkit-line-clamp: 3;
     }
   }
+
   .subtitle {
     color: $grey-black-40;
     @include font-text-subtitle-l;
@@ -125,6 +132,7 @@
       padding-bottom: 3px;
     }
   }
+
   .title {
     @include font-title-add;
     padding-bottom: 8px;
@@ -136,6 +144,7 @@
       @include font-title-m;
     }
   }
+
   .subtitle {
     color: $grey-black-70;
     @include font-text-400-l;

@@ -1,9 +1,11 @@
 import classNames from 'classnames';
 
 import coverPlaceHolder from '../../assets/images/cat.svg';
+import { selectSearchString, useAppSelector } from '../../store';
 import { Book } from '../../types/types';
-import { getURI, truncateText } from '../../utils';
+import { getURI } from '../../utils';
 import { BookButton } from '../book-button';
+import { Hightlight } from '../hightlight';
 import { Rating } from '../rating';
 
 import styles from './book-card.module.scss';
@@ -14,12 +16,12 @@ interface BookCardProps {
 }
 
 const BookCard: React.FC<BookCardProps> = ({ book, variant }) => {
+  const searchString = useAppSelector(selectSearchString);
   const { authors, image, rating, title, issueYear } = book;
 
   const cardClasses = classNames(styles.card, styles[variant]);
 
   const imgSrc = image?.url ? getURI(image.url) : coverPlaceHolder;
-  const titleForRender = variant === 'large' ? title : truncateText(title, 54);
 
   return (
     <div className={cardClasses} data-test-id='card'>
@@ -29,7 +31,9 @@ const BookCard: React.FC<BookCardProps> = ({ book, variant }) => {
       <div className={styles.flex}>
         <Rating value={rating || 0} starsize={variant === 'large' ? 'm' : 'l'} />
         <div className={styles.description}>
-          <p className={styles.title}>{titleForRender}</p>
+          <p className={styles.title}>
+            <Hightlight str={title} filter={searchString} />
+          </p>
           <p className={styles.subtitle}>
             {authors.join(', ')}, {issueYear}
           </p>
