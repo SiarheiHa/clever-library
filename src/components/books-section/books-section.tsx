@@ -14,14 +14,15 @@ const BooksSection = () => {
   const [view, setView] = useState<View>('table');
   const onViewSelect = (newView: View) => setView(newView);
   const dispatch = useAppDispatch();
-  const { data: books, error: booksError, isLoading: isBookLoading } = useGetFilteredBooksQuery();
+  const { data: books, error: booksError, isLoading: isBookLoading, refetch } = useGetFilteredBooksQuery();
   const { data: categories, error: categoriesError, isLoading: isCategoriesLoading } = useGetCategoriesQuery('');
   const error = booksError || categoriesError;
   const isLoading = isBookLoading || isCategoriesLoading;
 
   useEffect(() => {
     dispatch(hideToast());
-  }, [dispatch]);
+    refetch();
+  }, [dispatch, refetch]);
 
   useEffect(() => {
     if (isLoading) {
