@@ -20,14 +20,14 @@ const Hightlight: React.FC<HightlightProps> = ({ filter, str }) => {
             const c = matchValue.shift();
 
             return (
-              <span>
+              <span key={String(index) + s}>
                 {s}
                 <span className={styles.hightlight}>{c}</span>
               </span>
             );
           }
 
-          return <span>{s}</span>;
+          return <span key={String(index) + s}>{s}</span>;
         })}
       </React.Fragment>
     );
