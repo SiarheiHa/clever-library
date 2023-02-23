@@ -65,7 +65,9 @@ const BookInfo = () => {
           <Slider arrOfPaths={imagesSrcArr} placeholder={!(images && images.length)} />
           <div className={styles.info__wrapper}>
             <div className={styles.main_info}>
-              <h3 className={styles.title}>{title}</h3>
+              <h3 className={styles.title} data-test-id='book-title'>
+                {title}
+              </h3>
               <p className={styles.subtitle}>
                 {authors.join('. ')}, {issueYear}
               </p>

@@ -37,7 +37,7 @@ const BookList: React.FC<BookListProps> = ({ books, view }) => {
       })}
     </ul>
   ) : (
-    <SearchMessage text='По запросу ничего не найдено' />
+    <SearchMessage text='По запросу ничего не найдено' testId='search-result-not-found' />
   );
 };
 

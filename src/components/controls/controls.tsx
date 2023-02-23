@@ -49,7 +49,7 @@ const Controls: React.FC<ControlsProps> = ({ onViewClick, selectedButton }) => {
       <Input onChange={onInputChange} value={searchString} onButtonClick={toggleView} className={inputClasses} />
       {!isInputOpen && (
         <React.Fragment>
-          <Button onClick={toggleSort} className={styles.button_sort} bordered={false}>
+          <Button onClick={toggleSort} className={styles.button_sort} bordered={false} testId='sort-rating-button'>
             <img className={sortIconClasses} src={arrow} alt='sort' />
             <span className={styles.button_text}>По рейтингу</span>
           </Button>

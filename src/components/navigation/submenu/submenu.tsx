@@ -35,6 +35,7 @@ const Submenu = ({ submenu, testIdPrefix, className }: SubmenuProps) => {
           <SubmenuItem
             item={item}
             badge={true}
+            testIdPrefix={testIdPrefix}
             badgeText={bookCountByCategory[item.name] ? String(bookCountByCategory[item.name]) : '0'}
           />
         </li>

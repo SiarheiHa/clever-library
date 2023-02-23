@@ -22,7 +22,9 @@ const Hightlight: React.FC<HightlightProps> = ({ filter, str }) => {
             return (
               <span key={String(index) + s}>
                 {s}
-                <span className={styles.hightlight}>{c}</span>
+                <span className={styles.hightlight} data-test-id='highlight-matches'>
+                  {c}
+                </span>
               </span>
             );
           }

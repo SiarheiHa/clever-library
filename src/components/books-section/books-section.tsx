@@ -54,7 +54,11 @@ const BooksSection = () => {
   return (
     <section className={styles.books}>
       <Controls selectedButton={view} onViewClick={onViewSelect} />
-      {books.length ? <BookList view={view} books={books} /> : <SearchMessage text='В этой категории книг ещё нет' />}
+      {books.length ? (
+        <BookList view={view} books={books} />
+      ) : (
+        <SearchMessage text='В этой категории книг ещё нет' testId='empty-category' />
+      )}
     </section>
   );
 };
