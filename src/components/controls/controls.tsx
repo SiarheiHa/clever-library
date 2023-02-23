@@ -1,9 +1,17 @@
-import classNames from 'classnames';
 import React, { useState } from 'react';
+import classNames from 'classnames';
 
 import arrow from '../../assets/images/icons/arrow-sort.svg';
 import menu from '../../assets/images/icons/menu.svg';
 import square from '../../assets/images/icons/square-four.svg';
+import {
+  selectSearchString,
+  selectSortingType,
+  setSearchString,
+  setSortingType,
+  useAppDispatch,
+  useAppSelector,
+} from '../../store';
 import { View } from '../../types/types';
 import { Button } from '../button';
 import { Input } from '../input';
@@ -16,21 +24,33 @@ interface ControlsProps {
 }
 
 const Controls: React.FC<ControlsProps> = ({ onViewClick, selectedButton }) => {
+  const sort = useAppSelector(selectSortingType);
+  const searchString = useAppSelector(selectSearchString);
+  const dispatch = useAppDispatch();
   const [isInputOpen, setInputOpen] = useState<boolean>(false);
 
   const toggleView = () => {
     setInputOpen(!isInputOpen);
   };
 
+  const toggleSort = () => {
+    dispatch(setSortingType({ sort: sort === 'desc' ? 'asc' : 'desc' }));
+  };
+
+  const onInputChange = (e: React.FormEvent<HTMLInputElement>) => {
+    dispatch(setSearchString({ searchString: e.currentTarget.value }));
+  };
+
   const inputClasses = classNames({ [styles.input]: !isInputOpen });
+  const sortIconClasses = classNames(styles.icon, { [styles.revert]: sort === 'asc' });
 
   return (
     <div className={styles.controls}>
-      <Input onChange={() => {}} className={inputClasses} onButtonClick={toggleView} />
+      <Input onChange={onInputChange} value={searchString} onButtonClick={toggleView} className={inputClasses} />
       {!isInputOpen && (
         <React.Fragment>
-          <Button onClick={() => {}} className={styles.button_sort} bordered={false}>
-            <img className={styles.icon} src={arrow} alt='sort' />
+          <Button onClick={toggleSort} className={styles.button_sort} bordered={false} testId='sort-rating-button'>
+            <img className={sortIconClasses} src={arrow} alt='sort' />
             <span className={styles.button_text}>По рейтингу</span>
           </Button>
           <Button

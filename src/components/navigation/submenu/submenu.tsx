@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 
+import { useBookCountByCategory } from '../../../hooks';
 import { SubMenu } from '../../../types/types';
 
 import { SubmenuItem } from './submenu-item';
@@ -14,6 +15,7 @@ interface SubmenuProps {
 
 const Submenu = ({ submenu, testIdPrefix, className }: SubmenuProps) => {
   const { items, subtitle } = submenu;
+  const bookCountByCategory = useBookCountByCategory();
   const classes = classNames(styles.list, className);
 
   return (
@@ -30,7 +32,12 @@ const Submenu = ({ submenu, testIdPrefix, className }: SubmenuProps) => {
       </li>
       {items.map((item) => (
         <li key={item.name}>
-          <SubmenuItem item={item} badge={true} />
+          <SubmenuItem
+            item={item}
+            badge={true}
+            testIdPrefix={testIdPrefix}
+            badgeText={bookCountByCategory[item.name] ? String(bookCountByCategory[item.name]) : '0'}
+          />
         </li>
       ))}
     </ul>

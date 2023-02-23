@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 
-import { useGetBooksQuery, useGetCategoriesQuery } from '../../api';
-import { hideLoader, hideToast, showLoader, showToast, useAppDispatch } from '../../store';
+import { useGetCategoriesQuery } from '../../api';
+import { useGetFilteredBooksQuery } from '../../hooks';
+import { hideLoader, hideToast, setSearchString, showLoader, showToast, useAppDispatch } from '../../store';
 import { View } from '../../types/types';
 import { BookList } from '../book-list';
 import { Controls } from '../controls';
+import { SearchMessage } from '../search-message';
 
 import styles from './books-section.module.scss';
 
@@ -12,14 +14,15 @@ const BooksSection = () => {
   const [view, setView] = useState<View>('table');
   const onViewSelect = (newView: View) => setView(newView);
   const dispatch = useAppDispatch();
-  const { data: books, error: booksError, isLoading: isBookLoading } = useGetBooksQuery('');
+  const { data: books, error: booksError, isLoading: isBookLoading, refetch } = useGetFilteredBooksQuery();
   const { data: categories, error: categoriesError, isLoading: isCategoriesLoading } = useGetCategoriesQuery('');
   const error = booksError || categoriesError;
   const isLoading = isBookLoading || isCategoriesLoading;
 
   useEffect(() => {
     dispatch(hideToast());
-  }, [dispatch]);
+    refetch();
+  }, [dispatch, refetch]);
 
   useEffect(() => {
     if (isLoading) {
@@ -37,6 +40,13 @@ const BooksSection = () => {
     }
   }, [error, dispatch]);
 
+  useEffect(
+    () => () => {
+      dispatch(setSearchString({ searchString: '' }));
+    },
+    [dispatch]
+  );
+
   if (!books || error) {
     return null;
   }
@@ -44,7 +54,11 @@ const BooksSection = () => {
   return (
     <section className={styles.books}>
       <Controls selectedButton={view} onViewClick={onViewSelect} />
-      <BookList view={view} books={books} />
+      {books.length ? (
+        <BookList view={view} books={books} />
+      ) : (
+        <SearchMessage text='В этой категории книг ещё нет' testId='empty-category' />
+      )}
     </section>
   );
 };

@@ -18,9 +18,13 @@ const Breadcrumbs = () => {
     <div className={styles.background}>
       <Container>
         <div className={styles.crumbs}>
-          <Link to={to}>{currentCategory?.name ?? 'Все книги'}</Link>
+          <Link to={to} data-test-id='breadcrumbs-link'>
+            {currentCategory?.name ?? 'Все книги'}
+          </Link>
           <span className={styles.divider}>/</span>
-          <span className={styles.book_name}>{currentBook?.title}</span>
+          <span className={styles.book_name} data-test-id='book-name'>
+            {currentBook?.title}
+          </span>
         </div>
       </Container>
     </div>

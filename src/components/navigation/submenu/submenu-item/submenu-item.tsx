@@ -10,6 +10,7 @@ interface SubmenuItemProps {
   item: Category;
   testIdPrefix?: 'burger' | 'navigation';
   badge?: boolean;
+  badgeText?: string;
 }
 
 const setActive = ({ isActive }: { isActive: boolean }) => {
@@ -18,35 +19,38 @@ const setActive = ({ isActive }: { isActive: boolean }) => {
   return classes;
 };
 
-const SubmenuItem = ({ item, testIdPrefix, badge = false }: SubmenuItemProps) => {
+const SubmenuItem = ({ item, testIdPrefix, badge = false, badgeText = '' }: SubmenuItemProps) => {
   const testIdprops: Record<string, string> = {};
+  const { name, path } = item;
 
   if (testIdPrefix) {
-    testIdprops['data-test-id'] = `${testIdPrefix}-books`;
+    if (path === 'all') {
+      testIdprops['data-test-id'] = `${testIdPrefix}-books`;
+    } else {
+      testIdprops['data-test-id'] = `${testIdPrefix}-${path}`;
+    }
   }
 
-  const { name, path } = item;
-  // TODO Посчитать кол-во книг в каждой категории
-  const amount = Math.ceil(Math.random() * 10);
-  const { pathname } = useLocation();
   const dispatch = useAppDispatch();
   const menuMode = useAppSelector(selectMenuMode);
 
-  const isCurrentPage = () => pathname.includes(path);
-
   const closeMenu = () => {
-    if (!isCurrentPage() && menuMode === 'open') {
+    if (menuMode === 'open') {
       dispatch(setMenuMode({ mode: 'close' }));
     }
   };
 
   return (
-    <NavLink to={`books/${path}`} className={setActive} onClick={closeMenu} {...testIdprops}>
-      <p>
+    <div>
+      <NavLink to={`books/${path}`} className={setActive} onClick={closeMenu} {...testIdprops}>
         {name}
-        {badge && <span className={styles.amount}>{amount}</span>}
-      </p>
-    </NavLink>
+      </NavLink>
+      {badge && (
+        <span className={styles.amount} data-test-id={`${testIdPrefix}-book-count-for-${path}`}>
+          {badgeText}
+        </span>
+      )}
+    </div>
   );
 };
 

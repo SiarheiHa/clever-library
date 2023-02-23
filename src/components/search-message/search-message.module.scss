@@ -1,0 +1,18 @@
+@use '../../styles/style.scss' as *;
+
+.text {
+  @include font-title-xxl;
+  color: $grey-black-40;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 200px;
+  @include for-tablet {
+    margin-top: 226px;
+  }
+  @include for-phone {
+    @include font-title-l;
+    max-width: 265px;
+    margin-top: 134px;
+  }
+}
