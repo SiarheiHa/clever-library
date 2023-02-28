@@ -5,9 +5,13 @@ import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { Layout } from './components/layout';
 import { LayoutMainPage } from './components/layout-main-page';
+import { LayoutStart } from './components/layout-start';
 import { Terms } from './components/terms';
+import { AuthPage } from './pages/auth';
 import { BookPage } from './pages/book';
+import { ForgotPassPage } from './pages/forgot-pass';
 import { MainPage } from './pages/main';
+import { RegistrationPage } from './pages/registration';
 import { store } from './store';
 
 import './index.css';
@@ -19,9 +23,14 @@ root.render(
     <HashRouter>
       <Provider store={store}>
         <Routes>
-          <Route path='/' element={<Layout />}>
+          <Route path='/' element={<LayoutStart />}>
+            <Route index={true} element={<Navigate to='/auth' />} />
+            <Route path='/auth' element={<AuthPage />} />
+            <Route path='/registration' element={<RegistrationPage />} />
+            <Route path='/forgot-pass' element={<ForgotPassPage />} />
+          </Route>
+          <Route element={<Layout />}>
             <Route element={<LayoutMainPage />}>
-              <Route index={true} element={<Navigate to='/books/all' />} />
               <Route path='/books/all' element={<MainPage />} />
               <Route path='/books/:category' element={<MainPage />} />
               <Route path='/terms' element={<Terms content='terms' />} />
