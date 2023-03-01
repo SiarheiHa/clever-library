@@ -1,0 +1,10 @@
+@use '../../../styles/style.scss' as *;
+
+.title {
+  @include font-title-xl;
+  padding-bottom: 8px;
+}
+
+.subtitle {
+  @include font-title-m;
+}

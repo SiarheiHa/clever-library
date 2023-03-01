@@ -1,0 +1,81 @@
+@use '../../../styles/style.scss' as *;
+
+.wrapper {
+  padding-bottom: 16px;
+  @include for-phone {
+    padding-bottom: 10px;
+    &:last-child {
+      padding-bottom: 2px;
+    }
+  }
+}
+
+.input__wrapper {
+  background-color: $grey-black-5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid $grey-black-20;
+  padding-right: 12px;
+  padding-left: 12px;
+  .error {
+    border-bottom: 1px solid $other-negative;
+  }
+  border-radius: 4px 4px 0 0;
+}
+
+.input__block {
+  flex-grow: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 56px;
+  padding-top: 19px;
+  padding-bottom: 19px;
+}
+
+.input {
+  z-index: 1;
+  background-color: transparent;
+  border: none;
+  @include font-text-subtitle-l;
+  &:focus {
+    padding-top: 7px;
+    outline: none;
+  }
+  &:valid {
+    padding-top: 7px;
+  }
+}
+.input:focus + .placeholder,
+.input:valid + .placeholder {
+  @include font-text-subtitle-s;
+  color: $grey-black-40;
+  top: 6px;
+  transform: none;
+}
+
+.placeholder {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 100%;
+  z-index: 0;
+  @include font-text-subtitle-l;
+}
+
+.hint {
+  @include font-text-subtitle-s;
+  color: $grey-black-40;
+  padding: 2px 12px;
+  display: inline-block;
+  margin-bottom: 16px;
+  @include for-phone {
+    margin-bottom: 0;
+  }
+}
+
+.icons {
+  display: flex;
+  gap: 4px;
+}
