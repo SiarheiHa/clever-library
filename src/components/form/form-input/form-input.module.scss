@@ -18,10 +18,11 @@
   border-bottom: 1px solid $grey-black-20;
   padding-right: 12px;
   padding-left: 12px;
-  .error {
-    border-bottom: 1px solid $other-negative;
-  }
   border-radius: 4px 4px 0 0;
+}
+
+.input__wrapper.error {
+  border-bottom: 1px solid $other-negative;
 }
 
 .input__block {
@@ -62,17 +63,6 @@
   max-width: 100%;
   z-index: 0;
   @include font-text-subtitle-l;
-}
-
-.hint {
-  @include font-text-subtitle-s;
-  color: $grey-black-40;
-  padding: 2px 12px;
-  display: inline-block;
-  margin-bottom: 16px;
-  @include for-phone {
-    margin-bottom: 0;
-  }
 }
 
 .icons {

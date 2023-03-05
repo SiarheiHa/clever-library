@@ -115,3 +115,8 @@ export interface Category {
   path: string;
   id: number;
 }
+
+export type RegistrationFormData = {
+  login: string;
+  password: string;
+};
