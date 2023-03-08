@@ -10,6 +10,13 @@ interface HightlightProps {
 const Hightlight: React.FC<HightlightProps> = ({ filter, str }) => {
   console.log(filter, str);
   if (!filter) return <span>{str}</span>;
+  if (filter === str) {
+    return (
+      <span className={styles.hightlight} data-test-id='highlight-matches'>
+        {str}
+      </span>
+    );
+  }
   const regexp = new RegExp(filter, 'ig');
   const matchValue = str.match(regexp);
 
