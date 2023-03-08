@@ -12,10 +12,13 @@ interface HintProps {
 
 const Hint = ({ error, errorMessageRequired, errorsMatches, hint, isInputFocused }: HintProps) => {
   if (!error) {
+    console.log('BBBBBBBBBBBBB');
     return <span className={styles.hint}>{hint}</span>;
   }
 
   if (errorMessageRequired) {
+    console.log('AAAAAAAAAAAAAA');
+
     return (
       <span className={styles.hint}>
         <Hightlight filter={errorMessageRequired} str={errorMessageRequired} />
@@ -23,7 +26,7 @@ const Hint = ({ error, errorMessageRequired, errorsMatches, hint, isInputFocused
     );
   }
   // console.log('!isInputFocused, !errorMessageRequired, hint');
-  // console.log(!isInputFocused, !errorMessageRequired, hint);
+  console.log('CCCCCCCCCCCC');
 
   if (!isInputFocused && !errorMessageRequired && hint) {
     // console.log('AAAAAAAAAAAAAAA');

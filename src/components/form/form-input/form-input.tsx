@@ -28,6 +28,9 @@ const FormInput = React.forwardRef<
   const [passVisible, setPassVisible] = useState(false);
   const [isFocus, setIsFocus] = useState(false);
 
+  console.log(error);
+  console.log(errorMessageRequired);
+
   const togglePassVisibility = () => {
     setPassVisible(!passVisible);
   };
