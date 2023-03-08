@@ -16,6 +16,7 @@ interface FormInputOProps {
   errorMessageRequired?: string;
   errorsMatches?: string | string[];
   error: boolean;
+  isDirty?: boolean;
   type: 'text' | 'password' | 'number';
   hint?: string;
 }
@@ -23,8 +24,9 @@ interface FormInputOProps {
 const FormInput = React.forwardRef<
   HTMLInputElement,
   FormInputOProps & ReturnType<UseFormRegister<RegistrationFormData>>
->(({ placeholderText, hint, error, errorMessageRequired, errorsMatches, type, name, ...rest }, ref) => {
+>(({ placeholderText, hint, error, errorMessageRequired, errorsMatches, isDirty, type, name, ...rest }, ref) => {
   const [passVisible, setPassVisible] = useState(false);
+  const [isFocus, setIsFocus] = useState(false);
 
   const togglePassVisibility = () => {
     setPassVisible(!passVisible);
@@ -46,19 +48,36 @@ const FormInput = React.forwardRef<
     }
   };
 
+  const onFocus = () => {
+    setIsFocus(true);
+  };
+
+  const onBlur = () => {
+    setIsFocus(false);
+  };
+
   const wrapperClasses = classNames(styles.input__wrapper, error && styles.error);
 
   return (
     <div className={styles.wrapper}>
       <div className={wrapperClasses}>
         <div className={styles.input__block}>
-          <input name={name} type={getInputType()} className={styles.input} required={true} {...rest} ref={ref} />
+          <input
+            name={name}
+            type={getInputType()}
+            className={styles.input}
+            required={true}
+            {...rest}
+            ref={ref}
+            onFocus={onFocus}
+            onBlur={onBlur}
+          />
           <span className={styles.placeholder}>{placeholderText}</span>
         </div>
 
         {type === 'password' && (
           <div className={styles.icons}>
-            <TickIcon />
+            {error || !isDirty ? null : <TickIcon />}
             {passVisible ? (
               <EyeOpenedIcon onClick={togglePassVisibility} />
             ) : (
@@ -67,8 +86,13 @@ const FormInput = React.forwardRef<
           </div>
         )}
       </div>
-      <Hint hint={hint} error={error} errorMessageRequired={errorMessageRequired} errorsMatches={errorsMatches} />
-      {/* <span className={styles.hint}>{hint}</span> */}
+      <Hint
+        hint={hint}
+        error={error}
+        errorMessageRequired={errorMessageRequired}
+        errorsMatches={errorsMatches}
+        isInputFocused={isFocus}
+      />
     </div>
   );
 });
