@@ -5,6 +5,7 @@ import { api } from '../api';
 
 import { loaderReducer } from './loader-slice';
 import { menuReducer } from './menu-slice';
+import { registrationReducer } from './registration-slice';
 import { searchReducer } from './search-slice';
 import { sortingReducer } from './sorting-slice';
 import { toastReducer } from './toast-slice';
@@ -15,6 +16,7 @@ export const store = configureStore({
     [api.reducerPath]: api.reducer,
     toast: toastReducer,
     loader: loaderReducer,
+    registration: registrationReducer,
     sort: sortingReducer,
     search: searchReducer,
   },

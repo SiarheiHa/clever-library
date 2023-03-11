@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -8,6 +8,15 @@ import { Button } from '../button';
 import { Form, FormInput, FormLinkBlock, FormTitle } from '../form';
 
 import styles from './registration-form.module.scss';
+import {
+  hideLoader,
+  registerUser,
+  selectLoaderVisibility,
+  selectRegistration,
+  showLoader,
+  useAppDispatch,
+  useAppSelector,
+} from '../../store';
 
 const schema1 = yup.object<RegistrationFormData>({
   username: yup
@@ -50,6 +59,9 @@ const schemes = [schema1, schema2, schema3];
 const buttonText = ['СЛЕДУЮЩИЙ ШАГ', 'ПОСЛЕДНИЙ ШАГ', 'ЗАРЕГИСТРИРОВАТЬСЯ'];
 
 const RegistrationForm = () => {
+  const dispatch = useAppDispatch();
+  const { error: registrationError, loading, success } = useAppSelector(selectRegistration);
+  const isLoaderVisible = useAppSelector(selectLoaderVisibility);
   const [step, setStep] = useState<number>(1);
   const {
     register,
@@ -63,10 +75,21 @@ const RegistrationForm = () => {
     criteriaMode: 'all',
   });
 
+  useEffect(() => {
+    if (loading && !isLoaderVisible) {
+      dispatch(showLoader());
+    }
+    if (!loading && isLoaderVisible) {
+      dispatch(hideLoader());
+    }
+  }, [dispatch, isLoaderVisible, loading]);
+
   const onSubmit = handleSubmit((data) => {
     console.log(data);
     if (step < 3) {
       setStep(step + 1);
+    } else if (step === 3) {
+      dispatch(registerUser(data));
     }
     // console.log(errors);
   });
@@ -95,6 +118,18 @@ const RegistrationForm = () => {
 
     return errorsArr.length ? errorsArr : undefined;
   };
+
+  if (registrationError) {
+    if (registrationError === 400) {
+      return <p> такой логин уже есть </p>;
+    }
+
+    return <p> что-то не так </p>;
+  }
+
+  if (success) {
+    return <p>кангратулэйшен</p>;
+  }
 
   return (
     <Form onSubmit={onSubmit} onChange={onChange}>
