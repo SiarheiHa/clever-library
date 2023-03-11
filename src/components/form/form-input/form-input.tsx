@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { UseFormRegister } from 'react-hook-form';
+import { Control, Controller, UseFormRegister } from 'react-hook-form';
+import MaskedInput from 'react-text-mask';
 import classNames from 'classnames';
 
 import { ReactComponent as EyeClosedIcon } from '../../../assets/images/icons/eye_closed.svg';
@@ -19,85 +20,115 @@ interface FormInputOProps {
   isDirty?: boolean;
   type: 'text' | 'password' | 'number';
   hint?: string;
+  control?: Control<RegistrationFormData, any>;
 }
+
+const mask = ['+', '3', '7', '5', ' ', '(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/];
 
 const FormInput = React.forwardRef<
   HTMLInputElement,
   FormInputOProps & ReturnType<UseFormRegister<RegistrationFormData>>
->(({ placeholderText, hint, error, errorMessageRequired, errorsMatches, isDirty, type, name, ...rest }, ref) => {
-  const [passVisible, setPassVisible] = useState(false);
-  const [isFocus, setIsFocus] = useState(false);
+>(
+  (
+    { control, placeholderText, hint, error, errorMessageRequired, errorsMatches, isDirty, type, name, ...rest },
+    ref
+  ) => {
+    const [passVisible, setPassVisible] = useState(false);
+    const [isFocus, setIsFocus] = useState(false);
 
-  console.log(error);
-  console.log(errorMessageRequired);
+    // console.log(error);
+    // console.log(errorMessageRequired);
 
-  const togglePassVisibility = () => {
-    setPassVisible(!passVisible);
-  };
+    const togglePassVisibility = () => {
+      setPassVisible(!passVisible);
+    };
 
-  const getInputType = () => {
-    switch (type) {
-      case 'number':
-        return 'number';
-      case 'password':
-        if (!passVisible) {
-          return 'password';
-        }
+    const getInputType = () => {
+      switch (type) {
+        case 'password':
+          if (!passVisible) {
+            return 'password';
+          }
 
-        return 'text';
+          return 'text';
 
-      default:
-        return 'text';
-    }
-  };
+        default:
+          return 'text';
+      }
+    };
 
-  const onFocus = () => {
-    setIsFocus(true);
-  };
+    const onFocus = () => {
+      setIsFocus(true);
+    };
 
-  const onBlur = () => {
-    setIsFocus(false);
-  };
+    const onBlur = () => {
+      setIsFocus(false);
+    };
 
-  const wrapperClasses = classNames(styles.input__wrapper, error && styles.error);
+    const wrapperClasses = classNames(styles.input__wrapper, error && styles.error);
 
-  return (
-    <div className={styles.wrapper}>
-      <div className={wrapperClasses}>
-        <div className={styles.input__block}>
-          <input
-            name={name}
-            type={getInputType()}
-            className={styles.input}
-            required={true}
-            {...rest}
-            ref={ref}
-            onFocus={onFocus}
-            onBlur={onBlur}
-          />
-          <span className={styles.placeholder}>{placeholderText}</span>
-        </div>
-
-        {type === 'password' && (
-          <div className={styles.icons}>
-            {error || !isDirty ? null : <TickIcon />}
-            {passVisible ? (
-              <EyeOpenedIcon onClick={togglePassVisibility} />
+    return (
+      <div className={styles.wrapper}>
+        <div className={wrapperClasses}>
+          <div className={styles.input__block}>
+            {type === 'number' && control ? (
+              <Controller
+                name={name}
+                control={control}
+                render={({ field }) => (
+                  <MaskedInput
+                    mask={mask}
+                    // name={name}
+                    type={getInputType()}
+                    className={styles.input}
+                    required={true}
+                    // {...rest}
+                    onFocus={onFocus}
+                    // onBlur={onBlur}
+                    guide={true}
+                    keepCharPositions={true}
+                    placeholderChar={'\u0078'}
+                    showMask={false}
+                    {...field}
+                  />
+                )}
+              />
             ) : (
-              <EyeClosedIcon onClick={togglePassVisibility} />
+              <input
+                name={name}
+                type={getInputType()}
+                className={styles.input}
+                required={true}
+                {...rest}
+                ref={ref}
+                onFocus={onFocus}
+                onBlur={onBlur}
+              />
             )}
+            <span className={styles.placeholder}>{placeholderText}</span>
           </div>
-        )}
+
+          {type === 'password' && (
+            <div className={styles.icons}>
+              {error || !isDirty ? null : <TickIcon />}
+              {passVisible ? (
+                <EyeOpenedIcon onClick={togglePassVisibility} />
+              ) : (
+                <EyeClosedIcon onClick={togglePassVisibility} />
+              )}
+            </div>
+          )}
+        </div>
+        <Hint
+          hint={hint}
+          error={error}
+          errorMessageRequired={errorMessageRequired}
+          errorsMatches={errorsMatches}
+          isInputFocused={isFocus}
+        />
       </div>
-      <Hint
-        hint={hint}
-        error={error}
-        errorMessageRequired={errorMessageRequired}
-        errorsMatches={errorsMatches}
-        isInputFocused={isFocus}
-      />
-    </div>
-  );
-});
+    );
+  }
+);
 
 export { FormInput };

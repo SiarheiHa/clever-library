@@ -117,7 +117,7 @@ export interface Category {
 }
 
 export type RegistrationFormData = {
-  login: string;
+  username: string;
   password: string;
   firstName: string;
   lastName: string;

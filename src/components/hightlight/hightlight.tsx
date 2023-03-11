@@ -8,7 +8,6 @@ interface HightlightProps {
 }
 
 const Hightlight: React.FC<HightlightProps> = ({ filter, str }) => {
-  console.log(filter, str);
   if (!filter) return <span>{str}</span>;
   if (filter === str) {
     return (
@@ -19,8 +18,6 @@ const Hightlight: React.FC<HightlightProps> = ({ filter, str }) => {
   }
   const regexp = new RegExp(filter, 'ig');
   const matchValue = str.match(regexp);
-
-  console.log(matchValue);
 
   if (matchValue) {
     return (

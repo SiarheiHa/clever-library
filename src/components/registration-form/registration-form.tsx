@@ -10,7 +10,7 @@ import { Form, FormInput, FormLinkBlock, FormTitle } from '../form';
 import styles from './registration-form.module.scss';
 
 const schema1 = yup.object<RegistrationFormData>({
-  login: yup
+  username: yup
     .string()
     .required('Поле не может быть пустым')
     .matches(/[0-9]/, 'цифры')
@@ -47,15 +47,17 @@ const schema3 = yup.object<RegistrationFormData>({
 });
 
 const schemes = [schema1, schema2, schema3];
+const buttonText = ['СЛЕДУЮЩИЙ ШАГ', 'ПОСЛЕДНИЙ ШАГ', 'ЗАРЕГИСТРИРОВАТЬСЯ'];
 
 const RegistrationForm = () => {
   const [step, setStep] = useState<number>(1);
   const {
     register,
     handleSubmit,
-    formState: { errors, dirtyFields },
+    control,
+    formState: { errors, dirtyFields, isValid, isDirty },
   } = useForm<RegistrationFormData>({
-    mode: 'onChange',
+    mode: 'all',
     // shouldFocusError: false,
     resolver: yupResolver(schemes[step - 1]),
     criteriaMode: 'all',
@@ -70,11 +72,11 @@ const RegistrationForm = () => {
   });
 
   const onChange = () => {
-    console.log(errors);
+    // console.log(errors);
   };
 
-  const loginErrorMatches: string | string[] | undefined =
-    typeof errors.login?.types?.matches === 'boolean' ? undefined : errors.login?.types?.matches;
+  const usernameErrorMatches: string | string[] | undefined =
+    typeof errors.username?.types?.matches === 'boolean' ? undefined : errors.username?.types?.matches;
 
   const getPassErrors = () => {
     let errorsArr: string[] = [];
@@ -101,10 +103,10 @@ const RegistrationForm = () => {
         {step === 1 && (
           <React.Fragment>
             <FormInput
-              {...register('login')}
-              error={Boolean(errors.login)}
-              errorMessageRequired={errors.login?.type === 'required' ? errors.login.message : undefined}
-              errorsMatches={loginErrorMatches}
+              {...register('username')}
+              error={Boolean(errors.username)}
+              errorMessageRequired={errors.username?.type === 'required' ? errors.username.message : undefined}
+              errorsMatches={usernameErrorMatches}
               hint='Используйте для логина латинский алфавит и цифры'
               placeholderText='Придумайте логин для входа'
               type='text'
@@ -147,7 +149,8 @@ const RegistrationForm = () => {
               errorMessageRequired={errors.phone?.message}
               placeholderText='Номер телефона'
               hint='В формате +375 (xx) xxx-xx-xx'
-              type='text'
+              type='number'
+              control={control}
             />
             <FormInput
               {...register('email')}
@@ -161,8 +164,14 @@ const RegistrationForm = () => {
         )}
       </div>
       <div className={styles.footer}>
-        <Button contained={true} onClick={() => {}} className={styles.button} type='submit'>
-          СЛЕДУЮЩИЙ ШАГ
+        <Button
+          contained={!isDirty || !Object.keys(errors).length}
+          onClick={() => {}}
+          className={styles.button}
+          type='submit'
+          disabled={Boolean(Object.keys(errors).length)}
+        >
+          {buttonText[step - 1]}
         </Button>
         <FormLinkBlock text='Есть учётная запись?' linkText='ВОЙТИ' to='/auth' />
       </div>
