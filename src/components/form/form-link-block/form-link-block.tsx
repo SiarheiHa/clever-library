@@ -6,17 +6,19 @@ import styles from './form-link-block.module.scss';
 
 interface FormLinkBlockProps {
   text: string;
-  linkText: string;
-  to: string;
+  linkText?: string;
+  to?: string;
 }
 
 const FormLinkBlock = ({ to, linkText, text }: FormLinkBlockProps) => (
   <div className={styles.wrapper}>
     <span className={styles.text}>{text}</span>
-    <Link className={styles.link} to={to}>
-      <span>{linkText}</span>
-      <ArrowIcon />
-    </Link>
+    {linkText && to && (
+      <Link className={styles.link} to={to}>
+        <span>{linkText}</span>
+        <ArrowIcon />
+      </Link>
+    )}
   </div>
 );
 

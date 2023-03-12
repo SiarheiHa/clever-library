@@ -136,6 +136,11 @@ export type EmailFormData = {
   email: string;
 };
 
+export type ResetPassFormData = {
+  password: string;
+  passwordConfirmation: string;
+};
+
 export interface User {
   id: number;
   username: string;

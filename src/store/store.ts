@@ -7,6 +7,7 @@ import { forgotPassReducer } from './forgot-pass-slice';
 import { loaderReducer } from './loader-slice';
 import { menuReducer } from './menu-slice';
 import { registrationReducer } from './registration-slice';
+import { passReducer } from './reset-pass-slice';
 import { searchReducer } from './search-slice';
 import { sortingReducer } from './sorting-slice';
 import { toastReducer } from './toast-slice';
@@ -23,6 +24,7 @@ export const store = configureStore({
     search: searchReducer,
     user: userReducer,
     forgot: forgotPassReducer,
+    pass: passReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),
 });

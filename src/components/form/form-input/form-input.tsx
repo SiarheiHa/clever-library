@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import { ReactComponent as EyeClosedIcon } from '../../../assets/images/icons/eye_closed.svg';
 import { ReactComponent as EyeOpenedIcon } from '../../../assets/images/icons/eye_opened.svg';
 import { ReactComponent as TickIcon } from '../../../assets/images/icons/tick.svg';
-import { AuthFormData, RegistrationFormData } from '../../../types/types';
+import { AuthFormData, RegistrationFormData, ResetPassFormData } from '../../../types/types';
 
 import { Hint } from './hint';
 
@@ -20,7 +20,7 @@ interface FormInputOProps {
   isDirty?: boolean;
   type: 'text' | 'password' | 'number';
   hint?: string;
-  control?: Control<RegistrationFormData | AuthFormData>;
+  control?: Control<RegistrationFormData | AuthFormData | ResetPassFormData>;
   showTick?: boolean;
 }
 
@@ -28,7 +28,7 @@ const mask = ['+', '3', '7', '5', ' ', '(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\
 
 const FormInput = React.forwardRef<
   HTMLInputElement,
-  FormInputOProps & ReturnType<UseFormRegister<RegistrationFormData | AuthFormData>>
+  FormInputOProps & ReturnType<UseFormRegister<RegistrationFormData | AuthFormData | ResetPassFormData>>
 >(
   (
     {

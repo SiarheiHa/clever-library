@@ -1,5 +1,6 @@
 import { useLocation } from 'react-router-dom';
 
+import { NewPassForm } from './new-pass-form/new-pass-form';
 import { EmailForm } from './email-form';
 
 const ForgotPassForm = () => {
