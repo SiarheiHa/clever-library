@@ -5,4 +5,4 @@ export { hideLoader, showLoader, selectLoaderVisibility } from './loader-slice';
 export { selectSortingType, setSortingType } from './sorting-slice';
 export { selectSearchString, setSearchString } from './search-slice';
 export { registerUser } from './actions';
-export { selectRegistration } from './registration-slice';
+export { selectRegistration, resetRegistrationState } from './registration-slice';

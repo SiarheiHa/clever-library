@@ -15,7 +15,14 @@ const initialState: RegistrationState = {
 const registrationSlice = createSlice({
   name: 'registration',
   initialState,
-  reducers: {},
+  reducers: {
+    resetRegistrationState(state) {
+      state.error = null;
+      state.loading = false;
+      state.success = false;
+      state.userInfo = null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(registerUser.pending, (state) => {
       state.loading = true;
@@ -38,7 +45,8 @@ const registrationSlice = createSlice({
   },
 });
 
+const { resetRegistrationState } = registrationSlice.actions;
 const registrationReducer = registrationSlice.reducer;
 const selectRegistration = ({ registration }: RootState) => registration;
 
-export { registrationReducer, selectRegistration };
+export { registrationReducer, resetRegistrationState, selectRegistration };

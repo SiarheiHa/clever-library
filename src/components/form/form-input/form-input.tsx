@@ -111,11 +111,12 @@ const FormInput = React.forwardRef<
           {type === 'password' && (
             <div className={styles.icons}>
               {error || !isDirty ? null : <TickIcon />}
-              {passVisible ? (
-                <EyeOpenedIcon onClick={togglePassVisibility} />
-              ) : (
-                <EyeClosedIcon onClick={togglePassVisibility} />
-              )}
+              {isDirty &&
+                (passVisible ? (
+                  <EyeOpenedIcon onClick={togglePassVisibility} />
+                ) : (
+                  <EyeClosedIcon onClick={togglePassVisibility} />
+                ))}
             </div>
           )}
         </div>

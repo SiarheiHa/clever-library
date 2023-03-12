@@ -1,7 +1,7 @@
-import { useNavigate } from 'react-router-dom';
-
 import { Button } from '../button';
 import { FormTitle } from '../form';
+
+import styles from './result-auth-block.module.scss';
 
 interface ResultAuthBlockProps {
   title: string;
@@ -11,11 +11,13 @@ interface ResultAuthBlockProps {
 }
 
 const ResultAuthBlock = ({ buttonText, onClick, text, title }: ResultAuthBlockProps) => (
-    <div>
-      <FormTitle title={title} />
-      <p>{text}</p>
-      <Button onClick={onClick}> {buttonText} </Button>
-    </div>
-  );
+  <div className={styles.wrapper}>
+    <FormTitle title={title} className={styles.header} />
+    <p className={styles.message}>{text}</p>
+    <Button onClick={onClick} contained={true} className={styles.button}>
+      {buttonText}
+    </Button>
+  </div>
+);
 
 export { ResultAuthBlock };

@@ -7,6 +7,7 @@ import * as yup from 'yup';
 import {
   hideLoader,
   registerUser,
+  resetRegistrationState,
   selectLoaderVisibility,
   selectRegistration,
   showLoader,
@@ -72,6 +73,7 @@ const RegistrationForm = () => {
     control,
     getValues,
     formState: { errors, dirtyFields, isValid, isDirty },
+    reset,
   } = useForm<RegistrationFormData>({
     mode: 'all',
     // shouldFocusError: false,
@@ -130,7 +132,11 @@ const RegistrationForm = () => {
           title='Данные не сохранились'
           text='Такой логин или e-mail уже записан в системе. Попробуйте зарегистрироваться по другому логину или e-mail.'
           buttonText='НАЗАД К РЕГИСТРАЦИИ'
-          onClick={() => setStep(1)}
+          onClick={() => {
+            dispatch(resetRegistrationState());
+            reset();
+            setStep(1);
+          }}
         />
       );
     }
@@ -166,7 +172,7 @@ const RegistrationForm = () => {
               <FormInput
                 {...register('username')}
                 error={Boolean(errors.username)}
-                errorMessageRequired={errors.username?.type === 'required' ? errors.username.message : undefined}
+                errorMessageRequired={errors.username?.type === 'required' ? errors.username?.message : undefined}
                 errorsMatches={usernameErrorMatches}
                 hint='Используйте для логина латинский алфавит и цифры'
                 placeholderText='Придумайте логин для входа'
@@ -175,7 +181,7 @@ const RegistrationForm = () => {
               <FormInput
                 {...register('password')}
                 error={Boolean(errors.password)}
-                errorMessageRequired={errors.password?.type === 'required' ? errors.password.message : undefined}
+                errorMessageRequired={errors.password?.type === 'required' ? errors.password?.message : undefined}
                 errorsMatches={getPassErrors()}
                 isDirty={dirtyFields.password}
                 hint='Пароль не менее 8 символов, с заглавной буквой и цифрой'
@@ -189,14 +195,14 @@ const RegistrationForm = () => {
               <FormInput
                 {...register('firstName')}
                 error={Boolean(errors.firstName)}
-                errorMessageRequired={errors.firstName?.type === 'required' ? errors.firstName.message : undefined}
+                errorMessageRequired={errors.firstName?.type === 'required' ? errors.firstName?.message : undefined}
                 placeholderText='Имя'
                 type='text'
               />
               <FormInput
                 {...register('lastName')}
                 error={Boolean(errors.lastName)}
-                errorMessageRequired={errors.lastName?.type === 'required' ? errors.lastName.message : undefined}
+                errorMessageRequired={errors.lastName?.type === 'required' ? errors.lastName?.message : undefined}
                 placeholderText='Фамилия'
                 type='text'
               />
