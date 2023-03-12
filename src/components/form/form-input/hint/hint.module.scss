@@ -5,8 +5,4 @@
   color: $grey-black-40;
   padding: 2px 12px;
   display: inline-block;
-  margin-bottom: 16px;
-  @include for-phone {
-    margin-bottom: 0;
-  }
 }

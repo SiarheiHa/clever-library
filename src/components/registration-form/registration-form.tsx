@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-import { RegistrationFormData } from '../../types/types';
-import { Button } from '../button';
-import { Form, FormInput, FormLinkBlock, FormTitle } from '../form';
-
-import styles from './registration-form.module.scss';
 import {
   hideLoader,
   registerUser,
@@ -17,6 +13,12 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '../../store';
+import { RegistrationFormData } from '../../types/types';
+import { Button } from '../button';
+import { Form, FormInput, FormLinkBlock, FormTitle } from '../form';
+import { ResultAuthBlock } from '../result-auth-block';
+
+import styles from './registration-form.module.scss';
 
 const schema1 = yup.object<RegistrationFormData>({
   username: yup
@@ -60,6 +62,7 @@ const buttonText = ['СЛЕДУЮЩИЙ ШАГ', 'ПОСЛЕДНИЙ ШАГ', '�
 
 const RegistrationForm = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { error: registrationError, loading, success } = useAppSelector(selectRegistration);
   const isLoaderVisible = useAppSelector(selectLoaderVisibility);
   const [step, setStep] = useState<number>(1);
@@ -67,6 +70,7 @@ const RegistrationForm = () => {
     register,
     handleSubmit,
     control,
+    getValues,
     formState: { errors, dirtyFields, isValid, isDirty },
   } = useForm<RegistrationFormData>({
     mode: 'all',
@@ -121,96 +125,119 @@ const RegistrationForm = () => {
 
   if (registrationError) {
     if (registrationError === 400) {
-      return <p> такой логин уже есть </p>;
+      return (
+        <ResultAuthBlock
+          title='Данные не сохранились'
+          text='Такой логин или e-mail уже записан в системе. Попробуйте зарегистрироваться по другому логину или e-mail.'
+          buttonText='НАЗАД К РЕГИСТРАЦИИ'
+          onClick={() => setStep(1)}
+        />
+      );
     }
 
-    return <p> что-то не так </p>;
+    return (
+      <ResultAuthBlock
+        title='Данные не сохранились'
+        text='Что-то пошло не так и ваша регистрация не завершилась. Попробуйте ещё раз'
+        buttonText='ПОВТОРИТЬ'
+        onClick={() => dispatch(registerUser(getValues()))}
+      />
+    );
   }
 
   if (success) {
-    return <p>кангратулэйшен</p>;
+    return (
+      <ResultAuthBlock
+        title='Регистрация успешна'
+        text='Регистрация прошла успешно. Зайдите в личный кабинет, используя свои логин и пароль'
+        buttonText='ВХОД'
+        onClick={() => navigate('/')}
+      />
+    );
   }
 
   return (
-    <Form onSubmit={onSubmit} onChange={onChange}>
-      <FormTitle title='Регистрация' subtitle={`${step} шаг из 3`} />
-      <div>
-        {step === 1 && (
-          <React.Fragment>
-            <FormInput
-              {...register('username')}
-              error={Boolean(errors.username)}
-              errorMessageRequired={errors.username?.type === 'required' ? errors.username.message : undefined}
-              errorsMatches={usernameErrorMatches}
-              hint='Используйте для логина латинский алфавит и цифры'
-              placeholderText='Придумайте логин для входа'
-              type='text'
-            />
-            <FormInput
-              {...register('password')}
-              error={Boolean(errors.password)}
-              errorMessageRequired={errors.password?.type === 'required' ? errors.password.message : undefined}
-              errorsMatches={getPassErrors()}
-              isDirty={dirtyFields.password}
-              hint='Пароль не менее 8 символов, с заглавной буквой и цифрой'
-              placeholderText='Пароль'
-              type='password'
-            />
-          </React.Fragment>
-        )}
-        {step === 2 && (
-          <React.Fragment>
-            <FormInput
-              {...register('firstName')}
-              error={Boolean(errors.firstName)}
-              errorMessageRequired={errors.firstName?.type === 'required' ? errors.firstName.message : undefined}
-              placeholderText='Имя'
-              type='text'
-            />
-            <FormInput
-              {...register('lastName')}
-              error={Boolean(errors.lastName)}
-              errorMessageRequired={errors.lastName?.type === 'required' ? errors.lastName.message : undefined}
-              placeholderText='Фамилия'
-              type='text'
-            />
-          </React.Fragment>
-        )}
-        {step === 3 && (
-          <React.Fragment>
-            <FormInput
-              {...register('phone')}
-              error={Boolean(errors.phone)}
-              errorMessageRequired={errors.phone?.message}
-              placeholderText='Номер телефона'
-              hint='В формате +375 (xx) xxx-xx-xx'
-              type='number'
-              control={control}
-            />
-            <FormInput
-              {...register('email')}
-              error={Boolean(errors.email)}
-              errorMessageRequired={errors.email?.message}
-              errorsMatches={errors.email?.type === 'email' ? errors.email?.message : undefined}
-              placeholderText='E-mail'
-              type='text'
-            />
-          </React.Fragment>
-        )}
-      </div>
-      <div className={styles.footer}>
-        <Button
-          contained={!isDirty || !Object.keys(errors).length}
-          onClick={() => {}}
-          className={styles.button}
-          type='submit'
-          disabled={Boolean(Object.keys(errors).length)}
-        >
-          {buttonText[step - 1]}
-        </Button>
-        <FormLinkBlock text='Есть учётная запись?' linkText='ВОЙТИ' to='/auth' />
-      </div>
-    </Form>
+    <div className={styles.wrapper}>
+      <Form onSubmit={onSubmit} onChange={onChange}>
+        <FormTitle title='Регистрация' subtitle={`${step} шаг из 3`} />
+        <div>
+          {step === 1 && (
+            <React.Fragment>
+              <FormInput
+                {...register('username')}
+                error={Boolean(errors.username)}
+                errorMessageRequired={errors.username?.type === 'required' ? errors.username.message : undefined}
+                errorsMatches={usernameErrorMatches}
+                hint='Используйте для логина латинский алфавит и цифры'
+                placeholderText='Придумайте логин для входа'
+                type='text'
+              />
+              <FormInput
+                {...register('password')}
+                error={Boolean(errors.password)}
+                errorMessageRequired={errors.password?.type === 'required' ? errors.password.message : undefined}
+                errorsMatches={getPassErrors()}
+                isDirty={dirtyFields.password}
+                hint='Пароль не менее 8 символов, с заглавной буквой и цифрой'
+                placeholderText='Пароль'
+                type='password'
+              />
+            </React.Fragment>
+          )}
+          {step === 2 && (
+            <React.Fragment>
+              <FormInput
+                {...register('firstName')}
+                error={Boolean(errors.firstName)}
+                errorMessageRequired={errors.firstName?.type === 'required' ? errors.firstName.message : undefined}
+                placeholderText='Имя'
+                type='text'
+              />
+              <FormInput
+                {...register('lastName')}
+                error={Boolean(errors.lastName)}
+                errorMessageRequired={errors.lastName?.type === 'required' ? errors.lastName.message : undefined}
+                placeholderText='Фамилия'
+                type='text'
+              />
+            </React.Fragment>
+          )}
+          {step === 3 && (
+            <React.Fragment>
+              <FormInput
+                {...register('phone')}
+                error={Boolean(errors.phone)}
+                errorMessageRequired={errors.phone?.message}
+                placeholderText='Номер телефона'
+                hint='В формате +375 (xx) xxx-xx-xx'
+                type='number'
+                control={control}
+              />
+              <FormInput
+                {...register('email')}
+                error={Boolean(errors.email)}
+                errorMessageRequired={errors.email?.message}
+                errorsMatches={errors.email?.type === 'email' ? errors.email?.message : undefined}
+                placeholderText='E-mail'
+                type='text'
+              />
+            </React.Fragment>
+          )}
+        </div>
+        <div className={styles.footer}>
+          <Button
+            contained={!isDirty || !Object.keys(errors).length}
+            onClick={() => {}}
+            className={styles.button}
+            type='submit'
+            disabled={Boolean(Object.keys(errors).length)}
+          >
+            {buttonText[step - 1]}
+          </Button>
+          <FormLinkBlock text='Есть учётная запись?' linkText='ВОЙТИ' to='/auth' />
+        </div>
+      </Form>
+    </div>
   );
 };
 

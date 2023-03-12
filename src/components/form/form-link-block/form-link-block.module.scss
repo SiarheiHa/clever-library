@@ -4,9 +4,12 @@
 }
 
 .text {
-  @include font-text-400-s;
+  @include font-text-400-l;
   color: $grey-black-70;
   margin-right: 16px;
+  @include for-phone {
+    @include font-text-400-m;
+  }
 }
 
 .link {
