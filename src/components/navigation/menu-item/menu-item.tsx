@@ -58,6 +58,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, isSubmenuOpen, toggleSubmenu 
     if (item.path === 'singout') {
       e.preventDefault();
       localStorage.clear();
+      dispatch(setMenuMode({ mode: 'close' }));
       dispatch(resetUserState());
 
       return;

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import classNames from 'classnames';
 
 import { ReactComponent as Avatar } from '../../assets/images/avatar.svg';
-import { resetUserState, useAppDispatch } from '../../store';
+import { resetUserState, setMenuMode, useAppDispatch } from '../../store';
 
 import styles from './person-block.module.scss';
 
@@ -18,6 +18,7 @@ const PersonBlock = ({ className }: { className?: string }) => {
 
   const singout = () => {
     localStorage.clear();
+    dispatch(setMenuMode({ mode: 'close' }));
     dispatch(resetUserState());
   };
 
