@@ -132,6 +132,10 @@ export type AuthFormData = {
   password: string;
 };
 
+export type EmailFormData = {
+  email: string;
+};
+
 export interface User {
   id: number;
   username: string;
@@ -153,7 +157,14 @@ export interface UserInfo {
 
 export type UserState = {
   loading: boolean;
-  userInfo: UserInfo | null; // for user object
+  userInfo: UserInfo | null;
   error: 1 | 400 | null;
-  success: boolean; // for monitoring the registration process.
+  success: boolean;
+};
+
+export type ForgotPassState = {
+  loading: boolean;
+  errorMessage: string | null;
+  error: 1 | 400 | null;
+  success: boolean;
 };

@@ -76,7 +76,7 @@ const RegistrationForm = () => {
     reset,
   } = useForm<RegistrationFormData>({
     mode: 'all',
-    // shouldFocusError: false,
+    shouldFocusError: false,
     resolver: yupResolver(schemes[step - 1]),
     criteriaMode: 'all',
   });

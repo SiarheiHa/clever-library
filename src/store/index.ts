@@ -4,6 +4,6 @@ export { hideToast, showToast, selectToastVisibility } from './toast-slice';
 export { hideLoader, showLoader, selectLoaderVisibility } from './loader-slice';
 export { selectSortingType, setSortingType } from './sorting-slice';
 export { selectSearchString, setSearchString } from './search-slice';
-export { registerUser } from './actions';
+export { registerUser, auth, requestRefreshLink } from './actions';
 export { selectRegistration, resetRegistrationState } from './registration-slice';
 export { selectUserState, resetUserState } from './user-slice';

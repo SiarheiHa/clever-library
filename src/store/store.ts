@@ -3,6 +3,7 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import { api } from '../api';
 
+import { forgotPassReducer } from './forgot-pass-slice';
 import { loaderReducer } from './loader-slice';
 import { menuReducer } from './menu-slice';
 import { registrationReducer } from './registration-slice';
@@ -21,6 +22,7 @@ export const store = configureStore({
     sort: sortingReducer,
     search: searchReducer,
     user: userReducer,
+    forgot: forgotPassReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),
 });
