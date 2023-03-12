@@ -2,21 +2,24 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { UserState } from '../types/types';
 
-import { registerUser } from './actions';
+import { auth } from './actions';
 import { RootState } from './store';
 
 const initialState: UserState = {
   loading: false,
-  userInfo: null, // for user object
+  userInfo: {
+    user: null,
+    jwt: localStorage.getItem('jwt'),
+  },
   error: null,
-  success: false, // for monitoring the registration process.
+  success: false,
 };
 
-const registrationSlice = createSlice({
-  name: 'registration',
+const userSlice = createSlice({
+  name: 'user',
   initialState,
   reducers: {
-    resetRegistrationState(state) {
+    resetUserState(state) {
       state.error = null;
       state.loading = false;
       state.success = false;
@@ -24,19 +27,19 @@ const registrationSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(registerUser.pending, (state) => {
+    builder.addCase(auth.pending, (state) => {
       state.loading = true;
       state.success = false;
       state.error = null;
     });
-    builder.addCase(registerUser.fulfilled, (state, action) => {
+    builder.addCase(auth.fulfilled, (state, action) => {
       console.log(action);
       state.loading = false;
       state.success = true;
       state.error = null;
       state.userInfo = action.payload;
     });
-    builder.addCase(registerUser.rejected, (state, action) => {
+    builder.addCase(auth.rejected, (state, action) => {
       console.log(action);
       state.loading = false;
       state.success = false;
@@ -45,8 +48,8 @@ const registrationSlice = createSlice({
   },
 });
 
-const { resetRegistrationState } = registrationSlice.actions;
-const registrationReducer = registrationSlice.reducer;
-const selectRegistration = ({ registration }: RootState) => registration;
+const { resetUserState } = userSlice.actions;
+const userReducer = userSlice.reducer;
+const selectUserState = ({ user }: RootState) => user;
 
-export { registrationReducer, resetRegistrationState, selectRegistration };
+export { userReducer, resetUserState, selectUserState };

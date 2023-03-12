@@ -127,6 +127,11 @@ export type RegistrationFormData = {
   email: string;
 };
 
+export type AuthFormData = {
+  identifier: string;
+  password: string;
+};
+
 export interface User {
   id: number;
   username: string;
@@ -142,11 +147,11 @@ export interface User {
 }
 
 export interface UserInfo {
-  jwt: string;
-  user: User;
+  jwt: string | null;
+  user: User | null;
 }
 
-export type RegistrationState = {
+export type UserState = {
   loading: boolean;
   userInfo: UserInfo | null; // for user object
   error: 1 | 400 | null;

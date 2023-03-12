@@ -6,3 +6,4 @@ export { selectSortingType, setSortingType } from './sorting-slice';
 export { selectSearchString, setSearchString } from './search-slice';
 export { registerUser } from './actions';
 export { selectRegistration, resetRegistrationState } from './registration-slice';
+export { selectUserState, resetUserState } from './user-slice';

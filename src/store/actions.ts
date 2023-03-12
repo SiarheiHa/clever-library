@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
 import { BASE_URL } from '../constants';
-import { RegistrationFormData, ServerError, UserInfo } from '../types/types';
+import { AuthFormData, RegistrationFormData, UserInfo } from '../types/types';
 
 const registerUser = createAsyncThunk<UserInfo, RegistrationFormData, { rejectValue: 1 | 400 }>(
   'registaration/register',
@@ -34,4 +34,34 @@ const registerUser = createAsyncThunk<UserInfo, RegistrationFormData, { rejectVa
   }
 );
 
-export { registerUser };
+const auth = createAsyncThunk<UserInfo, AuthFormData, { rejectValue: 1 | 400 }>(
+  'user/auth',
+  async (data, { rejectWithValue }) => {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+      const resp: AxiosResponse<UserInfo> = await axios.post(`${BASE_URL}/api/auth/local`, data, config);
+
+      if (resp.status === 200 && resp.data.jwt) {
+        localStorage.setItem('jwt', resp.data.jwt);
+
+        return resp.data;
+      }
+
+      return resp.data;
+    } catch (error) {
+      const err = error as AxiosError;
+
+      if (err.response?.status === 400) {
+        return rejectWithValue(err.response.status);
+      }
+
+      return rejectWithValue(1);
+    }
+  }
+);
+
+export { registerUser, auth };

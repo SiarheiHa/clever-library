@@ -9,6 +9,7 @@ import { registrationReducer } from './registration-slice';
 import { searchReducer } from './search-slice';
 import { sortingReducer } from './sorting-slice';
 import { toastReducer } from './toast-slice';
+import { userReducer } from './user-slice';
 
 export const store = configureStore({
   reducer: {
@@ -19,6 +20,7 @@ export const store = configureStore({
     registration: registrationReducer,
     sort: sortingReducer,
     search: searchReducer,
+    user: userReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),
 });

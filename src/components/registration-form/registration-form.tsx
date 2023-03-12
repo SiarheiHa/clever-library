@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Control, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -14,7 +14,7 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '../../store';
-import { RegistrationFormData } from '../../types/types';
+import { AuthFormData, RegistrationFormData } from '../../types/types';
 import { Button } from '../button';
 import { Form, FormInput, FormLinkBlock, FormTitle } from '../form';
 import { ResultAuthBlock } from '../result-auth-block';
@@ -187,6 +187,7 @@ const RegistrationForm = () => {
                 hint='Пароль не менее 8 символов, с заглавной буквой и цифрой'
                 placeholderText='Пароль'
                 type='password'
+                showTick={true}
               />
             </React.Fragment>
           )}
@@ -217,7 +218,7 @@ const RegistrationForm = () => {
                 placeholderText='Номер телефона'
                 hint='В формате +375 (xx) xxx-xx-xx'
                 type='number'
-                control={control}
+                control={control as Control<AuthFormData | RegistrationFormData, any>}
               />
               <FormInput
                 {...register('email')}

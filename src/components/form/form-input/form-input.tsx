@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import { ReactComponent as EyeClosedIcon } from '../../../assets/images/icons/eye_closed.svg';
 import { ReactComponent as EyeOpenedIcon } from '../../../assets/images/icons/eye_opened.svg';
 import { ReactComponent as TickIcon } from '../../../assets/images/icons/tick.svg';
-import { RegistrationFormData } from '../../../types/types';
+import { AuthFormData, RegistrationFormData } from '../../../types/types';
 
 import { Hint } from './hint';
 
@@ -20,17 +20,30 @@ interface FormInputOProps {
   isDirty?: boolean;
   type: 'text' | 'password' | 'number';
   hint?: string;
-  control?: Control<RegistrationFormData, any>;
+  control?: Control<RegistrationFormData | AuthFormData>;
+  showTick?: boolean;
 }
 
 const mask = ['+', '3', '7', '5', ' ', '(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/];
 
 const FormInput = React.forwardRef<
   HTMLInputElement,
-  FormInputOProps & ReturnType<UseFormRegister<RegistrationFormData>>
+  FormInputOProps & ReturnType<UseFormRegister<RegistrationFormData | AuthFormData>>
 >(
   (
-    { control, placeholderText, hint, error, errorMessageRequired, errorsMatches, isDirty, type, name, ...rest },
+    {
+      control,
+      placeholderText,
+      hint,
+      error,
+      errorMessageRequired,
+      errorsMatches,
+      isDirty,
+      showTick,
+      type,
+      name,
+      ...rest
+    },
     ref
   ) => {
     const [passVisible, setPassVisible] = useState(false);
@@ -110,7 +123,7 @@ const FormInput = React.forwardRef<
 
           {type === 'password' && (
             <div className={styles.icons}>
-              {error || !isDirty ? null : <TickIcon />}
+              {error || !isDirty || !showTick ? null : <TickIcon />}
               {isDirty &&
                 (passVisible ? (
                   <EyeOpenedIcon onClick={togglePassVisibility} />
