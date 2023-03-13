@@ -22,6 +22,7 @@ interface FormInputOProps {
   hint?: string;
   control?: Control<RegistrationFormData | AuthFormData | ResetPassFormData>;
   showTick?: boolean;
+  onBlurHandler?: () => void;
 }
 
 const mask = ['+', '3', '7', '5', ' ', '(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/];
@@ -42,6 +43,7 @@ const FormInput = React.forwardRef<
       showTick,
       type,
       name,
+      onBlurHandler,
       ...rest
     },
     ref
@@ -75,7 +77,11 @@ const FormInput = React.forwardRef<
     };
 
     const onBlur = () => {
+      console.log('onblur');
       setIsFocus(false);
+      if (onBlurHandler) {
+        onBlurHandler();
+      }
     };
 
     const wrapperClasses = classNames(styles.input__wrapper, error && styles.error);
@@ -97,12 +103,12 @@ const FormInput = React.forwardRef<
                     required={true}
                     // {...rest}
                     onFocus={onFocus}
-                    // onBlur={onBlur}
                     guide={true}
                     keepCharPositions={true}
                     placeholderChar={'\u0078'}
                     showMask={false}
                     {...field}
+                    onBlur={onBlur}
                   />
                 )}
               />
@@ -123,12 +129,12 @@ const FormInput = React.forwardRef<
 
           {type === 'password' && (
             <div className={styles.icons}>
-              {error || !isDirty || !showTick ? null : <TickIcon />}
+              {error || !isDirty || !showTick ? null : <TickIcon data-test-id='checkmark' />}
               {isDirty &&
                 (passVisible ? (
-                  <EyeOpenedIcon onClick={togglePassVisibility} />
+                  <EyeOpenedIcon onClick={togglePassVisibility} data-test-id='eye-opened' />
                 ) : (
-                  <EyeClosedIcon onClick={togglePassVisibility} />
+                  <EyeClosedIcon onClick={togglePassVisibility} data-test-id='eye-closed' />
                 ))}
             </div>
           )}

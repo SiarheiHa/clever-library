@@ -83,7 +83,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, isSubmenuOpen, toggleSubmenu 
         to={path}
         className={setActive}
         onClick={(e) => handleClick(e)}
-        data-test-id={`${testIdPrefix}-${testIds[path]}`}
+        data-test-id={item.path === 'singout' ? 'exit-button' : `${testIdPrefix}-${testIds[path]}`}
       >
         <span>{name}</span>
         {submenu && (

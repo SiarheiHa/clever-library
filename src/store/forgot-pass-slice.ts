@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { ForgotPassState } from '../types/types';
-import { requestRefreshLink } from './actions';
 
+import { requestRefreshLink } from './actions';
 import { RootState } from './store';
 
 const initialState: ForgotPassState = {
@@ -41,8 +41,8 @@ const forgotPassSlice = createSlice({
       console.log(action);
       state.loading = false;
       state.success = false;
-      state.error = action.payload || 1;
-      state.errorMessage = 'need refactor';
+      state.error = 1;
+      state.errorMessage = action.payload || null;
     });
   },
 });

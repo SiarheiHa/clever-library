@@ -43,6 +43,7 @@ const NewPassForm = ({ code }: { code: string }) => {
     register,
     handleSubmit,
     getValues,
+    trigger,
     formState: { errors, dirtyFields, isValid, isDirty },
   } = useForm<ResetPassFormData>({
     mode: 'all',
@@ -115,7 +116,7 @@ const NewPassForm = ({ code }: { code: string }) => {
 
   return (
     <div className={styles.wrapper}>
-      <Form onSubmit={onSubmit} onChange={onChange}>
+      <Form onSubmit={onSubmit} onChange={onChange} testId='reset-password-form'>
         <FormTitle title='Восстановление пароля' />
         <div>
           <FormInput
@@ -128,6 +129,7 @@ const NewPassForm = ({ code }: { code: string }) => {
             placeholderText='Новый пароль'
             type='password'
             showTick={true}
+            onBlurHandler={() => trigger('password')}
           />
           <FormInput
             {...register('passwordConfirmation')}
@@ -136,6 +138,7 @@ const NewPassForm = ({ code }: { code: string }) => {
             isDirty={dirtyFields.passwordConfirmation}
             placeholderText='Повторите пароль'
             type='password'
+            onBlurHandler={() => trigger('passwordConfirmation')}
           />
         </div>
         <div className={styles.footer}>

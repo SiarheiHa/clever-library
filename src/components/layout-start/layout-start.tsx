@@ -19,7 +19,7 @@ const LayoutStart = () => {
 
   return (
     <React.Fragment>
-      <div className={styles.overlay}>
+      <div className={styles.overlay} data-test-id='auth'>
         <div className={styles.outlet}>
           <h2 className={styles.brand}>Cleverland</h2>
           <Outlet />

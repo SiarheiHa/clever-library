@@ -11,7 +11,7 @@ interface ResultAuthBlockProps {
 }
 
 const ResultAuthBlock = ({ buttonText, onClick, text, title }: ResultAuthBlockProps) => (
-  <div className={styles.wrapper}>
+  <div className={styles.wrapper} data-test-id='status-block'>
     <FormTitle title={title} className={styles.header} />
     <p className={styles.message}>{text}</p>
     {buttonText && onClick && (

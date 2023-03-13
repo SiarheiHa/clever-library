@@ -5,13 +5,16 @@ import styles from './hightligh.module.scss';
 interface HightlightProps {
   filter: string;
   str: string;
+  testId?: string;
 }
 
-const Hightlight: React.FC<HightlightProps> = ({ filter, str }) => {
+const Hightlight: React.FC<HightlightProps> = ({ filter, str, testId }) => {
   if (!filter) return <span>{str}</span>;
+  const dataTestId = testId || 'highlight-matches';
+
   if (filter === str) {
     return (
-      <span className={styles.hightlight} data-test-id='highlight-matches'>
+      <span className={styles.hightlight} data-test-id={dataTestId}>
         {str}
       </span>
     );
@@ -27,9 +30,9 @@ const Hightlight: React.FC<HightlightProps> = ({ filter, str }) => {
             const c = matchValue.shift();
 
             return (
-              <span key={String(index) + s}>
+              <span key={String(index) + s} data-test-id={dataTestId}>
                 {s}
-                <span className={styles.hightlight} data-test-id='highlight-matches'>
+                <span className={styles.hightlight} data-test-id={dataTestId}>
                   {c}
                 </span>
               </span>

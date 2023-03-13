@@ -35,12 +35,13 @@ const schema = yup.object<EmailFormData>({
 const EmailForm = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { error: refreshError, loading, success } = useAppSelector(selectForgotPassState);
+  const { error: refreshError, loading, success, errorMessage } = useAppSelector(selectForgotPassState);
   const isLoaderVisible = useAppSelector(selectLoaderVisibility);
   const {
     register,
     handleSubmit,
     getValues,
+    trigger,
     formState: { errors, dirtyFields, isValid, isDirty },
   } = useForm<EmailFormData>({
     mode: 'onSubmit',
@@ -75,6 +76,8 @@ const EmailForm = () => {
     );
   }
 
+  console.log('errorMessage', errorMessage);
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
@@ -84,29 +87,20 @@ const EmailForm = () => {
         <span className={styles.text}>ВХОД В ЛИЧНЫЙ КАБИНЕТ</span>
       </div>
 
-      <Form onSubmit={onSubmit} onChange={onChange} className={styles.form}>
+      <Form onSubmit={onSubmit} onChange={onChange} className={styles.form} testId='send-email-form'>
         <FormTitle title='Восстановление пароля' />
         <div>
           <FormInput
             {...register('email')}
-            error={Boolean(errors.email)}
-            errorMessageRequired={errors.email?.message}
+            error={Boolean(errors.email || errorMessage)}
+            errorMessageRequired={errors.email?.message || errorMessage || undefined}
             placeholderText='Email'
             type='text'
+            onBlurHandler={() => trigger('email')}
           />
           <span className={styles.gray}>
             На это email будет отправлено письмо с инструкциями по восстановлению пароля
           </span>
-          {/* <div className={styles.forgot}>
-            {authError === 400 && <span className={styles.error}>Неверный логин или пароль!</span>}
-            <Link to='/forgot-pass'>
-              {authError === 400 ? (
-                <span className={styles.dark}>Восстановить?</span>
-              ) : (
-                <span className={styles.gray}>Забыли логин или пароль?</span>
-              )}
-            </Link>
-          </div> */}
         </div>
         <div className={styles.footer}>
           <Button

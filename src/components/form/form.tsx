@@ -7,10 +7,17 @@ interface FormProps {
   onSubmit: () => void;
   onChange: () => void;
   className?: string;
+  testId?: string;
 }
 
-const Form: React.FC<FormProps> = ({ children, className, onChange, onSubmit }) => (
-  <form onChange={onChange} onSubmit={onSubmit} className={classNames(styles.form, className)} noValidate={true}>
+const Form: React.FC<FormProps> = ({ children, className, onChange, onSubmit, testId }) => (
+  <form
+    data-test-id={testId}
+    onChange={onChange}
+    onSubmit={onSubmit}
+    className={classNames(styles.form, className)}
+    noValidate={true}
+  >
     {children}
   </form>
 );

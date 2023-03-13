@@ -74,6 +74,7 @@ const RegistrationForm = () => {
     getValues,
     formState: { errors, dirtyFields, isValid, isDirty },
     reset,
+    trigger,
   } = useForm<RegistrationFormData>({
     mode: 'all',
     shouldFocusError: false,
@@ -164,7 +165,7 @@ const RegistrationForm = () => {
 
   return (
     <div className={styles.wrapper}>
-      <Form onSubmit={onSubmit} onChange={onChange}>
+      <Form onSubmit={onSubmit} onChange={onChange} testId='register-form'>
         <FormTitle title='Регистрация' subtitle={`${step} шаг из 3`} />
         <div>
           {step === 1 && (
@@ -177,6 +178,7 @@ const RegistrationForm = () => {
                 hint='Используйте для логина латинский алфавит и цифры'
                 placeholderText='Придумайте логин для входа'
                 type='text'
+                onBlurHandler={() => trigger('username')}
               />
               <FormInput
                 {...register('password')}
@@ -188,6 +190,7 @@ const RegistrationForm = () => {
                 placeholderText='Пароль'
                 type='password'
                 showTick={true}
+                onBlurHandler={() => trigger('password')}
               />
             </React.Fragment>
           )}
@@ -199,6 +202,7 @@ const RegistrationForm = () => {
                 errorMessageRequired={errors.firstName?.type === 'required' ? errors.firstName?.message : undefined}
                 placeholderText='Имя'
                 type='text'
+                onBlurHandler={() => trigger('firstName')}
               />
               <FormInput
                 {...register('lastName')}
@@ -206,6 +210,7 @@ const RegistrationForm = () => {
                 errorMessageRequired={errors.lastName?.type === 'required' ? errors.lastName?.message : undefined}
                 placeholderText='Фамилия'
                 type='text'
+                onBlurHandler={() => trigger('lastName')}
               />
             </React.Fragment>
           )}
@@ -219,6 +224,7 @@ const RegistrationForm = () => {
                 hint='В формате +375 (xx) xxx-xx-xx'
                 type='number'
                 control={control as Control<AuthFormData | RegistrationFormData | ResetPassFormData, any>}
+                onBlurHandler={() => trigger('phone')}
               />
               <FormInput
                 {...register('email')}
@@ -227,6 +233,7 @@ const RegistrationForm = () => {
                 errorsMatches={errors.email?.type === 'email' ? errors.email?.message : undefined}
                 placeholderText='E-mail'
                 type='text'
+                onBlurHandler={() => trigger('email')}
               />
             </React.Fragment>
           )}

@@ -64,7 +64,7 @@ const auth = createAsyncThunk<UserInfo, AuthFormData, { rejectValue: 1 | 400 }>(
   }
 );
 
-const requestRefreshLink = createAsyncThunk<{ ok: boolean }, EmailFormData, { rejectValue: 1 | 400 }>(
+const requestRefreshLink = createAsyncThunk<{ ok: boolean }, EmailFormData, { rejectValue: string }>(
   'forgot/refresh',
   async (data, { rejectWithValue }) => {
     try {
@@ -78,7 +78,6 @@ const requestRefreshLink = createAsyncThunk<{ ok: boolean }, EmailFormData, { re
         data,
         config
       );
-      console.log(resp);
 
       if (resp.data.ok === true) {
         return resp.data;
@@ -88,11 +87,13 @@ const requestRefreshLink = createAsyncThunk<{ ok: boolean }, EmailFormData, { re
     } catch (error) {
       const err = error as AxiosError;
 
-      if (err.response?.status === 400) {
-        return rejectWithValue(err.response.status);
+      if (err.response?.status === 500) {
+        return rejectWithValue('error');
+
+        // return rejectWithValue(err.response.data.error.message);
       }
 
-      return rejectWithValue(1);
+      return rejectWithValue('error');
     }
   }
 );

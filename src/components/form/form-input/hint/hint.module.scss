@@ -2,7 +2,13 @@
 
 .hint {
   @include font-text-subtitle-s;
-  color: $grey-black-40;
+
   padding: 2px 12px;
   display: inline-block;
+}
+.inactive {
+  color: $grey-black-40;
+}
+.active {
+  color: rgb(244, 44, 79);
 }

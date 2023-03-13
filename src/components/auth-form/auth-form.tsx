@@ -34,9 +34,10 @@ const AuthForm = () => {
     register,
     handleSubmit,
     getValues,
+    trigger,
     formState: { errors, dirtyFields, isValid, isDirty },
   } = useForm<AuthFormData>({
-    mode: 'onBlur',
+    mode: 'all',
     // shouldFocusError: false,
     resolver: yupResolver(schema),
     criteriaMode: 'all',
@@ -76,8 +77,8 @@ const AuthForm = () => {
 
   return (
     <div className={styles.wrapper}>
-      <Form onSubmit={onSubmit} onChange={onChange}>
-        <FormTitle title='Вход в личный кабинет' />
+      <Form onSubmit={onSubmit} onChange={onChange} testId='auth-form'>
+        <FormTitle title='Вхoд в личный кабинет' />
         <div>
           <FormInput
             {...register('identifier')}
@@ -85,6 +86,7 @@ const AuthForm = () => {
             errorMessageRequired={errors.identifier?.type === 'required' ? errors.identifier?.message : undefined}
             placeholderText='Логин'
             type='text'
+            onBlurHandler={() => trigger('identifier')}
           />
           <FormInput
             {...register('password')}
@@ -94,9 +96,14 @@ const AuthForm = () => {
             placeholderText='Пароль'
             type='password'
             showTick={false}
+            onBlurHandler={() => trigger('password')}
           />
           <div className={styles.forgot}>
-            {authError === 400 && <span className={styles.error}>Неверный логин или пароль!</span>}
+            {authError === 400 && (
+              <span className={styles.error} data-test-id='hint'>
+                Неверный логин или пароль!
+              </span>
+            )}
             <Link to='/forgot-pass'>
               {authError === 400 ? (
                 <span className={styles.dark}>Восстановить?</span>
