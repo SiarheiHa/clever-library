@@ -1,0 +1,61 @@
+@use '../../../styles/style.scss' as *;
+
+.wrapper {
+  min-width: 528px;
+  padding-bottom: 48px;
+  @include for-phone {
+    min-width: 288px;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: $grey-black-5;
+  padding: 20px 16px;
+  border-radius: 16px 16px 0px 0px;
+  margin-bottom: 32px;
+}
+
+.text {
+  @include font-button;
+  color: $grey-black-70;
+}
+
+.form {
+  padding: 0 56px;
+  @include for-phone {
+    padding: 0 16px;
+  }
+}
+
+.footer {
+  width: 100%;
+}
+
+.button {
+  width: 100%;
+  margin-bottom: 16px;
+  padding: 14px;
+  @include font-text-bold;
+  @include for-phone {
+    padding: 11px;
+    @include font-button;
+  }
+}
+
+.error,
+.gray,
+.dark {
+  @include font-text-subtitle-s;
+}
+
+.gray {
+  color: $grey-black-40;
+}
+
+.error {
+  display: block;
+  color: $other-negative;
+}

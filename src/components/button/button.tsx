@@ -13,6 +13,7 @@ interface ButtonProps {
   disabled?: boolean;
   filtered?: boolean;
   className?: string;
+  type?: 'submit' | 'reset';
   testId?: string;
 }
 
@@ -26,6 +27,7 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   children,
   className,
+  type,
   testId,
 }) => {
   const classes = classNames(
@@ -40,7 +42,14 @@ const Button: React.FC<ButtonProps> = ({
   );
 
   return (
-    <button type='button' className={classes} onClick={onClick} disabled={disabled} data-test-id={testId}>
+    <button
+      // eslint-disable-next-line react/button-has-type
+      type={type ? type : 'button'}
+      className={classes}
+      onClick={onClick}
+      disabled={disabled}
+      data-test-id={testId}
+    >
       {children}
     </button>
   );

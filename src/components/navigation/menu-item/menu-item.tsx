@@ -6,7 +6,7 @@ import { useGetBooksQuery } from '../../../api';
 import сhevronColored from '../../../assets/images/icons/chevron_colored.svg';
 import сhevron from '../../../assets/images/icons/сhevron.svg';
 import { testIds } from '../../../data';
-import { selectMenuMode, setMenuMode, useAppDispatch, useAppSelector } from '../../../store';
+import { resetUserState, selectMenuMode, setMenuMode, useAppDispatch, useAppSelector } from '../../../store';
 import { Category, NavItem } from '../../../types/types';
 import { Button } from '../../button';
 import { Submenu } from '../submenu';
@@ -52,7 +52,18 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, isSubmenuOpen, toggleSubmenu 
       <Submenu submenu={item.submenu} className={submenuClasses} testIdPrefix={testIdPrefix} />
     ) : null;
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    // exit
+
+    if (item.path === 'singout') {
+      e.preventDefault();
+      localStorage.clear();
+      dispatch(setMenuMode({ mode: 'close' }));
+      dispatch(resetUserState());
+
+      return;
+    }
+
     // adaptive menu
     if (!isCurrentPage() && menuMode === 'open') {
       dispatch(setMenuMode({ mode: 'close' }));
@@ -68,7 +79,12 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, isSubmenuOpen, toggleSubmenu 
 
   return (
     <React.Fragment>
-      <NavLink to={path} className={setActive} onClick={handleClick} data-test-id={`${testIdPrefix}-${testIds[path]}`}>
+      <NavLink
+        to={path}
+        className={setActive}
+        onClick={(e) => handleClick(e)}
+        data-test-id={item.path === 'singout' ? 'exit-button' : `${testIdPrefix}-${testIds[path]}`}
+      >
         <span>{name}</span>
         {submenu && (
           <Button onClick={() => {}} className={buttonClasses} shadowed={false} bordered={false} filtered={false}>

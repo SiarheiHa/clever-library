@@ -1,3 +1,5 @@
+import { AxiosError } from 'axios';
+
 export type NavItem = {
   name: string;
   path: string;
@@ -58,10 +60,10 @@ export interface Comment {
   rating: number;
   text: string;
   createdAt: string;
-  user: User;
+  user: Сommentator;
 }
 
-export interface User {
+export interface Сommentator {
   commentUserId: number;
   firstName: string;
   lastName: string;
@@ -115,3 +117,59 @@ export interface Category {
   path: string;
   id: number;
 }
+
+export type RegistrationFormData = {
+  username: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+};
+
+export type AuthFormData = {
+  identifier: string;
+  password: string;
+};
+
+export type EmailFormData = {
+  email: string;
+};
+
+export type ResetPassFormData = {
+  password: string;
+  passwordConfirmation: string;
+};
+
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+  provider: string;
+  confirmed: boolean;
+  blocked: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  firstName: string;
+  lastName: string;
+  phone: string;
+}
+
+export interface UserInfo {
+  jwt: string | null;
+  user: User | null;
+}
+
+export type UserState = {
+  loading: boolean;
+  userInfo: UserInfo | null;
+  error: 1 | 400 | null;
+  success: boolean;
+};
+
+export type ForgotPassState = {
+  loading: boolean;
+  errorMessage: string | null;
+  error: 1 | 400 | null;
+  success: boolean;
+};

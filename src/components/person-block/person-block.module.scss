@@ -1,4 +1,7 @@
+@use '../../styles/style.scss' as *;
+
 .wrapper {
+  position: relative;
   margin-left: auto;
   display: flex;
   align-items: center;
@@ -19,4 +22,34 @@
   width: 58px;
   height: 58px;
   margin-left: 16px;
+}
+
+.menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 32px 24px;
+  gap: 32px;
+  background: #ffffff;
+  z-index: 15;
+  width: 270px;
+  box-shadow: 4px 4px 4px rgba(54, 54, 54, 0.05), -4px 4px 4px rgba(54, 54, 54, 0.05);
+  border-radius: 0px 0px 10px 10px;
+}
+
+.show {
+  display: flex;
+}
+
+.item {
+  @include font-title-l;
+}
+
+.button {
+  background-color: inherit;
+  border: none;
 }

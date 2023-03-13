@@ -1,0 +1,13 @@
+@use '../../../styles/style.scss' as *;
+
+.title {
+  @include font-title-xl;
+  padding-bottom: 8px;
+  @include for-phone {
+    @include font-title-l;
+  }
+}
+
+.subtitle {
+  @include font-title-m;
+}

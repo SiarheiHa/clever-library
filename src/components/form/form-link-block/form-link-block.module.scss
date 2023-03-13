@@ -1,0 +1,20 @@
+@use '../../../styles/style.scss' as *;
+
+.wrapper {
+}
+
+.text {
+  @include font-text-400-l;
+  color: $grey-black-70;
+  margin-right: 16px;
+  @include for-phone {
+    @include font-text-400-m;
+  }
+}
+
+.link {
+  @include font-button;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
