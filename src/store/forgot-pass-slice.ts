@@ -31,14 +31,12 @@ const forgotPassSlice = createSlice({
       state.errorMessage = null;
     });
     builder.addCase(requestRefreshLink.fulfilled, (state, action) => {
-      console.log(action);
       state.loading = false;
       state.success = true;
       state.error = null;
       state.errorMessage = null;
     });
     builder.addCase(requestRefreshLink.rejected, (state, action) => {
-      console.log(action);
       state.loading = false;
       state.success = false;
       state.error = 1;
@@ -47,8 +45,7 @@ const forgotPassSlice = createSlice({
   },
 });
 
-const { resetForgotPassState } = forgotPassSlice.actions;
 const forgotPassReducer = forgotPassSlice.reducer;
 const selectForgotPassState = ({ forgot }: RootState) => forgot;
 
-export { forgotPassReducer, resetForgotPassState, selectForgotPassState };
+export { forgotPassReducer, selectForgotPassState };

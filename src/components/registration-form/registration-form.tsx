@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
+import { regexp } from '../../constants';
 import {
   hideLoader,
   registerUser,
@@ -25,14 +26,14 @@ const schema1 = yup.object<RegistrationFormData>({
   username: yup
     .string()
     .required('Поле не может быть пустым')
-    .matches(/[0-9]/, 'цифры')
-    .matches(/[a-zA-Z]/, 'латинский алфавит'),
+    .matches(regexp.digit, 'цифры')
+    .matches(regexp.latinLetter, 'латинский алфавит'),
   password: yup
     .string()
     .required('Поле не может быть пустым')
     .min(8, 'не менее 8 символов')
-    .matches(/[0-9]/, 'цифрой')
-    .matches(/[A-ZА-Я]/, 'заглавной буквой'),
+    .matches(regexp.digit, 'цифрой')
+    .matches(regexp.bigLetter, 'заглавной буквой'),
 });
 
 const schema2 = yup.object<RegistrationFormData>({
@@ -41,21 +42,8 @@ const schema2 = yup.object<RegistrationFormData>({
 });
 
 const schema3 = yup.object<RegistrationFormData>({
-  phone: yup
-    .string()
-    .required('Поле не может быть пустым')
-    .matches(
-      /^\+?375((\s\(33\)\s\d{3}-\d{2}-\d{2})|(\s\(29\)\s\d{3}-\d{2}-\d{2})|(\s\(44\)\s\d{3}-\d{2}-\d{2})|(\s\(25\)\s\d{3}-\d{2}-\d{2}))\s*$/,
-      'В формате +375 (xx) xxx-xx-xx'
-    ),
-  email: yup
-    .string()
-    .required('Поле не может быть пустым')
-    .matches(
-      // eslint-disable-next-line no-useless-escape
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      'Введите корректный e-mail'
-    ),
+  phone: yup.string().required('Поле не может быть пустым').matches(regexp.phoneBY, 'В формате +375 (xx) xxx-xx-xx'),
+  email: yup.string().required('Поле не может быть пустым').matches(regexp.email, 'Введите корректный e-mail'),
 });
 
 const schemes = [schema1, schema2, schema3];
@@ -72,7 +60,7 @@ const RegistrationForm = () => {
     handleSubmit,
     control,
     getValues,
-    formState: { errors, dirtyFields, isValid, isDirty },
+    formState: { errors, dirtyFields, isDirty },
     reset,
     trigger,
   } = useForm<RegistrationFormData>({
@@ -92,18 +80,12 @@ const RegistrationForm = () => {
   }, [dispatch, isLoaderVisible, loading]);
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
     if (step < 3) {
       setStep(step + 1);
     } else if (step === 3) {
       dispatch(registerUser(data));
     }
-    // console.log(errors);
   });
-
-  const onChange = () => {
-    // console.log(errors);
-  };
 
   const usernameErrorMatches: string | string[] | undefined =
     typeof errors.username?.types?.matches === 'boolean' ? undefined : errors.username?.types?.matches;
@@ -165,7 +147,7 @@ const RegistrationForm = () => {
 
   return (
     <div className={styles.wrapper}>
-      <Form onSubmit={onSubmit} onChange={onChange} testId='register-form'>
+      <Form onSubmit={onSubmit} testId='register-form'>
         <FormTitle title='Регистрация' subtitle={`${step} шаг из 3`} />
         <div>
           {step === 1 && (
@@ -223,7 +205,7 @@ const RegistrationForm = () => {
                 placeholderText='Номер телефона'
                 hint='В формате +375 (xx) xxx-xx-xx'
                 type='number'
-                control={control as Control<AuthFormData | RegistrationFormData | ResetPassFormData, any>}
+                control={control as Control<AuthFormData | RegistrationFormData | ResetPassFormData>}
                 onBlurHandler={() => trigger('phone')}
               />
               <FormInput

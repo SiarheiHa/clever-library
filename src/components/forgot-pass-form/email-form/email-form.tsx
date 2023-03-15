@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 import { ReactComponent as ArrowIcon } from '../../../assets/images/icons/arrow-left.svg';
+import { regexp } from '../../../constants';
 import {
   hideLoader,
   requestRefreshLink,
@@ -13,7 +14,7 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '../../../store';
-import { resetForgotPassState, selectForgotPassState } from '../../../store/forgot-pass-slice';
+import { selectForgotPassState } from '../../../store/forgot-pass-slice';
 import { EmailFormData } from '../../../types/types';
 import { Button } from '../../button';
 import { Form, FormInput, FormLinkBlock, FormTitle } from '../../form';
@@ -22,30 +23,21 @@ import { ResultAuthBlock } from '../../result-auth-block';
 import styles from './email-form.module.scss';
 
 const schema = yup.object<EmailFormData>({
-  email: yup
-    .string()
-    .required('Поле не может быть пустым')
-    .matches(
-      // eslint-disable-next-line no-useless-escape
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      'Введите корректный e-mail'
-    ),
+  email: yup.string().required('Поле не может быть пустым').matches(regexp.email, 'Введите корректный e-mail'),
 });
 
 const EmailForm = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { error: refreshError, loading, success, errorMessage } = useAppSelector(selectForgotPassState);
+  const { error: loading, success, errorMessage } = useAppSelector(selectForgotPassState);
   const isLoaderVisible = useAppSelector(selectLoaderVisibility);
   const {
     register,
     handleSubmit,
-    getValues,
     trigger,
-    formState: { errors, dirtyFields, isValid, isDirty },
+    formState: { errors, isDirty },
   } = useForm<EmailFormData>({
     mode: 'onSubmit',
-    // shouldFocusError: false,
     resolver: yupResolver(schema),
     criteriaMode: 'all',
   });
@@ -63,10 +55,6 @@ const EmailForm = () => {
     dispatch(requestRefreshLink(data));
   });
 
-  const onChange = () => {
-    console.log(errors);
-  };
-
   if (success) {
     return (
       <ResultAuthBlock
@@ -75,8 +63,6 @@ const EmailForm = () => {
       />
     );
   }
-
-  console.log('errorMessage', errorMessage);
 
   return (
     <div className={styles.wrapper}>
@@ -87,7 +73,7 @@ const EmailForm = () => {
         <span className={styles.text}>ВХОД В ЛИЧНЫЙ КАБИНЕТ</span>
       </div>
 
-      <Form onSubmit={onSubmit} onChange={onChange} className={styles.form} testId='send-email-form'>
+      <Form onSubmit={onSubmit} className={styles.form} testId='send-email-form'>
         <FormTitle title='Восстановление пароля' />
         <div>
           <FormInput

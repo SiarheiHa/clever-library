@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
+import { regexp } from '../../../constants';
 import {
   hideLoader,
   resetPass,
@@ -26,8 +27,8 @@ const schema = yup.object<ResetPassFormData>({
     .string()
     .required('Поле не может быть пустым')
     .min(8, 'не менее 8 символов')
-    .matches(/[0-9]/, 'цифрой')
-    .matches(/[A-ZА-Я]/, 'заглавной буквой'),
+    .matches(regexp.digit, 'цифрой')
+    .matches(regexp.bigLetter, 'заглавной буквой'),
   passwordConfirmation: yup
     .string()
     .required('Поле не может быть пустым')
@@ -44,10 +45,9 @@ const NewPassForm = ({ code }: { code: string }) => {
     handleSubmit,
     getValues,
     trigger,
-    formState: { errors, dirtyFields, isValid, isDirty },
+    formState: { errors, dirtyFields, isDirty },
   } = useForm<ResetPassFormData>({
     mode: 'all',
-    // shouldFocusError: false,
     resolver: yupResolver(schema),
     criteriaMode: 'all',
   });
@@ -64,10 +64,6 @@ const NewPassForm = ({ code }: { code: string }) => {
   const onSubmit = handleSubmit((data) => {
     dispatch(resetPass({ ...data, code }));
   });
-
-  const onChange = () => {
-    // console.log(errors);
-  };
 
   const getPassErrors = () => {
     let errorsArr: string[] = [];
@@ -116,7 +112,7 @@ const NewPassForm = ({ code }: { code: string }) => {
 
   return (
     <div className={styles.wrapper}>
-      <Form onSubmit={onSubmit} onChange={onChange} testId='reset-password-form'>
+      <Form onSubmit={onSubmit} testId='reset-password-form'>
         <FormTitle title='Восстановление пароля' />
         <div>
           <FormInput

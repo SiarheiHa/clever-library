@@ -26,9 +26,6 @@ const Hint = ({ error, errorMessageRequired, errorsMatches, hint, isInputFocused
 
   if (errorMessageRequired && isInputFocused && hint) {
     return (
-      // <span className={classesActive}>
-      //   <Hightlight filter={hint} str={hint} testId='hint' />
-      // </span>
       <span className={classesInactive} data-test-id='hint'>
         {hint}
       </span>

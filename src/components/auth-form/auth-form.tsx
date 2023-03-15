@@ -35,10 +35,9 @@ const AuthForm = () => {
     handleSubmit,
     getValues,
     trigger,
-    formState: { errors, dirtyFields, isValid, isDirty },
+    formState: { errors, dirtyFields, isDirty },
   } = useForm<AuthFormData>({
     mode: 'all',
-    // shouldFocusError: false,
     resolver: yupResolver(schema),
     criteriaMode: 'all',
   });
@@ -53,13 +52,8 @@ const AuthForm = () => {
   }, [dispatch, isLoaderVisible, loading]);
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
     dispatch(auth(data));
   });
-
-  const onChange = () => {
-    // console.log(errors);
-  };
 
   if (authError && authError !== 400) {
     return (
@@ -77,7 +71,7 @@ const AuthForm = () => {
 
   return (
     <div className={styles.wrapper}>
-      <Form onSubmit={onSubmit} onChange={onChange} testId='auth-form'>
+      <Form onSubmit={onSubmit} testId='auth-form'>
         <FormTitle title='Вхoд в личный кабинет' />
         <div>
           <FormInput

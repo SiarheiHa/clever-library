@@ -7,9 +7,9 @@ import { RootState } from './store';
 
 const initialState: UserState = {
   loading: false,
-  userInfo: null, // for user object
+  userInfo: null,
   error: null,
-  success: false, // for monitoring the registration process.
+  success: false,
 };
 
 const registrationSlice = createSlice({
@@ -30,14 +30,12 @@ const registrationSlice = createSlice({
       state.error = null;
     });
     builder.addCase(registerUser.fulfilled, (state, action) => {
-      console.log(action);
       state.loading = false;
       state.success = true;
       state.error = null;
       state.userInfo = action.payload;
     });
     builder.addCase(registerUser.rejected, (state, action) => {
-      console.log(action);
       state.loading = false;
       state.success = false;
       state.error = action.payload || 1;

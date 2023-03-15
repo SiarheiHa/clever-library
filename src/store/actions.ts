@@ -27,8 +27,6 @@ const registerUser = createAsyncThunk<UserInfo, RegistrationFormData, { rejectVa
         return rejectWithValue(err.response.status);
       }
 
-      console.log(err);
-
       return rejectWithValue(1);
     }
   }
@@ -89,8 +87,6 @@ const requestRefreshLink = createAsyncThunk<{ ok: boolean }, EmailFormData, { re
 
       if (err.response?.status === 500) {
         return rejectWithValue('error');
-
-        // return rejectWithValue(err.response.data.error.message);
       }
 
       return rejectWithValue('error');

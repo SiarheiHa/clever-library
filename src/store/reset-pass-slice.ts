@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { UserState } from '../types/types';
-import { resetPass } from './actions';
 
+import { resetPass } from './actions';
 import { RootState } from './store';
 
 const initialState: UserState = {
@@ -33,14 +33,12 @@ const resetPassSlice = createSlice({
       state.error = null;
     });
     builder.addCase(resetPass.fulfilled, (state, action) => {
-      console.log(action);
       state.loading = false;
       state.success = true;
       state.error = null;
       state.userInfo = action.payload;
     });
     builder.addCase(resetPass.rejected, (state, action) => {
-      console.log(action);
       state.loading = false;
       state.success = false;
       state.error = action.payload || 1;

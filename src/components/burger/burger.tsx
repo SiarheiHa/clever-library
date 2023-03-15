@@ -9,14 +9,11 @@ const Burger = ({ className }: { className?: string }) => {
   const menuMode = useAppSelector(selectMenuMode);
   const classes = classNames(className, styles.burger, menuMode === 'open' && styles.open);
   const dispatch = useAppDispatch();
-  // const [blockScroll, allowScroll] = useScrollBlock();
 
   const toggleBurger = () => {
     if (menuMode === 'open') {
-      // allowScroll();
       dispatch(setMenuMode({ mode: 'close' }));
     } else {
-      // blockScroll();
       dispatch(setMenuMode({ mode: 'open' }));
     }
   };

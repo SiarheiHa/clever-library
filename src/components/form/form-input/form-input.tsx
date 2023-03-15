@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import { ReactComponent as EyeClosedIcon } from '../../../assets/images/icons/eye_closed.svg';
 import { ReactComponent as EyeOpenedIcon } from '../../../assets/images/icons/eye_opened.svg';
 import { ReactComponent as TickIcon } from '../../../assets/images/icons/tick.svg';
+import { mask } from '../../../constants';
 import { AuthFormData, RegistrationFormData, ResetPassFormData } from '../../../types/types';
 
 import { Hint } from './hint';
@@ -24,8 +25,6 @@ interface FormInputOProps {
   showTick?: boolean;
   onBlurHandler?: () => void;
 }
-
-const mask = ['+', '3', '7', '5', ' ', '(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/];
 
 const FormInput = React.forwardRef<
   HTMLInputElement,
@@ -51,9 +50,6 @@ const FormInput = React.forwardRef<
     const [passVisible, setPassVisible] = useState(false);
     const [isFocus, setIsFocus] = useState(false);
 
-    // console.log(error);
-    // console.log(errorMessageRequired);
-
     const togglePassVisibility = () => {
       setPassVisible(!passVisible);
     };
@@ -77,7 +73,6 @@ const FormInput = React.forwardRef<
     };
 
     const onBlur = () => {
-      console.log('onblur');
       setIsFocus(false);
       if (onBlurHandler) {
         onBlurHandler();
@@ -96,12 +91,10 @@ const FormInput = React.forwardRef<
                 control={control}
                 render={({ field }) => (
                   <MaskedInput
-                    mask={mask}
-                    // name={name}
+                    mask={mask.phone}
                     type={getInputType()}
                     className={styles.input}
                     required={true}
-                    // {...rest}
                     onFocus={onFocus}
                     guide={true}
                     keepCharPositions={true}
