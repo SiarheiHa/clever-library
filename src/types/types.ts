@@ -202,3 +202,42 @@ export type CommentRequestData = {
     user: string;
   };
 };
+
+// booking
+
+export type ChangeBookingRequestData = {
+  bookingId: string;
+  data: {
+    order: boolean;
+    dateOrder: string;
+    book: string;
+    customer: string;
+  };
+};
+
+export type BookingRequestData = {
+  data: {
+    order: boolean;
+    dateOrder: string;
+    book: string;
+    customer: string;
+  };
+};
+
+export interface BookingResponseData {
+  data: BookingData;
+  meta: object;
+}
+
+export interface BookingData {
+  id: number;
+  attributes: BookingAttributes;
+}
+
+export interface BookingAttributes {
+  order: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  publishedAt: Date;
+  dateOrder: Date;
+}

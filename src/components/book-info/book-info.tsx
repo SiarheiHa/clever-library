@@ -70,6 +70,7 @@ const BookInfo = () => {
   };
 
   const openBookingModal = () => {
+    console.log(book);
     setBookingModalOpen(true);
   };
 
@@ -150,18 +151,22 @@ const BookInfo = () => {
           ОЦЕНИТЬ КНИГУ
         </Button>
       </div>
-      <ReviewModal
-        bookId={id}
-        isOpen={reviewModalOpen}
-        onClose={closeReviewModal}
-        userId={userInfo?.user ? userInfo.user?.id : 0}
-      />
-      <BookingModal
-        book={book}
-        isOpen={bookingModalOpen}
-        onClose={closeBookingModal}
-        userId={userInfo?.user ? userInfo.user?.id : 0}
-      />
+      {reviewModalOpen && (
+        <ReviewModal
+          bookId={id}
+          isOpen={reviewModalOpen}
+          onClose={closeReviewModal}
+          userId={userInfo?.user ? userInfo.user?.id : 0}
+        />
+      )}
+      {bookingModalOpen && (
+        <BookingModal
+          book={book}
+          isOpen={bookingModalOpen}
+          onClose={closeBookingModal}
+          userId={userInfo?.user ? userInfo.user?.id : 0}
+        />
+      )}
     </Container>
   );
 };

@@ -5,6 +5,7 @@ import { Book, BookDetail } from '../../types/types';
 import { Button } from '../button';
 
 import styles from './book-card.module.scss';
+import { selectUserState, useAppSelector } from '../../store';
 
 interface BookCardProps {
   book: Book | BookDetail;
@@ -14,7 +15,9 @@ interface BookCardProps {
 }
 
 const BookButton: React.FC<BookCardProps> = ({ book, className, ...restProps }) => {
+  const { userInfo } = useAppSelector(selectUserState);
   const { delivery, booking } = book;
+  const currentUserId = userInfo?.user?.id;
 
   const getButtonText = () => {
     if (delivery?.handed) {
@@ -38,11 +41,19 @@ const BookButton: React.FC<BookCardProps> = ({ book, className, ...restProps }) 
         className: classNames(styles.busy, className),
       };
     }
-    if (booking?.order) {
+    if (booking?.customerId) {
+      if (booking.customerId === currentUserId) {
+        return {
+          bordered: true,
+          disabled: false,
+          className: classNames(className),
+        };
+      }
+
       return {
         bordered: true,
         disabled: true,
-        className: classNames(className),
+        className: classNames(styles.busy, className),
       };
     }
 
