@@ -3,5 +3,7 @@
 .button {
   width: 100%;
   padding: 14px;
+  background-color: $grey-black-10;
+  color: $main-white;
   @include font-text-bold;
 }

@@ -34,6 +34,8 @@
 
 .title {
   font-weight: bold;
+  max-width: 256px;
+  text-align: center;
   @include font-title-xl;
   @include for-phone {
     @include font-title-l;

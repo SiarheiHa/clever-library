@@ -157,7 +157,7 @@ const BookInfo = () => {
         userId={userInfo?.user ? userInfo.user?.id : 0}
       />
       <BookingModal
-        bookId={id}
+        book={book}
         isOpen={bookingModalOpen}
         onClose={closeBookingModal}
         userId={userInfo?.user ? userInfo.user?.id : 0}

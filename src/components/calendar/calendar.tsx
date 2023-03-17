@@ -11,7 +11,7 @@ import styles from './calendar.module.scss';
 
 interface CalendarProps {
   locale?: string;
-  selectedDate: Date;
+  selectedDate: Date | null;
   selectDate: (date: Date) => void;
   firstWeekDayNumber?: number;
 }
@@ -28,7 +28,10 @@ export const Calendar: React.FC<CalendarProps> = ({
     firstWeekDayNumber,
   });
 
-  // console.log(state.selectedMonth);
+  const onChangeMonthBySelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log(e); // '2'
+    functions.setSelectedMonthByIndex(Number(e.target.value));
+  };
 
   return (
     <div className={styles.calendar}>
@@ -38,7 +41,7 @@ export const Calendar: React.FC<CalendarProps> = ({
           // value={`${state.monthesNames[state.selectedMonth.monthIndex].month} ${state.selectedYear}`}
           // defaultValue={`${state.monthesNames[state.selectedMonth.monthIndex].month} ${state.selectedYear}`}
           value={state.selectedMonth.monthIndex}
-          onChange={() => {}}
+          onChange={onChangeMonthBySelect}
         >
           {state.monthesNames.map((name) => (
             <option
@@ -90,7 +93,7 @@ export const Calendar: React.FC<CalendarProps> = ({
               {state.calendarDays.map((day) => {
                 const isToday = checkIsToday(day.date);
                 const isTommorow = checkIsTomorrow(day.date);
-                const isSelectedDay = checkDateIsEqual(day.date, state.selectedDay.date);
+                const isSelectedDay = state.selectedDay ? checkDateIsEqual(day.date, state.selectedDay.date) : false;
                 const isAdditionalDay = day.monthIndex !== state.selectedMonth.monthIndex;
                 const isWeekend = day.dayNumberInWeek === 7 || day.dayNumberInWeek === 1;
 
