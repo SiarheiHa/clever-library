@@ -1,10 +1,12 @@
+import { useState } from 'react';
 import classNames from 'classnames';
 
 import coverPlaceHolder from '../../assets/images/cat.svg';
-import { selectSearchString, useAppSelector } from '../../store';
+import { selectSearchString, selectUserState, useAppSelector } from '../../store';
 import { Book } from '../../types/types';
 import { getURI } from '../../utils';
 import { BookButton } from '../book-button';
+import { BookingModal } from '../booking-modal';
 import { Hightlight } from '../hightlight';
 import { Rating } from '../rating';
 
@@ -16,6 +18,20 @@ interface BookCardProps {
 }
 
 const BookCard: React.FC<BookCardProps> = ({ book, variant }) => {
+  const [bookingModalOpen, setBookingModalOpen] = useState(false);
+  const { userInfo } = useAppSelector(selectUserState);
+
+  const openBookingModal = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    console.log(book);
+    setBookingModalOpen(true);
+  };
+
+  const closeBookingModal = () => {
+    setBookingModalOpen(false);
+  };
+
   const searchString = useAppSelector(selectSearchString);
   const { authors, image, rating, title, issueYear } = book;
 
@@ -38,8 +54,16 @@ const BookCard: React.FC<BookCardProps> = ({ book, variant }) => {
             {authors.join(', ')}, {issueYear}
           </p>
         </div>
-        <BookButton onClick={() => {}} className={styles.button} book={book} />
+        <BookButton onClick={openBookingModal} className={styles.button} book={book} />
       </div>
+      {bookingModalOpen && (
+        <BookingModal
+          book={book}
+          isOpen={bookingModalOpen}
+          onClose={closeBookingModal}
+          userId={userInfo?.user ? userInfo.user?.id : 0}
+        />
+      )}
     </div>
   );
 };

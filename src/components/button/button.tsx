@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import styles from './button.module.scss';
 
 interface ButtonProps {
-  onClick: () => void;
+  onClick: (() => void) | ((e: React.MouseEvent) => void);
   children: React.ReactNode;
   contained?: boolean;
   rounded?: boolean;

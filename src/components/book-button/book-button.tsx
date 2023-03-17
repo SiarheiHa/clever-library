@@ -1,15 +1,15 @@
 import React from 'react';
 import classNames from 'classnames';
 
+import { selectUserState, useAppSelector } from '../../store';
 import { Book, BookDetail } from '../../types/types';
 import { Button } from '../button';
 
 import styles from './book-card.module.scss';
-import { selectUserState, useAppSelector } from '../../store';
 
 interface BookCardProps {
   book: Book | BookDetail;
-  onClick: () => void;
+  onClick: (() => void) | ((e: React.MouseEvent) => void);
   className?: string;
   testId?: string;
 }

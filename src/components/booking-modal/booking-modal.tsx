@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import { useAddBookingMutation, useChangeBookingMutation, useDeleteBookingMutation } from '../../api/book-api';
 import { hideLoader, showLoader, showToast, useAppDispatch } from '../../store';
-import { BookDetail } from '../../types/types';
+import { Book, BookDetail } from '../../types/types';
 import { checkDateIsEqual, formatDate } from '../../utils/date';
 import { Button } from '../button';
 import { Calendar } from '../calendar/calendar';
@@ -11,7 +11,7 @@ import { Modal } from '../modal';
 import styles from './booking-modal.module.scss';
 
 interface ReviewModalProps {
-  book: BookDetail;
+  book: BookDetail | Book;
   isOpen: boolean;
   onClose: () => void;
   userId: number;
