@@ -29,7 +29,7 @@ export interface BookDetail {
   title: string;
   rating: number | null;
   issueYear: string;
-  description: string;
+  description: string | null;
   publish: string;
   pages: string;
   cover: string;

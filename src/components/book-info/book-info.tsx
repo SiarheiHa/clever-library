@@ -15,6 +15,7 @@ import {
 } from '../../store';
 import { getURI } from '../../utils';
 import { BookButton } from '../book-button';
+import { BookingModal } from '../booking-modal';
 import { Button } from '../button';
 import { CommentsBlock } from '../comments-block';
 import { Container } from '../container';
@@ -28,6 +29,8 @@ import styles from './book-info.module.scss';
 
 const BookInfo = () => {
   const [reviewModalOpen, setReviewModalOpen] = useState(false);
+  const [bookingModalOpen, setBookingModalOpen] = useState(false);
+
   const bookId = useParams()?.bookId as string;
   const { data: book, error, isLoading } = useGetBookByIdQuery(bookId);
 
@@ -66,6 +69,14 @@ const BookInfo = () => {
     setReviewModalOpen(false);
   };
 
+  const openBookingModal = () => {
+    setBookingModalOpen(true);
+  };
+
+  const closeBookingModal = () => {
+    setBookingModalOpen(false);
+  };
+
   const { authors, comments, description, images, title, issueYear, rating, id } = book;
 
   const commentsForRender = comments?.length
@@ -95,22 +106,23 @@ const BookInfo = () => {
               <p className={styles.subtitle}>
                 {authors.join('. ')}, {issueYear}
               </p>
-              <BookButton book={book} onClick={() => {}} className={styles.button} />
+              <BookButton book={book} onClick={openBookingModal} className={styles.button} />
             </div>
 
             <div className={styles.description}>
               <h4 className={styles.description__title}>О книге</h4>
-              {description.split('\n').map((text, i) => {
-                if (!text) {
-                  return null;
-                }
+              {description &&
+                description.split('\n').map((text, i) => {
+                  if (!text) {
+                    return null;
+                  }
 
-                return (
-                  <p key={String(i) + text[0]} className={styles.description__p}>
-                    {text}
-                  </p>
-                );
-              })}
+                  return (
+                    <p key={String(i) + text[0]} className={styles.description__p}>
+                      {text}
+                    </p>
+                  );
+                })}
             </div>
           </div>
         </div>
@@ -142,6 +154,12 @@ const BookInfo = () => {
         bookId={id}
         isOpen={reviewModalOpen}
         onClose={closeReviewModal}
+        userId={userInfo?.user ? userInfo.user?.id : 0}
+      />
+      <BookingModal
+        bookId={id}
+        isOpen={bookingModalOpen}
+        onClose={closeBookingModal}
         userId={userInfo?.user ? userInfo.user?.id : 0}
       />
     </Container>
