@@ -64,26 +64,37 @@ const ReviewModal = ({ bookId, isOpen, onClose, userId }: ReviewModalProps) => {
 
   for (let i = 0; i < 5; i++) {
     if (i < rating) {
-      stars.push(<Star key={i} className={styles.star} onClick={() => onStarClick(i)} />);
+      stars.push(
+        <div key={i} data-test-id='star'>
+          <Star className={styles.star} onClick={() => onStarClick(i)} data-test-id='star-active' />
+        </div>
+      );
     } else {
-      stars.push(<StarEmpty key={i} className={styles.star} onClick={() => onStarClick(i)} />);
+      stars.push(
+        <div key={i} data-test-id='star'>
+          <StarEmpty className={styles.star} onClick={() => onStarClick(i)} />
+        </div>
+      );
     }
   }
 
   return (
-    <Modal title='Оцените книгу' isOpen={isOpen} onCancel={onClose}>
+    <Modal title='Оцените книгу' isOpen={isOpen} onCancel={onClose} testId='modal-rate-book'>
       <React.Fragment>
         <div className={styles.rating}>
           <p className={styles.subtitle}>Ваша оценка</p>
-          <div className={styles.stars}>{stars}</div>
+          <div className={styles.stars} data-test-id='rating'>
+            {stars}
+          </div>
         </div>
         <textarea
           className={styles.textarea}
           placeholder='Оставить отзыв'
           value={reviewText}
           onChange={onTextareaChange}
+          data-test-id='comment'
         />
-        <Button onClick={sendComment} className={styles.button} contained={true}>
+        <Button onClick={sendComment} className={styles.button} contained={true} testId='button-comment'>
           ОЦЕНИТЬ
         </Button>
       </React.Fragment>

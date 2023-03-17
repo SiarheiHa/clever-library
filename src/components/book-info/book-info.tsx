@@ -135,21 +135,22 @@ const BookInfo = () => {
         <InfoBlock title='Подробная информация'>
           <DetailInfo book={book} />
         </InfoBlock>
-
-        <InfoBlock title='Отзывы' badge={String(comments?.length || 0)} dropdown={true} className={styles.comments}>
-          <CommentsBlock comments={commentsForRender} />
-        </InfoBlock>
-        <Button
-          disabled={hasCurrentUserComment()}
-          contained={!hasCurrentUserComment()}
-          bordered={false}
-          shadowed={false}
-          className={styles.button_review}
-          onClick={openReviewModal}
-          testId='button-rating'
-        >
-          ОЦЕНИТЬ КНИГУ
-        </Button>
+        <div data-test-id='reviews'>
+          <InfoBlock title='Отзывы' badge={String(comments?.length || 0)} dropdown={true} className={styles.comments}>
+            <CommentsBlock comments={commentsForRender} />
+          </InfoBlock>
+          <Button
+            disabled={hasCurrentUserComment()}
+            contained={!hasCurrentUserComment()}
+            bordered={false}
+            shadowed={false}
+            className={styles.button_review}
+            onClick={openReviewModal}
+            testId='button-rate-book'
+          >
+            ОЦЕНИТЬ КНИГУ
+          </Button>
+        </div>
       </div>
       {reviewModalOpen && (
         <ReviewModal

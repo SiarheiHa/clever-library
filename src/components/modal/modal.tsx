@@ -11,15 +11,24 @@ interface ModalProps {
   isOpen: boolean;
   onCancel: () => void;
   children: JSX.Element | string;
+  testId: string;
 }
 
-const Modal = ({ title, isOpen, onCancel, children }: ModalProps) =>
+const Modal = ({ title, isOpen, onCancel, children, testId }: ModalProps) =>
   isOpen ? (
     <Portal>
-      <div className={styles.overlay} onClick={onCancel}>
-        <div className={styles.window} onClick={(e) => e.stopPropagation()}>
-          <p className={styles.title}>{title}</p>
-          <Button onClick={onCancel} className={styles.button} bordered={false} shadowed={false}>
+      <div className={styles.overlay} onClick={onCancel} data-test-id='modal-outer'>
+        <div className={styles.window} onClick={(e) => e.stopPropagation()} data-test-id={testId}>
+          <p className={styles.title} data-test-id='modal-title'>
+            {title}
+          </p>
+          <Button
+            onClick={onCancel}
+            className={styles.button}
+            bordered={false}
+            shadowed={false}
+            testId='modal-close-button'
+          >
             <CloseIcon className={styles.cross} />
           </Button>
           {children}

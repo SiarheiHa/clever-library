@@ -65,7 +65,7 @@ const BookButton: React.FC<BookCardProps> = ({ book, className, ...restProps }) 
   };
 
   return (
-    <Button shadowed={false} {...getButtonProps()} {...restProps}>
+    <Button shadowed={false} testId='booking-button' {...getButtonProps()} {...restProps}>
       {getButtonText()}
     </Button>
   );

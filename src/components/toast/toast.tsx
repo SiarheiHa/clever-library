@@ -39,7 +39,14 @@ const Toast = () => {
           {mode === 'warning' ? <WarningIcon /> : <SuccessIcon />}
           <p className={styles.text}>{message}</p>
         </div>
-        <Button onClick={closeToast} className={styles.button} shadowed={false} bordered={false} filtered={false}>
+        <Button
+          onClick={closeToast}
+          className={styles.button}
+          shadowed={false}
+          bordered={false}
+          filtered={false}
+          testId='alert-close'
+        >
           <img src={cross} className={styles.icon} alt='close' />
         </Button>
       </div>

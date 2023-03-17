@@ -34,7 +34,7 @@ export const Calendar: React.FC<CalendarProps> = ({
   };
 
   return (
-    <div className={styles.calendar}>
+    <div className={styles.calendar} data-test-id='calendar'>
       <div className={styles.header}>
         <select
           className={styles.select}
@@ -42,6 +42,7 @@ export const Calendar: React.FC<CalendarProps> = ({
           // defaultValue={`${state.monthesNames[state.selectedMonth.monthIndex].month} ${state.selectedYear}`}
           value={state.selectedMonth.monthIndex}
           onChange={onChangeMonthBySelect}
+          data-test-id='month-select'
         >
           {state.monthesNames.map((name) => (
             <option
@@ -52,8 +53,16 @@ export const Calendar: React.FC<CalendarProps> = ({
           ))}
         </select>
         <div className={styles.arrows}>
-          <DownIcon onClick={() => functions.onClickArrow('right')} className={styles.arrow} />
-          <UpIcon onClick={() => functions.onClickArrow('left')} className={styles.arrow} />
+          <DownIcon
+            onClick={() => functions.onClickArrow('right')}
+            className={styles.arrow}
+            data-test-id='button-next-month'
+          />
+          <UpIcon
+            onClick={() => functions.onClickArrow('left')}
+            className={styles.arrow}
+            data-test-id='button-prev-month'
+          />
         </div>
         {/* <div
           aria-hidden={true}
@@ -121,6 +130,7 @@ export const Calendar: React.FC<CalendarProps> = ({
                       isSelectedDay ? styles.selected : '',
                       // isAdditionalDay ? 'calendar__additional__day' : '',
                     ].join(' ')}
+                    data-test-id='day-button'
                   >
                     {day.dayNumber}
                   </div>

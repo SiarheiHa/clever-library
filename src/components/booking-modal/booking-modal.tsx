@@ -154,9 +154,9 @@ const BookingModal = ({ book, isOpen, onClose, userId }: ReviewModalProps) => {
   };
 
   return (
-    <Modal title={modaltitle} isOpen={isOpen} onCancel={onClose}>
+    <Modal title={modaltitle} isOpen={isOpen} onCancel={onClose} testId='booking-modal'>
       <React.Fragment>
-        <div className='date__container'>{selectedDate && formatDate(selectedDate, 'DDD DD MMM YYYY')}</div>
+        {/* <div className='date__container'>{selectedDate && formatDate(selectedDate, 'DDD DD MMM YYYY')}</div> */}
         <Calendar selectedDate={selectedDate} selectDate={(date) => setSelectedDate(date)} />
         <div className={styles.buttons}>
           <Button
@@ -166,11 +166,12 @@ const BookingModal = ({ book, isOpen, onClose, userId }: ReviewModalProps) => {
             // disabled={!selectedDate || checkShouldDisabled()}
             disabled={checkShouldDisabled()}
             bordered={false}
+            testId='booking-button'
           >
             ЗАБРОНИРОВАТЬ
           </Button>
           {book.booking && (
-            <Button onClick={cancelBooking} className={styles.cancel_btn}>
+            <Button onClick={cancelBooking} className={styles.cancel_btn} testId=' booking-cancel-button'>
               ОТМЕНИТЬ БРОНЬ
             </Button>
           )}
