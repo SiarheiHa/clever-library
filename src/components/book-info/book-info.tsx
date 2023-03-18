@@ -68,6 +68,10 @@ const BookInfo = () => {
 
   const { authors, comments, description, images, title, issueYear, rating, id } = book;
 
+  const commentsForRender = comments?.length
+    ? [...comments].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    : [];
+
   const hasCurrentUserComment = () => {
     if (!comments || !userInfo?.user) {
       return false;
@@ -120,7 +124,7 @@ const BookInfo = () => {
         </InfoBlock>
 
         <InfoBlock title='Отзывы' badge={String(comments?.length || 0)} dropdown={true} className={styles.comments}>
-          <CommentsBlock comments={comments ?? []} />
+          <CommentsBlock comments={commentsForRender} />
         </InfoBlock>
         <Button
           disabled={hasCurrentUserComment()}
