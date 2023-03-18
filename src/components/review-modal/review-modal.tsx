@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useAddCommentMutation } from '../../api/comment-api';
 import { ReactComponent as Star } from '../../assets/images/icons/star.svg';
 import { ReactComponent as StarEmpty } from '../../assets/images/icons/star_empty.svg';
-import { hideLoader, showLoader, useAppDispatch } from '../../store';
+import { hideLoader, showLoader, showToast, useAppDispatch } from '../../store';
 import { Button } from '../button';
 import { Modal } from '../modal';
 
@@ -20,7 +20,7 @@ const ReviewModal = ({ bookId, isOpen, onClose, userId }: ReviewModalProps) => {
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState('');
   const dispatch = useAppDispatch();
-  const [addComment, { isError, isLoading, isSuccess }] = useAddCommentMutation();
+  const [addComment, { isError, isLoading, isSuccess, reset }] = useAddCommentMutation();
 
   const onTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setReviewText(e.target.value);
@@ -45,20 +45,20 @@ const ReviewModal = ({ bookId, isOpen, onClose, userId }: ReviewModalProps) => {
     if (isLoading) {
       console.log('loading');
       dispatch(showLoader());
-    }
-
-    if (isSuccess) {
+    } else if (isSuccess) {
       console.log('succes');
+      reset();
       dispatch(hideLoader());
+      dispatch(showToast({ mode: 'success', message: 'Спасибо, что нашли время оценить книгу!' }));
       onClose();
-    }
-
-    if (isError) {
+    } else if (isError) {
       console.log('error');
+      reset();
       dispatch(hideLoader());
+      dispatch(showToast({ mode: 'warning', message: 'Оценка не была отправлена. Попробуйте позже!' }));
       onClose();
     }
-  }, [dispatch, isError, isLoading, isSuccess, onClose]);
+  }, [dispatch, isError, isLoading, isSuccess, onClose, reset]);
 
   const stars = [];
 

@@ -5,7 +5,7 @@ import { useGetBookByIdQuery } from '../../api';
 import coverPlaceHolder from '../../assets/images/cat.svg';
 import {
   hideLoader,
-  hideToast,
+  // hideToast,
   selectToastVisibility,
   selectUserState,
   showLoader,
@@ -38,7 +38,7 @@ const BookInfo = () => {
 
   useEffect(() => {
     if (isLoading) {
-      dispatch(hideToast());
+      // dispatch(hideToast());
       dispatch(showLoader());
     } else if (book) {
       dispatch(hideLoader());
@@ -48,9 +48,9 @@ const BookInfo = () => {
   useEffect(() => {
     if (error && !isLoading) {
       dispatch(hideLoader());
-      dispatch(showToast());
+      showToast({ mode: 'warning', message: 'Что-то пошло не так. Обновите страницу через некоторое время.' });
     } else if (isToastVisible) {
-      dispatch(hideToast());
+      // dispatch(hideToast());
     }
   }, [error, dispatch, isToastVisible, isLoading]);
 
@@ -67,6 +67,14 @@ const BookInfo = () => {
   };
 
   const { authors, comments, description, images, title, issueYear, rating, id } = book;
+
+  const hasCurrentUserComment = () => {
+    if (!comments || !userInfo?.user) {
+      return false;
+    }
+
+    return comments.some(({ user }) => user.commentUserId === userInfo.user?.id);
+  };
 
   const imagesSrcArr = images && images.length ? images.map((img) => getURI(img.url)) : [coverPlaceHolder];
 
@@ -115,7 +123,8 @@ const BookInfo = () => {
           <CommentsBlock comments={comments ?? []} />
         </InfoBlock>
         <Button
-          contained={true}
+          disabled={hasCurrentUserComment()}
+          contained={!hasCurrentUserComment()}
           bordered={false}
           shadowed={false}
           className={styles.button_review}

@@ -23,7 +23,9 @@ const NavigationBlock: React.FC<NavigationBlockProps> = ({ className, userContro
 
   useEffect(() => {
     if (categoriesError) {
-      dispatch(showToast());
+      dispatch(
+        showToast({ mode: 'warning', message: 'Что-то пошло не так. Обновите страницу через некоторое время.' })
+      );
     }
   }, [categoriesError, dispatch]);
 
