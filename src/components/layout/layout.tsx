@@ -6,6 +6,8 @@ import { Container } from '../container';
 import { Footer } from '../footer';
 import { Header } from '../header';
 import { Loader } from '../loader';
+import { Modal } from '../modal';
+import { ReviewModal } from '../review-modal';
 import { Toast } from '../toast';
 
 const Layout = () => {
@@ -35,6 +37,7 @@ const Layout = () => {
         <Footer />
       </Container>
       <Loader />
+      <ReviewModal />
     </React.Fragment>
   );
 };
