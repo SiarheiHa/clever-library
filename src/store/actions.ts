@@ -44,7 +44,7 @@ const auth = createAsyncThunk<UserInfo, AuthFormData, { rejectValue: 1 | 400 }>(
       const resp: AxiosResponse<UserInfo> = await axios.post(`${BASE_URL}/api/auth/local`, data, config);
 
       if (resp.status === 200 && resp.data.jwt) {
-        localStorage.setItem('jwt', resp.data.jwt);
+        // localStorage.setItem('jwt', resp.data.jwt);
 
         return resp.data;
       }

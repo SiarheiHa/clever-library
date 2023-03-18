@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useGetBookByIdQuery } from '../../api';
@@ -7,6 +7,7 @@ import {
   hideLoader,
   hideToast,
   selectToastVisibility,
+  selectUserState,
   showLoader,
   showToast,
   useAppDispatch,
@@ -20,16 +21,19 @@ import { Container } from '../container';
 import { DetailInfo } from '../detail-info';
 import { InfoBlock } from '../info-block';
 import { Rating } from '../rating';
+import { ReviewModal } from '../review-modal';
 import { Slider } from '../slider';
 
 import styles from './book-info.module.scss';
 
 const BookInfo = () => {
+  const [reviewModalOpen, setReviewModalOpen] = useState(false);
   const bookId = useParams()?.bookId as string;
   const { data: book, error, isLoading } = useGetBookByIdQuery(bookId);
 
   const dispatch = useAppDispatch();
 
+  const { userInfo } = useAppSelector(selectUserState);
   const isToastVisible = useAppSelector(selectToastVisibility);
 
   useEffect(() => {
@@ -54,7 +58,15 @@ const BookInfo = () => {
     return null;
   }
 
-  const { authors, comments, description, images, title, issueYear, rating } = book;
+  const openReviewModal = () => {
+    setReviewModalOpen(true);
+  };
+
+  const closeReviewModal = () => {
+    setReviewModalOpen(false);
+  };
+
+  const { authors, comments, description, images, title, issueYear, rating, id } = book;
 
   const imagesSrcArr = images && images.length ? images.map((img) => getURI(img.url)) : [coverPlaceHolder];
 
@@ -107,12 +119,18 @@ const BookInfo = () => {
           bordered={false}
           shadowed={false}
           className={styles.button_review}
-          onClick={() => {}}
+          onClick={openReviewModal}
           testId='button-rating'
         >
           ОЦЕНИТЬ КНИГУ
         </Button>
       </div>
+      <ReviewModal
+        bookId={id}
+        isOpen={reviewModalOpen}
+        onClose={closeReviewModal}
+        userId={userInfo?.user ? userInfo.user?.id : 0}
+      />
     </Container>
   );
 };

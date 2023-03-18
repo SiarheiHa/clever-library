@@ -173,3 +173,32 @@ export type ForgotPassState = {
   error: 1 | 400 | null;
   success: boolean;
 };
+
+// comment post
+
+export interface CommentResponseData {
+  data: CommentData;
+  meta: object;
+}
+
+interface CommentData {
+  id: number;
+  attributes: Attributes;
+}
+
+interface Attributes {
+  rating: number;
+  text: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+export type CommentRequestData = {
+  data: {
+    rating: number;
+    text: string;
+    book: string;
+    user: string;
+  };
+};

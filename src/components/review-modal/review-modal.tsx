@@ -1,21 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
+import { useAddCommentMutation } from '../../api/comment-api';
 import { ReactComponent as Star } from '../../assets/images/icons/star.svg';
 import { ReactComponent as StarEmpty } from '../../assets/images/icons/star_empty.svg';
+import { hideLoader, showLoader, useAppDispatch } from '../../store';
 import { Button } from '../button';
 import { Modal } from '../modal';
 
 import styles from './review-modal.module.scss';
 
 interface ReviewModalProps {
+  bookId: number;
   isOpen: boolean;
-  onCancel: () => void;
-  children: JSX.Element | string;
+  onClose: () => void;
+  userId: number;
 }
 
-const ReviewModal = () => {
+const ReviewModal = ({ bookId, isOpen, onClose, userId }: ReviewModalProps) => {
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState('');
+  const dispatch = useAppDispatch();
+  const [addComment, { isError, isLoading, isSuccess }] = useAddCommentMutation();
 
   const onTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setReviewText(e.target.value);
@@ -24,6 +29,36 @@ const ReviewModal = () => {
   const onStarClick = (index: number) => {
     setRating(index + 1);
   };
+
+  const sendComment = () => {
+    addComment({
+      data: {
+        book: String(bookId),
+        rating,
+        text: reviewText,
+        user: String(userId),
+      },
+    });
+  };
+
+  useEffect(() => {
+    if (isLoading) {
+      console.log('loading');
+      dispatch(showLoader());
+    }
+
+    if (isSuccess) {
+      console.log('succes');
+      dispatch(hideLoader());
+      onClose();
+    }
+
+    if (isError) {
+      console.log('error');
+      dispatch(hideLoader());
+      onClose();
+    }
+  }, [dispatch, isError, isLoading, isSuccess, onClose]);
 
   const stars = [];
 
@@ -36,7 +71,7 @@ const ReviewModal = () => {
   }
 
   return (
-    <Modal title='Оцените книгу' isOpen={true} onCancel={() => {}}>
+    <Modal title='Оцените книгу' isOpen={isOpen} onCancel={onClose}>
       <React.Fragment>
         <div className={styles.rating}>
           <p className={styles.subtitle}>Ваша оценка</p>
@@ -48,7 +83,7 @@ const ReviewModal = () => {
           value={reviewText}
           onChange={onTextareaChange}
         />
-        <Button onClick={() => {}} className={styles.button} contained={true}>
+        <Button onClick={sendComment} className={styles.button} contained={true}>
           ОЦЕНИТЬ
         </Button>
       </React.Fragment>
