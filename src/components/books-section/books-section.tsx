@@ -2,14 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { useGetCategoriesQuery } from '../../api';
 import { useGetFilteredBooksQuery } from '../../hooks';
-import {
-  hideLoader,
-  // hideToast,
-  setSearchString,
-  showLoader,
-  showToast,
-  useAppDispatch,
-} from '../../store';
+import { hideLoader, setSearchString, showLoader, showToast, useAppDispatch } from '../../store';
 import { View } from '../../types/types';
 import { BookList } from '../book-list';
 import { Controls } from '../controls';
@@ -27,13 +20,11 @@ const BooksSection = () => {
   const isLoading = isBookLoading || isCategoriesLoading;
 
   useEffect(() => {
-    // dispatch(hideToast());
     refetch();
   }, [dispatch, refetch]);
 
   useEffect(() => {
     if (isLoading) {
-      // dispatch(hideToast());
       dispatch(showLoader());
     } else if (books && categories) {
       dispatch(hideLoader());

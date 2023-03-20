@@ -43,16 +43,13 @@ const ReviewModal = ({ bookId, isOpen, onClose, userId }: ReviewModalProps) => {
 
   useEffect(() => {
     if (isLoading) {
-      console.log('loading');
       dispatch(showLoader());
     } else if (isSuccess) {
-      console.log('succes');
       reset();
       dispatch(hideLoader());
       dispatch(showToast({ mode: 'success', message: 'Спасибо, что нашли время оценить книгу!' }));
       onClose();
     } else if (isError) {
-      console.log('error');
       reset();
       dispatch(hideLoader());
       dispatch(showToast({ mode: 'warning', message: 'Оценка не была отправлена. Попробуйте позже!' }));

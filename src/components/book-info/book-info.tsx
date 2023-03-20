@@ -3,16 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { useGetBookByIdQuery } from '../../api';
 import coverPlaceHolder from '../../assets/images/cat.svg';
-import {
-  hideLoader,
-  // hideToast,
-  selectToastVisibility,
-  selectUserState,
-  showLoader,
-  showToast,
-  useAppDispatch,
-  useAppSelector,
-} from '../../store';
+import { hideLoader, selectUserState, showLoader, showToast, useAppDispatch, useAppSelector } from '../../store';
 import { getURI } from '../../utils';
 import { BookButton } from '../book-button';
 import { BookingModal } from '../booking-modal';
@@ -37,11 +28,9 @@ const BookInfo = () => {
   const dispatch = useAppDispatch();
 
   const { userInfo } = useAppSelector(selectUserState);
-  const isToastVisible = useAppSelector(selectToastVisibility);
 
   useEffect(() => {
     if (isLoading) {
-      // dispatch(hideToast());
       dispatch(showLoader());
     } else if (book) {
       dispatch(hideLoader());
@@ -52,10 +41,8 @@ const BookInfo = () => {
     if (error && !isLoading) {
       dispatch(hideLoader());
       showToast({ mode: 'warning', message: 'Что-то пошло не так. Обновите страницу через некоторое время.' });
-    } else if (isToastVisible) {
-      // dispatch(hideToast());
     }
-  }, [error, dispatch, isToastVisible, isLoading]);
+  }, [error, dispatch, isLoading]);
 
   if (!book || error) {
     return null;
@@ -70,7 +57,6 @@ const BookInfo = () => {
   };
 
   const openBookingModal = () => {
-    console.log(book);
     setBookingModalOpen(true);
   };
 

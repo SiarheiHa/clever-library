@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useAddBookingMutation, useChangeBookingMutation, useDeleteBookingMutation } from '../../api/book-api';
 import { hideLoader, showLoader, showToast, useAppDispatch } from '../../store';
 import { Book, BookDetail } from '../../types/types';
-import { checkDateIsEqual, formatDate } from '../../utils/date';
+import { checkDateIsEqual } from '../../utils/date';
 import { Button } from '../button';
 import { Calendar } from '../calendar/calendar';
 import { Modal } from '../modal';
@@ -108,7 +108,6 @@ const BookingModal = ({ book, isOpen, onClose, userId }: ReviewModalProps) => {
   };
 
   const sendBooking = () => {
-    console.log(selectedDate?.toISOString());
     if (book.booking && selectedDate) {
       const value = selectedDate.getTimezoneOffset();
       const changedDate = new Date(selectedDate.getTime() - value * 60 * 1000).toISOString();
@@ -141,14 +140,10 @@ const BookingModal = ({ book, isOpen, onClose, userId }: ReviewModalProps) => {
 
   const checkShouldDisabled = () => {
     if (!book.booking && !selectedDate) {
-      console.log('true');
-
       return true;
     }
 
     if (!book.booking && selectedDate) {
-      console.log('false');
-
       return false;
     }
 
@@ -162,14 +157,12 @@ const BookingModal = ({ book, isOpen, onClose, userId }: ReviewModalProps) => {
   return (
     <Modal title={modaltitle} isOpen={isOpen} onCancel={onClose} testId='booking-modal'>
       <React.Fragment>
-        {/* <div className='date__container'>{selectedDate && formatDate(selectedDate, 'DDD DD MMM YYYY')}</div> */}
         <Calendar selectedDate={selectedDate} selectDate={(date) => setSelectedDate(date)} />
         <div className={styles.buttons}>
           <Button
             onClick={sendBooking}
             className={styles.button}
             contained={!checkShouldDisabled()}
-            // disabled={!selectedDate || checkShouldDisabled()}
             disabled={checkShouldDisabled()}
             bordered={false}
             testId='booking-button'

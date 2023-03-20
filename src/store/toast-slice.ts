@@ -19,13 +19,11 @@ const toastSlice = createSlice({
   initialState: initialToastState,
   reducers: {
     showToast: (state: ToastState, action: PayloadAction<Omit<ToastState, 'isVisible'>>) => {
-      console.log('showToast action');
       state.message = action.payload.message;
       state.mode = action.payload.mode;
       state.isVisible = true;
     },
     hideToast: (state: ToastState) => {
-      console.log('hideToast action');
       state.isVisible = false;
     },
   },

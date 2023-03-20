@@ -24,7 +24,6 @@ const BookCard: React.FC<BookCardProps> = ({ book, variant }) => {
   const openBookingModal = (e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
-    console.log(book);
     setBookingModalOpen(true);
   };
 
