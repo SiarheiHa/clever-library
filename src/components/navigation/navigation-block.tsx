@@ -23,7 +23,9 @@ const NavigationBlock: React.FC<NavigationBlockProps> = ({ className, userContro
 
   useEffect(() => {
     if (categoriesError) {
-      dispatch(showToast());
+      dispatch(
+        showToast({ mode: 'warning', message: 'Что-то пошло не так. Обновите страницу через некоторое время.' })
+      );
     }
   }, [categoriesError, dispatch]);
 
@@ -79,15 +81,11 @@ const NavigationBlock: React.FC<NavigationBlockProps> = ({ className, userContro
         <React.Fragment>
           <div className={styles.line} />
           <ul className={styles.nav}>
-            {userControllItems.map((item) => {
-              console.log(item.name);
-
-              return (
-                <li key={item.path} className={styles.item}>
-                  <MenuItem item={item} />
-                </li>
-              );
-            })}
+            {userControllItems.map((item) => (
+              <li key={item.path} className={styles.item}>
+                <MenuItem item={item} />
+              </li>
+            ))}
           </ul>
         </React.Fragment>
       )}

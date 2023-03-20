@@ -5,7 +5,7 @@ import styles from './form.module.scss';
 interface FormProps {
   children: React.ReactNode;
   onSubmit: () => void;
-  onChange: () => void;
+  onChange?: () => void;
   className?: string;
   testId?: string;
 }

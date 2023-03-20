@@ -18,6 +18,11 @@ const Layout = () => {
       navigate('/auth');
     }
   }, [jwt, navigate]);
+  if (!jwt) {
+    navigate('/auth');
+
+    return null;
+  }
 
   return (
     <React.Fragment>

@@ -145,6 +145,8 @@
 }
 
 .button_review {
+  background-color: $grey-black-10;
+  color: $main-white;
   margin-top: 42px;
   @include font-text-bold;
   letter-spacing: 0.2px;

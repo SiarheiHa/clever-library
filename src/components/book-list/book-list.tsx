@@ -23,7 +23,7 @@ const BookList: React.FC<BookListProps> = ({ books, view }) => {
   const classes = classNames(styles.main, view === 'list' ? styles.list : styles.table);
 
   return booksForRender.length ? (
-    <ul className={classes}>
+    <ul className={classes} data-test-id='content'>
       {booksForRender.map((book) => {
         const categoryPath = categoryParam ?? 'all';
 

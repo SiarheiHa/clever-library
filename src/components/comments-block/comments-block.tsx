@@ -33,16 +33,22 @@ const CommentsBlock: React.FC<CommentsProps> = ({ comments }) => (
           });
 
           return (
-            <li className={styles.comment} key={id}>
+            <li className={styles.comment} key={id} data-test-id='comment-wrapper'>
               <div className={styles.data}>
                 <img src={avatarSrc} className={styles.avatar} alt='avatar' />
                 <div className={styles.data__user}>
-                  <span className={styles.subtitle}>{`${firstName} ${lastName}`}</span>
-                  <span className={styles.subtitle}>{date}</span>
+                  <span className={styles.subtitle} data-test-id='comment-author'>{`${firstName} ${lastName}`}</span>
+                  <span className={styles.subtitle} data-test-id='comment-date'>
+                    {date}
+                  </span>
                 </div>
               </div>
               <Rating value={rating} className={styles.rating} />
-              {Boolean(text) && <p className={styles.text}>{text}</p>}
+              {Boolean(text) && (
+                <p className={styles.text} data-test-id='comment-text'>
+                  {text}
+                </p>
+              )}
             </li>
           );
         })}

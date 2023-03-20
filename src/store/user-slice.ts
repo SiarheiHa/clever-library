@@ -33,14 +33,12 @@ const userSlice = createSlice({
       state.error = null;
     });
     builder.addCase(auth.fulfilled, (state, action) => {
-      console.log(action);
       state.loading = false;
       state.success = true;
       state.error = null;
       state.userInfo = action.payload;
     });
     builder.addCase(auth.rejected, (state, action) => {
-      console.log(action);
       state.loading = false;
       state.success = false;
       state.error = action.payload || 1;
