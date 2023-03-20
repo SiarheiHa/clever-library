@@ -8,7 +8,7 @@ interface CreateMonthParams {
 
 export const createMonth = (params?: CreateMonthParams) => {
   const date = params?.date ?? new Date();
-  const locale = params?.locale ?? 'default';
+  const locale = params?.locale ?? 'ru-RU';
 
   const d = createDate({ date, locale });
   const { month: monthName, year, monthNumber, monthIndex } = d;

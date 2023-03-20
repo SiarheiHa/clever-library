@@ -1,6 +1,6 @@
 import { createDate } from './create-date';
 
-export const getWeekDaysNames = (firstWeekDay = 4, locale = 'default') => {
+export const getWeekDaysNames = (firstWeekDay = 4, locale = 'ru-RU') => {
   const weekDaysNames: Array<{
     day: ReturnType<typeof createDate>['day'];
     dayShort: ReturnType<typeof createDate>['dayShort'];

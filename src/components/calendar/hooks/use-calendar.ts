@@ -18,7 +18,7 @@ const getYearsInterval = (year: number) => {
   return [...Array(10)].map((_, index) => startYear + index);
 };
 
-export const useCalendar = ({ locale = 'default', selectedDate: date, firstWeekDayNumber = 2 }: UseCalendarParams) => {
+export const useCalendar = ({ locale = 'ru-RU', selectedDate: date, firstWeekDayNumber = 2 }: UseCalendarParams) => {
   const [selectedDay, setSelectedDay] = React.useState<ReturnType<typeof createDate> | null>(
     date ? createDate({ date }) : null
   );
