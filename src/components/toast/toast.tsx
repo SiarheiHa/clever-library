@@ -22,7 +22,7 @@ const Toast = () => {
 
   useEffect(() => {
     if (isVisible) {
-      setTimeout(() => dispatch(hideToast()), 4000);
+      setTimeout(() => dispatch(hideToast()), 4200);
     }
   });
 

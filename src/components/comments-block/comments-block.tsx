@@ -37,7 +37,7 @@ const CommentsBlock: React.FC<CommentsProps> = ({ comments }) => (
               <div className={styles.data}>
                 <img src={avatarSrc} className={styles.avatar} alt='avatar' />
                 <div className={styles.data__user}>
-                  <span className={styles.subtitle} data-test-id='comment-wrapper'>{`${firstName} ${lastName}`}</span>
+                  <span className={styles.subtitle} data-test-id='comment-author'>{`${firstName} ${lastName}`}</span>
                   <span className={styles.subtitle} data-test-id='comment-date'>
                     {date}
                   </span>

@@ -72,7 +72,7 @@ const BookingModal = ({ book, isOpen, onClose, userId }: ReviewModalProps) => {
     } else if (isErrorDelete) {
       resetDelete();
       dispatch(hideLoader());
-      dispatch(showToast({ mode: 'warning', message: 'Не удалось отменить бронирование книги. Попробуйте позже!' }));
+      dispatch(showToast({ mode: 'warning', message: 'Не удалось снять бронирование книги. Попробуйте позже!' }));
       onClose();
     }
   }, [dispatch, isErrorDelete, isLoadingDelete, isSuccessDelete, onClose, resetDelete]);
