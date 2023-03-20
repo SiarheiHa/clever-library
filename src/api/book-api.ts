@@ -30,7 +30,7 @@ const bookApi = api.injectEndpoints({
       query: ({ bookingId, data }) => ({
         url: `${Endpoint.BOOKINGS}/${bookingId}`,
         method: HTTPMethod.PUT,
-        body: data,
+        body: { data },
       }),
       invalidatesTags: ['Book', 'Books'],
     }),

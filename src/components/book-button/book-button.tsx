@@ -22,7 +22,7 @@ const BookButton: React.FC<BookCardProps> = ({ book, className, ...restProps }) 
   const getButtonText = () => {
     if (delivery?.handed) {
       const date = new Date(delivery.dateHandedTo);
-      const endDate = `${date.getDay() + 1}.${date.getMonth() + 1}`;
+      const endDate = date.toLocaleString('ru-RU').slice(0, 5);
 
       return `ЗАНЯТА ДО ${endDate}`;
     }

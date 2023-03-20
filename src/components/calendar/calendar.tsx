@@ -6,7 +6,7 @@ import { checkDateIsEqual, checkIsNextMonday, checkIsToday, checkIsTomorrow } fr
 
 import { useCalendar } from './hooks/use-calendar';
 
-import './calendar.scss';
+// import './calendar.scss';
 import styles from './calendar.module.scss';
 
 interface CalendarProps {

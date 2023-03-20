@@ -20,6 +20,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     resetUserState(state) {
+      console.log('reset');
       state.error = null;
       state.loading = false;
       state.success = false;
@@ -33,6 +34,7 @@ const userSlice = createSlice({
       state.error = null;
     });
     builder.addCase(auth.fulfilled, (state, action) => {
+      console.log(action.payload);
       state.loading = false;
       state.success = true;
       state.error = null;

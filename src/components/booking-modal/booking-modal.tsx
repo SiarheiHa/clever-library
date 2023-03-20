@@ -86,7 +86,7 @@ const BookingModal = ({ book, isOpen, onClose, userId }: ReviewModalProps) => {
       dispatch(
         showToast({
           mode: 'success',
-          message: 'Бронирование новой даты успешно изменено. Подробности можно посмотреть на странице Профиль',
+          message: 'Изменения успешно сохранены!',
         })
       );
       onClose();
@@ -96,7 +96,7 @@ const BookingModal = ({ book, isOpen, onClose, userId }: ReviewModalProps) => {
       dispatch(
         showToast({
           mode: 'warning',
-          message: 'Что-то пошло не так, дату бронирования не удалось изменить. Попробуйте позже!',
+          message: 'Изменения не были сохранены. Попробуйте позже!',
         })
       );
       onClose();
@@ -110,22 +110,28 @@ const BookingModal = ({ book, isOpen, onClose, userId }: ReviewModalProps) => {
   const sendBooking = () => {
     console.log(selectedDate?.toISOString());
     if (book.booking && selectedDate) {
+      const value = selectedDate.getTimezoneOffset();
+      const changedDate = new Date(selectedDate.getTime() - value * 60 * 1000).toISOString();
+
       // put
       changeBooking({
         bookingId: String(book.booking.id),
         data: {
           order: true,
-          dateOrder: selectedDate.toISOString(),
+          dateOrder: changedDate,
           book: String(book.id),
           customer: String(userId),
         },
       });
     } else if (selectedDate) {
+      const value = selectedDate.getTimezoneOffset();
+      const changedDate = new Date(selectedDate.getTime() - value * 60 * 1000).toISOString();
+
       // post
       addBooking({
         data: {
           order: true,
-          dateOrder: selectedDate.toISOString(),
+          dateOrder: changedDate,
           book: String(book.id),
           customer: String(userId),
         },
@@ -171,7 +177,7 @@ const BookingModal = ({ book, isOpen, onClose, userId }: ReviewModalProps) => {
             ЗАБРОНИРОВАТЬ
           </Button>
           {book.booking && (
-            <Button onClick={cancelBooking} className={styles.cancel_btn} testId=' booking-cancel-button'>
+            <Button onClick={cancelBooking} className={styles.cancel_btn} testId='booking-cancel-button'>
               ОТМЕНИТЬ БРОНЬ
             </Button>
           )}
