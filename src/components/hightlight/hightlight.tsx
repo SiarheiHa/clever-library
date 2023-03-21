@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 
 import styles from './hightligh.module.scss';
 
@@ -11,10 +12,12 @@ interface HightlightProps {
 const Hightlight: React.FC<HightlightProps> = ({ filter, str, testId }) => {
   if (!filter) return <span>{str}</span>;
   const dataTestId = testId || 'highlight-matches';
+  const classes = classNames(dataTestId === 'highlight-matches' ? styles.hightlight_search : styles.hightlight_form);
+  const prop = dataTestId === 'hint' ? { 'data-test-id': dataTestId } : {};
 
   if (filter === str) {
     return (
-      <span className={styles.hightlight} data-test-id={dataTestId}>
+      <span className={classes} data-test-id={dataTestId}>
         {str}
       </span>
     );
@@ -30,9 +33,9 @@ const Hightlight: React.FC<HightlightProps> = ({ filter, str, testId }) => {
             const c = matchValue.shift();
 
             return (
-              <span key={String(index) + s} data-test-id={dataTestId}>
+              <span key={String(index) + s} {...prop}>
                 {s}
-                <span className={styles.hightlight} data-test-id={dataTestId}>
+                <span className={classes} data-test-id={dataTestId}>
                   {c}
                 </span>
               </span>

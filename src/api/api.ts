@@ -18,7 +18,7 @@ const api = createApi({
     },
   }),
 
-  tagTypes: ['Books', 'Book', 'Categories'],
+  tagTypes: ['CurrentUser', 'Books', 'Book', 'Categories'],
   endpoints: () => ({}),
 });
 

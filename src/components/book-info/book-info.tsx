@@ -40,7 +40,9 @@ const BookInfo = () => {
   useEffect(() => {
     if (error && !isLoading) {
       dispatch(hideLoader());
-      showToast({ mode: 'warning', message: 'Что-то пошло не так. Обновите страницу через некоторое время.' });
+      dispatch(
+        showToast({ mode: 'warning', message: 'Что-то пошло не так. Обновите страницу через некоторое время.' })
+      );
     }
   }, [error, dispatch, isLoading]);
 
@@ -91,7 +93,8 @@ const BookInfo = () => {
                 {title}
               </h3>
               <p className={styles.subtitle}>
-                {authors.join('. ')}, {issueYear}
+                {/* эта проверка только для тестов, когда вместо книги приходит массив книг */}
+                {authors && `${authors.join('. ')}, ${issueYear}`}
               </p>
               <BookButton book={book} onClick={openBookingModal} className={styles.button} />
             </div>

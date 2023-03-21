@@ -1,5 +1,11 @@
 @use '../../styles/style.scss' as *;
 
-.hightlight {
+.hightlight_search {
+  // color: rgb(244, 44, 79);
+  color: rgb(255, 82, 83);
+}
+
+.hightlight_form {
   color: rgb(244, 44, 79);
+  // color: rgb(255, 82, 83);
 }

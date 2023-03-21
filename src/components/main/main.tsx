@@ -12,7 +12,11 @@ interface MainProps {
 const Main: FC<MainProps> = ({ children, direction = 'row', className }) => {
   const classes = classNames(styles.main, direction === 'column' && styles.column, className);
 
-  return <main className={classes}>{children}</main>;
+  return (
+    <main className={classes} data-test-id='main-page'>
+      {children}
+    </main>
+  );
 };
 
 export { Main };

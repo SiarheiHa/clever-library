@@ -3,6 +3,7 @@ export enum Endpoint {
   CATERGORIES = 'api/categories/',
   COMMENTS = 'api/comments/',
   BOOKINGS = '/api/bookings',
+  ME = '/api/users/me',
 }
 
 export enum HTTPMethod {
