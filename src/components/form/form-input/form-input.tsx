@@ -24,6 +24,7 @@ interface FormInputOProps {
   control?: Control<RegistrationFormData | AuthFormData | ResetPassFormData>;
   showTick?: boolean;
   onBlurHandler?: () => void;
+  onChangeHandler?: () => void;
 }
 
 const FormInput = React.forwardRef<
@@ -43,6 +44,8 @@ const FormInput = React.forwardRef<
       type,
       name,
       onBlurHandler,
+      onChangeHandler,
+      onChange,
       ...rest
     },
     ref
@@ -115,6 +118,14 @@ const FormInput = React.forwardRef<
                 ref={ref}
                 onFocus={onFocus}
                 onBlur={onBlur}
+                onChange={
+                  ((e) => {
+                    onChange(e);
+                    if (onChangeHandler) {
+                      onChangeHandler();
+                    }
+                  }) || onChange
+                }
               />
             )}
             <span className={styles.placeholder}>{placeholderText}</span>

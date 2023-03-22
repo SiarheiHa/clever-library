@@ -29,7 +29,7 @@ const schema = yup.object<EmailFormData>({
 const EmailForm = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { error: loading, success, errorMessage } = useAppSelector(selectForgotPassState);
+  const { loading, success, errorMessage } = useAppSelector(selectForgotPassState);
   const isLoaderVisible = useAppSelector(selectLoaderVisibility);
   const {
     register,
@@ -43,7 +43,10 @@ const EmailForm = () => {
   });
 
   useEffect(() => {
-    if (loading && !isLoaderVisible) {
+    console.log('useeffect');
+    console.log(loading && !isLoaderVisible);
+    if (loading) {
+      console.log('AAAAAAAAAAAAAAAAA');
       dispatch(showLoader());
     }
     if (!loading && isLoaderVisible) {

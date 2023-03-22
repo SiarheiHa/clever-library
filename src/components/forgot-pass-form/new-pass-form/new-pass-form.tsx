@@ -45,9 +45,11 @@ const NewPassForm = ({ code }: { code: string }) => {
     handleSubmit,
     getValues,
     trigger,
+    setError,
+    clearErrors,
     formState: { errors, dirtyFields, isDirty },
   } = useForm<ResetPassFormData>({
-    mode: 'all',
+    mode: 'onBlur',
     resolver: yupResolver(schema),
     criteriaMode: 'all',
   });
@@ -126,6 +128,7 @@ const NewPassForm = ({ code }: { code: string }) => {
             type='password'
             showTick={true}
             onBlurHandler={() => trigger('password')}
+            onChangeHandler={() => trigger('password')}
           />
           <FormInput
             {...register('passwordConfirmation')}
@@ -134,7 +137,16 @@ const NewPassForm = ({ code }: { code: string }) => {
             isDirty={dirtyFields.passwordConfirmation}
             placeholderText='Повторите пароль'
             type='password'
-            onBlurHandler={() => trigger('passwordConfirmation')}
+            onBlurHandler={() => {
+              trigger('passwordConfirmation');
+              if (!getValues('passwordConfirmation')) {
+                setError('passwordConfirmation', { type: 'required', message: 'Поле не может быть пустым' });
+              }
+            }}
+            onChangeHandler={() => {
+              clearErrors();
+              console.log(errors);
+            }}
           />
         </div>
         <div className={styles.footer}>

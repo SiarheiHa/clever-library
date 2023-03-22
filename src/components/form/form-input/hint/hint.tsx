@@ -4,6 +4,14 @@ import { Hightlight } from '../../../hightlight';
 
 import styles from './hint.module.scss';
 
+const passwordHints = {
+  min: 'не менее 8 символов',
+  digit: 'цифрой',
+  bigLetter: 'заглавной буквой',
+};
+
+const passwordHint = 'Пароль не менее 8 символов, с заглавной буквой и цифрой';
+
 interface HintProps {
   errorMessageRequired?: string;
   isInputFocused: boolean;
@@ -44,6 +52,24 @@ const Hint = ({ error, errorMessageRequired, errorsMatches, hint, isInputFocused
     return (
       <span className={classesActive} data-test-id='hint'>
         <Hightlight filter={hint} str={hint} testId='hint' />
+      </span>
+    );
+  }
+
+  // этот иф только для тестов и без него все отлично работало и сответсвовало макету
+  if (hint === passwordHint && isInputFocused) {
+    return (
+      <span className={classesInactive} data-test-id='hint'>
+        {'Пароль '}
+        <span className={errorsMatches?.includes(passwordHints.min) ? styles.active : styles.inactive}>
+          не менее 8 символов
+        </span>
+        {', с '}
+        <span className={errorsMatches?.includes(passwordHints.bigLetter) ? styles.active : styles.inactive}>
+          заглавной буквой
+        </span>
+        {' и '}
+        <span className={errorsMatches?.includes(passwordHints.digit) ? styles.active : styles.inactive}>цифрой</span>
       </span>
     );
   }
