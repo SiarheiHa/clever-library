@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import { selectUserState, useAppSelector } from '../../store';
+import { useGetCurrentUserQuery } from '../../api/current-user-api';
 import { Book, BookDetail } from '../../types/types';
 import { Button } from '../button';
 
@@ -15,9 +15,9 @@ interface BookCardProps {
 }
 
 const BookButton: React.FC<BookCardProps> = ({ book, className, ...restProps }) => {
-  const { userInfo } = useAppSelector(selectUserState);
+  const { data: currentUserData } = useGetCurrentUserQuery('');
   const { delivery, booking } = book;
-  const currentUserId = userInfo?.user?.id;
+  const currentUserId = currentUserData?.id;
 
   const getButtonText = () => {
     if (delivery?.handed) {

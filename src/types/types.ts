@@ -239,3 +239,19 @@ export interface BookingAttributes {
   publishedAt: Date;
   dateOrder: Date;
 }
+
+export interface UserDetail extends Omit<User, 'provider'> {
+  role: Role;
+  comments: Comment[];
+  avatar: string;
+  booking: Booking;
+  delivery: Delivery;
+  history: History;
+}
+
+interface Role {
+  id: number;
+  name: string;
+  description: string;
+  type: string;
+}

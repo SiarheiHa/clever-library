@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useGetBookByIdQuery } from '../../api';
+import { useGetCurrentUserQuery } from '../../api/current-user-api';
 import coverPlaceHolder from '../../assets/images/cat.svg';
-import { hideLoader, selectUserState, showLoader, showToast, useAppDispatch, useAppSelector } from '../../store';
+import { hideLoader, showLoader, showToast, useAppDispatch } from '../../store';
 import { getURI } from '../../utils';
 import { BookButton } from '../book-button';
 import { BookingModal } from '../booking-modal';
@@ -27,7 +28,7 @@ const BookInfo = () => {
 
   const dispatch = useAppDispatch();
 
-  const { userInfo } = useAppSelector(selectUserState);
+  const { data: userInfo } = useGetCurrentUserQuery('');
 
   useEffect(() => {
     if (isLoading) {
@@ -73,11 +74,11 @@ const BookInfo = () => {
     : [];
 
   const hasCurrentUserComment = () => {
-    if (!comments || !userInfo?.user) {
+    if (!comments || !userInfo?.id) {
       return false;
     }
 
-    return comments.some(({ user }) => user.commentUserId === userInfo.user?.id);
+    return comments.some(({ user }) => user.commentUserId === userInfo?.id);
   };
 
   const imagesSrcArr = images && images.length ? images.map((img) => getURI(img.url)) : [coverPlaceHolder];
@@ -142,20 +143,10 @@ const BookInfo = () => {
         </div>
       </div>
       {reviewModalOpen && (
-        <ReviewModal
-          bookId={id}
-          isOpen={reviewModalOpen}
-          onClose={closeReviewModal}
-          userId={userInfo?.user ? userInfo.user?.id : 0}
-        />
+        <ReviewModal bookId={id} isOpen={reviewModalOpen} onClose={closeReviewModal} userId={Number(userInfo?.id)} />
       )}
       {bookingModalOpen && (
-        <BookingModal
-          book={book}
-          isOpen={bookingModalOpen}
-          onClose={closeBookingModal}
-          userId={userInfo?.user ? userInfo.user?.id : 0}
-        />
+        <BookingModal book={book} isOpen={bookingModalOpen} onClose={closeBookingModal} userId={Number(userInfo?.id)} />
       )}
     </Container>
   );

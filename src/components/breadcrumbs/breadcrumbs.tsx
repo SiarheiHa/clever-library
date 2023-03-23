@@ -14,25 +14,6 @@ const Breadcrumbs = () => {
 
   const to = `/books/${categoryParam ?? 'all'}`;
 
-  /* эта проверка только для тестов, когда вместо книги приходит массив книг */
-  if (Array.isArray(currentBook)) {
-    return (
-      <div className={styles.background}>
-        <Container>
-          <div className={styles.crumbs}>
-            <Link to={to} data-test-id='breadcrumbs-link'>
-              Программирование
-            </Link>
-            <span className={styles.divider}>/</span>
-            <span className={styles.book_name} data-test-id='book-name'>
-              Чистый код: создание, анализ и рефакторинг. Библиотека прогаммиста
-            </span>
-          </div>
-        </Container>
-      </div>
-    );
-  }
-
   return (
     <div className={styles.background}>
       <Container>

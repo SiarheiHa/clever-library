@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import classNames from 'classnames';
 
+import { useGetCurrentUserQuery } from '../../api/current-user-api';
 import coverPlaceHolder from '../../assets/images/cat.svg';
-import { selectSearchString, selectUserState, useAppSelector } from '../../store';
+import { selectSearchString, useAppSelector } from '../../store';
 import { Book } from '../../types/types';
 import { getURI } from '../../utils';
 import { BookButton } from '../book-button';
@@ -19,7 +20,7 @@ interface BookCardProps {
 
 const BookCard: React.FC<BookCardProps> = ({ book, variant }) => {
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
-  const { userInfo } = useAppSelector(selectUserState);
+  const { data: userInfo } = useGetCurrentUserQuery('');
 
   const openBookingModal = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -56,12 +57,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, variant }) => {
         <BookButton onClick={openBookingModal} className={styles.button} book={book} />
       </div>
       {bookingModalOpen && (
-        <BookingModal
-          book={book}
-          isOpen={bookingModalOpen}
-          onClose={closeBookingModal}
-          userId={userInfo?.user ? userInfo.user?.id : 0}
-        />
+        <BookingModal book={book} isOpen={bookingModalOpen} onClose={closeBookingModal} userId={Number(userInfo?.id)} />
       )}
     </div>
   );
