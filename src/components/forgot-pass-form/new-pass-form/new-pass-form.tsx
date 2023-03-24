@@ -32,6 +32,7 @@ const schema = yup.object<ResetPassFormData>({
   passwordConfirmation: yup
     .string()
     .required('Поле не может быть пустым')
+    .oneOf([''], 'Поле не может быть пустым')
     .oneOf([yup.ref('password')], 'Пароли не совпадают'),
 });
 
@@ -139,13 +140,9 @@ const NewPassForm = ({ code }: { code: string }) => {
             type='password'
             onBlurHandler={() => {
               trigger('passwordConfirmation');
-              if (!getValues('passwordConfirmation')) {
-                setError('passwordConfirmation', { type: 'required', message: 'Поле не может быть пустым' });
-              }
             }}
             onChangeHandler={() => {
               clearErrors();
-              console.log(errors);
             }}
           />
         </div>
