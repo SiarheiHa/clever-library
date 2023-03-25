@@ -60,6 +60,7 @@ const NewPassForm = ({ code }: { code: string }) => {
       dispatch(showLoader());
     }
     if (!loading && isLoaderVisible) {
+      // console.log(13);
       dispatch(hideLoader());
     }
   }, [dispatch, isLoaderVisible, loading]);

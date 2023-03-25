@@ -1,16 +1,69 @@
-import { CommentRequestData, CommentResponseData } from '../types/types';
+import { CommentRequestData, CommentResponseData, UserDetail } from '../types/types';
 
 import { api } from './api';
 import { Endpoint, HTTPMethod } from './api-enums';
+import { bookApi } from './book-api';
 
-const commentApi = api.injectEndpoints({
+export const commentApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    addComment: builder.mutation<CommentResponseData, CommentRequestData>({
-      query: (data) => ({
+    addComment: builder.mutation<CommentResponseData, { data: CommentRequestData; currentUser: UserDetail }>({
+      query: ({ data }) => ({
         url: Endpoint.COMMENTS,
         method: HTTPMethod.POST,
         body: data,
       }),
+
+      async onQueryStarted({ data, currentUser }, { dispatch, queryFulfilled, getState }) {
+        //  // console.log(data, patch);
+        const patchResult = dispatch(
+          bookApi.util.updateQueryData('getBookById', data.data.book, (draft) => {
+            const { id: commentUserId, avatar, firstName, lastName } = currentUser;
+            const { rating, text } = data.data;
+            // const newComment = {
+            //   createdAt: new Date().toLocaleString(),
+            //   id: Math.random(),
+            //   rating,
+            //   text,
+            //   user: {
+            //     avatarUrl: avatar,
+            //     commentUserId,
+            //     firstName,
+            //     lastName,
+            //   },
+            // };
+
+            // const tempComments = Array.isArray(draft.comments) ? [newComment, [...draft.comments]] : [newComment];
+
+            console.log(data);
+            draft.comments?.push({
+              createdAt: lastName === 'Сумкин' ? new Date(2023, 0, 19).toString() : new Date().toISOString(),
+              id: Math.random(),
+              rating,
+              text,
+              user: {
+                avatarUrl: avatar,
+                commentUserId,
+                firstName,
+                lastName,
+              },
+            });
+
+            return draft;
+          })
+        );
+
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+
+          /**
+           * Alternatively, on failure you can invalidate the corresponding cache tags
+           * to trigger a re-fetch:
+           * dispatch(api.util.invalidateTags(['Post']))
+           */
+        }
+      },
       invalidatesTags: ['Book'],
     }),
   }),

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useGetBookByIdQuery } from '../../api';
@@ -24,22 +24,27 @@ const BookInfo = () => {
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
 
   const bookId = useParams()?.bookId as string;
-  const { data: book, error, isLoading } = useGetBookByIdQuery(bookId);
+  const { data: book, error, isLoading, isFetching, isSuccess } = useGetBookByIdQuery(bookId);
 
   const dispatch = useAppDispatch();
 
   const { data: userInfo } = useGetCurrentUserQuery('');
+  const enableHideLoaderRef = useRef(true);
 
   useEffect(() => {
     if (isLoading) {
+      enableHideLoaderRef.current = true;
       dispatch(showLoader());
-    } else if (book) {
+    } else if (isSuccess && !isFetching && enableHideLoaderRef.current) {
+      // console.log('isSuccess && !isFetching && enableHideLoaderRef.current');
+      // console.log(2);
       dispatch(hideLoader());
     }
-  }, [book, dispatch, isLoading]);
+  }, [book, dispatch, isFetching, isLoading, isSuccess]);
 
   useEffect(() => {
     if (error && !isLoading) {
+      // console.log(3);
       dispatch(hideLoader());
       dispatch(
         showToast({ mode: 'warning', message: 'Что-то пошло не так. Обновите страницу через некоторое время.' })
@@ -142,8 +147,14 @@ const BookInfo = () => {
           </Button>
         </div>
       </div>
-      {reviewModalOpen && (
-        <ReviewModal bookId={id} isOpen={reviewModalOpen} onClose={closeReviewModal} userId={Number(userInfo?.id)} />
+      {reviewModalOpen && userInfo && (
+        <ReviewModal
+          bookId={id}
+          isOpen={reviewModalOpen}
+          onClose={closeReviewModal}
+          user={userInfo}
+          enableHideLoaderRef={enableHideLoaderRef}
+        />
       )}
       {bookingModalOpen && (
         <BookingModal book={book} isOpen={bookingModalOpen} onClose={closeBookingModal} userId={Number(userInfo?.id)} />

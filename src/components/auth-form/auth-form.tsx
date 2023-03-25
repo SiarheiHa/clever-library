@@ -47,6 +47,7 @@ const AuthForm = () => {
       dispatch(showLoader());
     }
     if (!loading && isLoaderVisible) {
+      // console.log(1);
       dispatch(hideLoader());
     }
   }, [dispatch, isLoaderVisible, loading]);

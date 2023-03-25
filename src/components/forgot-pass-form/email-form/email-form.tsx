@@ -43,13 +43,14 @@ const EmailForm = () => {
   });
 
   useEffect(() => {
-    console.log('useeffect');
-    console.log(loading && !isLoaderVisible);
+    // console.log('useeffect');
+    // console.log(loading && !isLoaderVisible);
     if (loading) {
-      console.log('AAAAAAAAAAAAAAAAA');
+      // console.log('AAAAAAAAAAAAAAAAA');
       dispatch(showLoader());
     }
     if (!loading && isLoaderVisible) {
+      // console.log(12);
       dispatch(hideLoader());
     }
   }, [dispatch, isLoaderVisible, loading]);

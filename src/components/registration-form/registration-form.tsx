@@ -75,6 +75,7 @@ const RegistrationForm = () => {
       dispatch(showLoader());
     }
     if (!loading && isLoaderVisible) {
+      // console.log(14);
       dispatch(hideLoader());
     }
   }, [dispatch, isLoaderVisible, loading]);

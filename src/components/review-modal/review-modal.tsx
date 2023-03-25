@@ -4,6 +4,7 @@ import { useAddCommentMutation } from '../../api/comment-api';
 import { ReactComponent as Star } from '../../assets/images/icons/star.svg';
 import { ReactComponent as StarEmpty } from '../../assets/images/icons/star_empty.svg';
 import { hideLoader, showLoader, showToast, useAppDispatch } from '../../store';
+import { UserDetail } from '../../types/types';
 import { Button } from '../button';
 import { Modal } from '../modal';
 
@@ -13,10 +14,11 @@ interface ReviewModalProps {
   bookId: number;
   isOpen: boolean;
   onClose: () => void;
-  userId: number;
+  user: UserDetail;
+  enableHideLoaderRef: React.MutableRefObject<boolean>;
 }
 
-const ReviewModal = ({ bookId, isOpen, onClose, userId }: ReviewModalProps) => {
+const ReviewModal = ({ bookId, isOpen, onClose, user, enableHideLoaderRef }: ReviewModalProps) => {
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState('');
   const dispatch = useAppDispatch();
@@ -31,26 +33,43 @@ const ReviewModal = ({ bookId, isOpen, onClose, userId }: ReviewModalProps) => {
   };
 
   const sendComment = () => {
+    // eslint-disable-next-line no-param-reassign
+    enableHideLoaderRef.current = false;
+    // console.log('click');
     addComment({
+      currentUser: user,
       data: {
-        book: String(bookId),
-        rating,
-        text: reviewText,
-        user: String(userId),
+        data: {
+          book: String(bookId),
+          rating,
+          text: reviewText,
+          user: String(user.id),
+        },
       },
+
+      // data: {
+      //   book: String(bookId),
+      //   rating,
+      //   text: reviewText,
+      //   user: String(user.id),
+      // },
+      // currentUser: user,
     });
   };
 
   useEffect(() => {
     if (isLoading) {
+      // console.log('isLoading');
       dispatch(showLoader());
     } else if (isSuccess) {
       reset();
+      // console.log(15);
       dispatch(hideLoader());
       dispatch(showToast({ mode: 'success', message: 'Спасибо, что нашли время оценить книгу!' }));
       onClose();
     } else if (isError) {
       reset();
+      // console.log(16);
       dispatch(hideLoader());
       dispatch(showToast({ mode: 'warning', message: 'Оценка не была отправлена. Попробуйте позже!' }));
       onClose();

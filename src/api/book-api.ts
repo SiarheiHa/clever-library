@@ -2,8 +2,9 @@ import { BookDetail, BookingRequestData, BookingResponseData, ChangeBookingReque
 
 import { api } from './api';
 import { Endpoint, HTTPMethod } from './api-enums';
+import { commentApi } from './comment-api';
 
-const bookApi = api.injectEndpoints({
+export const bookApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getBookById: builder.query<BookDetail, string>({
       query: (id) => ({
@@ -17,6 +18,7 @@ const bookApi = api.injectEndpoints({
         method: HTTPMethod.POST,
         body: data,
       }),
+
       invalidatesTags: ['Book', 'Books'],
     }),
     deleteBooking: builder.mutation<BookingResponseData, string>({
