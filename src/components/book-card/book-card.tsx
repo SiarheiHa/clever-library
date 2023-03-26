@@ -20,7 +20,7 @@ interface BookCardProps {
 
 const BookCard: React.FC<BookCardProps> = ({ book, variant }) => {
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
-  const { data: userInfo } = useGetCurrentUserQuery('');
+  const { data: userInfo } = useGetCurrentUserQuery('1');
 
   const openBookingModal = (e: React.MouseEvent) => {
     e.stopPropagation();

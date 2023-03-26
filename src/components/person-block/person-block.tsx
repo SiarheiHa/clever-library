@@ -1,22 +1,19 @@
-import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { useGetCurrentUserQuery } from '../../api/current-user-api';
-import { ReactComponent as Avatar } from '../../assets/images/avatar.svg';
+import { ReactComponent as CatAvatar } from '../../assets/images/cat-avatar.svg';
 import { resetUserState, setMenuMode, useAppDispatch } from '../../store';
+import { getURI } from '../../utils';
 
 import styles from './person-block.module.scss';
 
 const PersonBlock = ({ className }: { className?: string }) => {
-  const { data } = useGetCurrentUserQuery('');
-  const [menuVisible, setMenuVisible] = useState(false);
+  const { data } = useGetCurrentUserQuery('1');
   const classes = classNames(className, styles.wrapper);
-  const menuClasses = classNames(styles.menu, menuVisible && styles.show);
   const dispatch = useAppDispatch();
 
-  const toggleMenu = () => {
-    setMenuVisible(!menuVisible);
-  };
+  console.log(data);
 
   const singout = () => {
     localStorage.clear();
@@ -24,16 +21,28 @@ const PersonBlock = ({ className }: { className?: string }) => {
     dispatch(resetUserState());
   };
 
+  if (!data) {
+    return null;
+  }
+
+  const { firstName, avatar } = data;
+
   return (
     <div className={classes} data-test-id='profile-avatar'>
-      <span className={styles.greeting}>{`Привет, ${data}!`} </span>
+      <span className={styles.greeting}>{`Привет, ${firstName}!`} </span>
       <div className={styles.image_wrapper}>
-        <Avatar className={styles.avatar} onClick={toggleMenu} />
+        {avatar ? (
+          <img src={getURI(avatar)} alt='ava' className={styles.avatar} />
+        ) : (
+          <CatAvatar className={styles.avatar} />
+        )}
       </div>
-      <div className={menuClasses}>
-        <p className={styles.item} data-test-id='profile-button'>
-          Профиль
-        </p>
+      <div className={styles.menu}>
+        <Link to='/profile'>
+          <p className={styles.item} data-test-id='profile-button'>
+            Профиль
+          </p>
+        </Link>
         <button type='button' onClick={singout} className={styles.button}>
           <p className={styles.item}>Выход</p>
         </button>

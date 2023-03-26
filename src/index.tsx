@@ -11,6 +11,7 @@ import { AuthPage } from './pages/auth';
 import { BookPage } from './pages/book';
 import { ForgotPassPage } from './pages/forgot-pass';
 import { MainPage } from './pages/main';
+import { ProfilePage } from './pages/profile';
 import { RegistrationPage } from './pages/registration';
 import { store } from './store';
 
@@ -36,6 +37,7 @@ root.render(
               <Route path='/terms' element={<Terms content='terms' />} />
               <Route path='/contract' element={<Terms content='contract' />} />
             </Route>
+            <Route path='/profile' element={<ProfilePage />} />
             <Route path='books/:category/:bookId' element={<BookPage />} />
           </Route>
         </Routes>

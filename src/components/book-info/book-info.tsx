@@ -28,7 +28,7 @@ const BookInfo = () => {
 
   const dispatch = useAppDispatch();
 
-  const { data: userInfo } = useGetCurrentUserQuery('');
+  const { data: userInfo } = useGetCurrentUserQuery('1');
   const enableHideLoaderRef = useRef(true);
 
   useEffect(() => {

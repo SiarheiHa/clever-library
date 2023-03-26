@@ -15,7 +15,7 @@ interface BookCardProps {
 }
 
 const BookButton: React.FC<BookCardProps> = ({ book, className, ...restProps }) => {
-  const { data: currentUserData } = useGetCurrentUserQuery('');
+  const { data: currentUserData } = useGetCurrentUserQuery('1');
   const { delivery, booking } = book;
   const currentUserId = currentUserData?.id;
 

@@ -5,6 +5,11 @@
   margin-left: auto;
   display: flex;
   align-items: center;
+  &:hover {
+    .menu {
+      display: flex;
+    }
+  }
 }
 
 .greeting {
@@ -41,12 +46,9 @@
   border-radius: 0px 0px 10px 10px;
 }
 
-.show {
-  display: flex;
-}
-
 .item {
   @include font-title-l;
+  cursor: pointer;
 }
 
 .button {

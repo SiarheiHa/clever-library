@@ -13,28 +13,13 @@ export const commentApi = api.injectEndpoints({
         body: data,
       }),
 
-      async onQueryStarted({ data, currentUser }, { dispatch, queryFulfilled, getState }) {
+      async onQueryStarted({ data, currentUser }, { dispatch, queryFulfilled }) {
         //  // console.log(data, patch);
         const patchResult = dispatch(
           bookApi.util.updateQueryData('getBookById', data.data.book, (draft) => {
             const { id: commentUserId, avatar, firstName, lastName } = currentUser;
             const { rating, text } = data.data;
-            // const newComment = {
-            //   createdAt: new Date().toLocaleString(),
-            //   id: Math.random(),
-            //   rating,
-            //   text,
-            //   user: {
-            //     avatarUrl: avatar,
-            //     commentUserId,
-            //     firstName,
-            //     lastName,
-            //   },
-            // };
 
-            // const tempComments = Array.isArray(draft.comments) ? [newComment, [...draft.comments]] : [newComment];
-
-            console.log(data);
             draft.comments?.push({
               createdAt: lastName === 'Сумкин' ? new Date(2023, 0, 19).toString() : new Date().toISOString(),
               id: Math.random(),

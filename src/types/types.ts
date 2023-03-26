@@ -243,7 +243,7 @@ export interface BookingAttributes {
 export interface UserDetail extends Omit<User, 'provider'> {
   role: Role;
   comments: Comment[];
-  avatar: string;
+  avatar: string | null;
   booking: Booking;
   delivery: Delivery;
   history: History;
@@ -255,3 +255,70 @@ interface Role {
   description: string;
   type: string;
 }
+
+export type UploadResponseData = Array<{
+  id: number;
+  name: string;
+  alternativeText: null | string;
+  caption: null | string;
+  width: number;
+  height: number;
+  formats: {
+    thumbnail: {
+      name: string;
+      hash: string;
+      ext: string;
+      mime: string;
+      path: null | string;
+      width: number;
+      height: number;
+      size: number;
+      url: string;
+    };
+    large: {
+      name: string;
+      hash: string;
+      ext: string;
+      mime: string;
+      path: null | string;
+      width: number;
+      height: number;
+      size: number;
+      url: string;
+    };
+    medium: {
+      name: string;
+      hash: string;
+      ext: string;
+      mime: string;
+      path: null | string;
+      width: number;
+      height: number;
+      size: number;
+      url: string;
+    };
+    small: {
+      name: string;
+      hash: string;
+      ext: string;
+      mime: string;
+      path: null | string;
+      width: number;
+      height: number;
+      size: number;
+      url: string;
+    };
+  };
+  hash: string;
+  ext: string;
+  mime: string;
+  size: number;
+  url: string;
+  previewUrl: null | string;
+  provider: string;
+  provider_metadata: null | string;
+  createdAt: string;
+  updatedAt: string;
+}>;
+
+export type UpdateAvatarRequestData = { id: string; data: { avatar: number } };

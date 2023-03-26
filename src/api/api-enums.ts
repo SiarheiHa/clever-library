@@ -4,6 +4,8 @@ export enum Endpoint {
   COMMENTS = 'api/comments/',
   BOOKINGS = '/api/bookings',
   ME = '/api/users/me',
+  UPLOAD = '/api/upload',
+  USERS = '/api/users/',
 }
 
 export enum HTTPMethod {
