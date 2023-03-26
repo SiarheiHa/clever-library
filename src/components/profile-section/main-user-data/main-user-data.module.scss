@@ -40,6 +40,9 @@
   @include big-text;
   @include for-phone {
     text-align: center;
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 36px;
   }
 }
 
@@ -68,5 +71,7 @@
 }
 
 .input {
-  display: none;
+  opacity: 0;
+  position: absolute;
+  visibility: hidden;
 }

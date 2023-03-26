@@ -25,21 +25,25 @@ const currentUserApi = api.injectEndpoints({
         body: data,
       }),
       async onQueryStarted(_, { dispatch, queryFulfilled, getState }) {
-        const { data: newUserData } = await queryFulfilled;
-        const patchResult = dispatch(
-          currentUserApi.util.updateQueryData('getCurrentUser', '1', (draft) => newUserData)
-        );
-
         try {
-          await queryFulfilled;
-        } catch {
-          patchResult.undo();
+          const { data: newUserData } = await queryFulfilled;
+          const patchResult = dispatch(
+            currentUserApi.util.updateQueryData('getCurrentUser', '1', (draft) => newUserData)
+          );
 
-          /**
-           * Alternatively, on failure you can invalidate the corresponding cache tags
-           * to trigger a re-fetch:
-           * dispatch(api.util.invalidateTags(['Post']))
-           */
+          try {
+            await queryFulfilled;
+          } catch {
+            patchResult.undo();
+
+            /**
+             * Alternatively, on failure you can invalidate the corresponding cache tags
+             * to trigger a re-fetch:
+             * dispatch(api.util.invalidateTags(['Post']))
+             */
+          }
+        } catch (e) {
+          console.error(e);
         }
       },
     }),

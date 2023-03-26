@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 
+import { useGetCategoriesQuery } from '../../../api';
 import {
   useGetCurrentUserQuery,
   useUpdateUserAvatarMutation,
@@ -21,6 +22,7 @@ import styles from './main-user-data.module.scss';
 
 const MainUserData = () => {
   const { data: currentUserData } = useGetCurrentUserQuery('1');
+  const { isLoading: isCategoryLoading } = useGetCategoriesQuery('');
   const [uploadFile, { data: uploadFileData, isSuccess, reset, isLoading: isFileLoading, isError: isFileUploadError }] =
     useUploadFileMutation();
   const [updateAvatar, { isLoading: isAvatarUpdating, isError: isAvatarUpdatingError }] = useUpdateUserAvatarMutation();
@@ -57,11 +59,11 @@ const MainUserData = () => {
       console.log(isLoaderVisible);
       console.log('show');
       dispatch(showLoader());
-    } else if (isLoaderVisible && !isFileLoading && !isAvatarUpdating) {
+    } else if (isLoaderVisible && !isFileLoading && !isAvatarUpdating && !isCategoryLoading) {
       dispatch(hideLoader());
       console.log('hide');
     }
-  }, [dispatch, isAvatarUpdating, isFileLoading, isLoaderVisible]);
+  }, [dispatch, isAvatarUpdating, isCategoryLoading, isFileLoading, isLoaderVisible]);
 
   useEffect(() => {
     if (isSuccess && !isFileLoading && !isAvatarUpdating) {
@@ -79,7 +81,15 @@ const MainUserData = () => {
   const { firstName, lastName, avatar } = currentUserData;
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} data-test-id='profile-avatar'>
+      <input
+        className={styles.input}
+        type='file'
+        name='file-upload'
+        id='file-upload'
+        accept='image/*'
+        onChange={changeAvatar}
+      />
       <div className={styles.avatar_input}>
         <div className={styles.image_wrapper}>
           {avatar ? (
@@ -93,17 +103,8 @@ const MainUserData = () => {
           <div className={styles.backdrop} />
           <PhotoIcon className={styles.icon} />
         </label>
-
-        <input
-          className={styles.input}
-          type='file'
-          name='file-upload'
-          id='file-upload'
-          accept='image/*'
-          onChange={changeAvatar}
-        />
       </div>
-      <h2 className={styles.name} data-test-id='profile-avatar'>{`${lastName} ${firstName}`}</h2>
+      <h2 className={styles.name}>{`${lastName} ${firstName}`}</h2>
     </div>
   );
 };

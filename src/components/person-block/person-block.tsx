@@ -28,7 +28,7 @@ const PersonBlock = ({ className }: { className?: string }) => {
   const { firstName, avatar } = data;
 
   return (
-    <div className={classes} data-test-id='profile-avatar'>
+    <div className={classes}>
       <span className={styles.greeting}>{`Привет, ${firstName}!`} </span>
       <div className={styles.image_wrapper}>
         {avatar ? (

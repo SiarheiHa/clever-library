@@ -37,7 +37,8 @@ const NavigationBlock: React.FC<NavigationBlockProps> = ({ className, userContro
   }, [categoriesError, dispatch]);
 
   useEffect(() => {
-    if (isLoading && !isLoaderVisible) {
+    if (isLoading && !isLoaderVisible && !isSuccess) {
+      console.log('show1');
       dispatch(showLoader());
     } else if (!isLoading && isLoaderVisible && isUninitialized) {
       console.log('nav block hide loader');
