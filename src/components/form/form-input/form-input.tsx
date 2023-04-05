@@ -25,6 +25,8 @@ interface FormInputOProps {
   showTick?: boolean;
   onBlurHandler?: () => void;
   onChangeHandler?: () => void;
+  value?: string;
+  readonly?: boolean;
 }
 
 const FormInput = React.forwardRef<
@@ -46,6 +48,8 @@ const FormInput = React.forwardRef<
       onBlurHandler,
       onChangeHandler,
       onChange,
+      value,
+      readonly = false,
       ...rest
     },
     ref
@@ -82,6 +86,7 @@ const FormInput = React.forwardRef<
       }
     };
 
+    const placeholderClasses = classNames(styles.placeholder, value && styles.placeholder_top);
     const wrapperClasses = classNames(styles.input__wrapper, error && styles.error);
 
     return (
@@ -105,6 +110,8 @@ const FormInput = React.forwardRef<
                     showMask={false}
                     {...field}
                     onBlur={onBlur}
+                    defaultValue={value}
+                    readOnly={readonly}
                   />
                 )}
               />
@@ -116,6 +123,9 @@ const FormInput = React.forwardRef<
                 required={true}
                 {...rest}
                 ref={ref}
+                defaultValue={value}
+                // disabled={true}
+                readOnly={readonly}
                 onFocus={onFocus}
                 onBlur={onBlur}
                 onChange={
@@ -128,7 +138,7 @@ const FormInput = React.forwardRef<
                 }
               />
             )}
-            <span className={styles.placeholder}>{placeholderText}</span>
+            <span className={placeholderClasses}>{placeholderText}</span>
           </div>
 
           {type === 'password' && (

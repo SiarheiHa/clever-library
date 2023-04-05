@@ -39,21 +39,15 @@
   z-index: 1;
   background-color: transparent;
   border: none;
+  padding-top: 7px;
   @include font-text-subtitle-l;
   &:focus {
-    padding-top: 7px;
+    // padding-top: 7px;
     outline: none;
   }
   &:valid {
-    padding-top: 7px;
+    // padding-top: 7px;
   }
-}
-.input:focus + .placeholder,
-.input:valid + .placeholder {
-  @include font-text-subtitle-s;
-  color: $grey-black-40;
-  top: 6px;
-  transform: none;
 }
 
 .placeholder {
@@ -64,7 +58,14 @@
   z-index: 0;
   @include font-text-subtitle-l;
 }
-
+.input:focus + .placeholder,
+.input:valid + .placeholder,
+.placeholder_top {
+  @include font-text-subtitle-s;
+  color: $grey-black-40;
+  top: 6px;
+  transform: none;
+}
 .icons {
   display: flex;
   gap: 4px;

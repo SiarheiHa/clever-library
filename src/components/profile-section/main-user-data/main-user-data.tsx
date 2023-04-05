@@ -16,12 +16,17 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '../../../store';
+import { UserDetail } from '../../../types/types';
 import { getURI } from '../../../utils';
 
 import styles from './main-user-data.module.scss';
 
-const MainUserData = () => {
-  const { data: currentUserData } = useGetCurrentUserQuery('1');
+const MainUserData: React.FC<Pick<UserDetail, 'avatar' | 'firstName' | 'lastName' | 'id'>> = ({
+  avatar,
+  firstName,
+  id,
+  lastName,
+}) => {
   const { isLoading: isCategoryLoading } = useGetCategoriesQuery('');
   const [uploadFile, { data: uploadFileData, isSuccess, reset, isLoading: isFileLoading, isError: isFileUploadError }] =
     useUploadFileMutation();
@@ -43,16 +48,16 @@ const MainUserData = () => {
   };
 
   useEffect(() => {
-    if (uploadFileData?.length && currentUserData && isSuccess) {
+    if (uploadFileData?.length && isSuccess) {
       reset();
       updateAvatar({
-        id: String(currentUserData.id),
+        id: String(id),
         data: {
           avatar: uploadFileData[0].id,
         },
       });
     }
-  }, [currentUserData, isSuccess, reset, updateAvatar, uploadFileData]);
+  }, [id, isSuccess, reset, updateAvatar, uploadFileData]);
 
   useEffect(() => {
     if (!isLoaderVisible && (isFileLoading || isAvatarUpdating)) {
@@ -74,11 +79,6 @@ const MainUserData = () => {
       dispatch(showToast({ mode: 'warning', message: 'Что-то пошло не так, фото не сохранилось. Попробуйте позже!' }));
     }
   }, [dispatch, isAvatarUpdating, isAvatarUpdatingError, isFileLoading, isFileUploadError, isSuccess, reset]);
-
-  if (!currentUserData) {
-    return null;
-  }
-  const { firstName, lastName, avatar } = currentUserData;
 
   return (
     <div className={styles.wrapper} data-test-id='profile-avatar'>
