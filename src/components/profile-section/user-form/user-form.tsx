@@ -1,20 +1,26 @@
 import { useEffect, useState } from 'react';
 import { Control, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import classNames from 'classnames';
 import * as yup from 'yup';
 
-import { useGetCurrentUserQuery } from '../../../api/current-user-api';
+import { useUpdateUserMutation } from '../../../api/current-user-api';
 import { regexp } from '../../../constants';
-import { hideLoader, selectLoaderVisibility, showLoader, useAppDispatch, useAppSelector } from '../../../store';
-import { AuthFormData, RegistrationFormData, ResetPassFormData, UserDetail } from '../../../types/types';
-import { getURI } from '../../../utils';
+import { showToast, useAppDispatch } from '../../../store';
+import {
+  AuthFormData,
+  RegistrationFormData,
+  ResetPassFormData,
+  UserDetail,
+  UserFormFields,
+} from '../../../types/types';
 import { Button } from '../../button';
 import { Form, FormInput } from '../../form';
 
 import styles from './user-form.module.scss';
 
-const schema = yup.object<RegistrationFormData>({
-  username: yup
+const schema = yup.object<UserFormFields>({
+  login: yup
     .string()
     .required('Поле не может быть пустым')
     .matches(regexp.digit, 'цифры')
@@ -40,31 +46,48 @@ const UserForm: React.FC<Pick<UserDetail, 'email' | 'firstName' | 'lastName' | '
   username,
 }) => {
   const [isEditMode, setEditMode] = useState(false);
+  const [updateUser, { isLoading: isUserUpdating, isError: isUserUpdatingError, isSuccess, reset: resetQueryState }] =
+    useUpdateUserMutation();
+
   const {
     register,
     handleSubmit,
     control,
     getValues,
-    formState: { errors, dirtyFields, isDirty },
-    reset,
+    formState: { errors, dirtyFields },
     trigger,
-  } = useForm<RegistrationFormData>({
+  } = useForm<UserFormFields>({
     mode: 'all',
     shouldFocusError: false,
     resolver: yupResolver(schema),
     criteriaMode: 'all',
+    defaultValues: {
+      email,
+      firstName,
+      lastName,
+      phone,
+      login: username,
+      password: 'TrataTa3raza',
+    },
   });
-  const isLoaderVisible = useAppSelector(selectLoaderVisibility);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (isSuccess && !isUserUpdating) {
+      resetQueryState();
+      dispatch(showToast({ mode: 'success', message: 'Изменения успешно сохранены!' }));
+    } else if (isUserUpdatingError) {
+      resetQueryState();
+      dispatch(showToast({ mode: 'warning', message: 'Изменения не были сохранены. Попробуйте позже!' }));
+    }
+  }, [dispatch, isSuccess, isUserUpdating, isUserUpdatingError, resetQueryState]);
 
   const handleEdit = () => {
     setEditMode(!isEditMode);
   };
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
-
-    // dispatch(updateUser(data));
+    updateUser({ id: String(id), data: { ...data, username: data.login } });
   });
 
   const getPassErrors = () => {
@@ -86,7 +109,7 @@ const UserForm: React.FC<Pick<UserDetail, 'email' | 'firstName' | 'lastName' | '
   };
 
   const usernameErrorMatches: string | string[] | undefined =
-    typeof errors.username?.types?.matches === 'boolean' ? undefined : errors.username?.types?.matches;
+    typeof errors.login?.types?.matches === 'boolean' ? undefined : errors.login?.types?.matches;
 
   return (
     <div className={styles.wrapper}>
@@ -94,19 +117,24 @@ const UserForm: React.FC<Pick<UserDetail, 'email' | 'firstName' | 'lastName' | '
         <h3 className={styles.title}>Учётные данные</h3>
         <h4 className={styles.subtitle}>Здесь вы можете отредактировать информацию о себе</h4>
       </div>
-      <Form onSubmit={onSubmit} className={styles.form}>
+      <Form onSubmit={onSubmit} className={styles.form} id='user-form' testId='profile-form'>
         <div className={styles.inputs}>
           <FormInput
-            {...register('username')}
-            error={Boolean(errors.username)}
-            errorMessageRequired={errors.username?.type === 'required' ? errors.username?.message : undefined}
+            {...register('login')}
+            error={Boolean(errors.login)}
+            errorMessageRequired={errors.login?.type === 'required' ? errors.login?.message : undefined}
             errorsMatches={usernameErrorMatches}
             hint='Используйте для логина латинский алфавит и цифры'
             placeholderText='Придумайте логин для входа'
             type='text'
-            onBlurHandler={() => trigger('username')}
+            onBlurHandler={() => {
+              console.log(errors);
+              console.log(getValues());
+              trigger('login');
+            }}
             value={username}
             readonly={!isEditMode}
+            disabled={!isEditMode}
           />
 
           <FormInput
@@ -118,6 +146,7 @@ const UserForm: React.FC<Pick<UserDetail, 'email' | 'firstName' | 'lastName' | '
             onBlurHandler={() => trigger('firstName')}
             value={firstName}
             readonly={!isEditMode}
+            disabled={!isEditMode}
           />
 
           <FormInput
@@ -127,10 +156,11 @@ const UserForm: React.FC<Pick<UserDetail, 'email' | 'firstName' | 'lastName' | '
             placeholderText='Номер телефона'
             hint='В формате +375 (xx) xxx-xx-xx'
             type='number'
-            control={control as Control<AuthFormData | RegistrationFormData | ResetPassFormData>}
+            control={control as Control<AuthFormData | RegistrationFormData | ResetPassFormData | UserFormFields>}
             onBlurHandler={() => trigger('phone')}
             value={phone}
             readonly={!isEditMode}
+            disabled={!isEditMode}
           />
         </div>
 
@@ -148,6 +178,7 @@ const UserForm: React.FC<Pick<UserDetail, 'email' | 'firstName' | 'lastName' | '
             onBlurHandler={() => trigger('password')}
             value='TrataTa3raza'
             readonly={!isEditMode}
+            disabled={!isEditMode}
           />
 
           <FormInput
@@ -159,6 +190,7 @@ const UserForm: React.FC<Pick<UserDetail, 'email' | 'firstName' | 'lastName' | '
             onBlurHandler={() => trigger('lastName')}
             value={lastName}
             readonly={!isEditMode}
+            disabled={!isEditMode}
           />
 
           <FormInput
@@ -171,20 +203,25 @@ const UserForm: React.FC<Pick<UserDetail, 'email' | 'firstName' | 'lastName' | '
             onBlurHandler={() => trigger('email')}
             value={email}
             readonly={!isEditMode}
+            disabled={!isEditMode}
           />
         </div>
       </Form>
       <div className={styles.buttons}>
-        <Button onClick={handleEdit} className={styles.button} shadowed={false} contained={true}>
-          РЕДАКТИРОВАТЬ
+        <Button onClick={handleEdit} className={styles.button} shadowed={false} testId='edit-button'>
+          Редактировать
         </Button>
         <Button
+          form='user-form'
+          type='submit'
           onClick={() => {}}
-          className={styles.button}
+          className={classNames(styles.button, !isEditMode && styles.button_grey)}
           shadowed={false}
-          disabled={true}
-          contained={false}
           filtered={true}
+          bordered={false}
+          disabled={!isEditMode}
+          contained={isEditMode}
+          testId='save-button'
         >
           СОХРАНИТЬ ИЗМЕНЕНИЯ
         </Button>

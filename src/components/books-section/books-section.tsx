@@ -25,10 +25,10 @@ const BooksSection = () => {
 
   useEffect(() => {
     if (isLoading) {
-      dispatch(showLoader());
+      // dispatch(showLoader());
     } else if (books && categories) {
       // console.log(10);
-      dispatch(hideLoader());
+      // dispatch(hideLoader());
     }
   }, [books, categories, dispatch, error, isLoading]);
 
@@ -36,7 +36,7 @@ const BooksSection = () => {
     if (error) {
       showToast({ mode: 'warning', message: 'Что-то пошло не так. Обновите страницу через некоторое время.' });
       // console.log(11);
-      dispatch(hideLoader());
+      // dispatch(hideLoader());
     }
   }, [error, dispatch]);
 

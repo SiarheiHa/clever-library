@@ -15,7 +15,7 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '../../store';
-import { AuthFormData, RegistrationFormData, ResetPassFormData } from '../../types/types';
+import { AuthFormData, RegistrationFormData, ResetPassFormData, UserFormFields } from '../../types/types';
 import { Button } from '../button';
 import { Form, FormInput, FormLinkBlock, FormTitle } from '../form';
 import { ResultAuthBlock } from '../result-auth-block';
@@ -206,7 +206,7 @@ const RegistrationForm = () => {
                 placeholderText='Номер телефона'
                 hint='В формате +375 (xx) xxx-xx-xx'
                 type='number'
-                control={control as Control<AuthFormData | RegistrationFormData | ResetPassFormData>}
+                control={control as Control<AuthFormData | RegistrationFormData | ResetPassFormData | UserFormFields>}
                 onBlurHandler={() => trigger('phone')}
               />
               <FormInput

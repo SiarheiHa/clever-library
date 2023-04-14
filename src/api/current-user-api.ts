@@ -1,4 +1,10 @@
-import { UpdateAvatarRequestData, UploadResponseData, UserDetail } from '../types/types';
+import {
+  RegistrationFormData,
+  UpdateAvatarRequestData,
+  UpdateUserRequestData,
+  UploadResponseData,
+  UserDetail,
+} from '../types/types';
 
 import { api } from './api';
 import { Endpoint, HTTPMethod } from './api-enums';
@@ -47,7 +53,36 @@ const currentUserApi = api.injectEndpoints({
         }
       },
     }),
+
+    updateUser: builder.mutation<UserDetail, UpdateUserRequestData>({
+      query: ({ id, data }) => ({
+        url: `${Endpoint.USERS}${id}`,
+        method: HTTPMethod.PUT,
+        body: data,
+      }),
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data: newUserData } = await queryFulfilled;
+          const patchResult = dispatch(currentUserApi.util.updateQueryData('getCurrentUser', '1', () => newUserData));
+
+          try {
+            await queryFulfilled;
+          } catch {
+            patchResult.undo();
+
+            /**
+             * Alternatively, on failure you can invalidate the corresponding cache tags
+             * to trigger a re-fetch:
+             * dispatch(api.util.invalidateTags(['Post']))
+             */
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      },
+    }),
   }),
 });
 
-export const { useGetCurrentUserQuery, useUploadFileMutation, useUpdateUserAvatarMutation } = currentUserApi;
+export const { useGetCurrentUserQuery, useUploadFileMutation, useUpdateUserAvatarMutation, useUpdateUserMutation } =
+  currentUserApi;

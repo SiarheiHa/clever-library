@@ -322,3 +322,10 @@ export type UploadResponseData = Array<{
 }>;
 
 export type UpdateAvatarRequestData = { id: string; data: { avatar: number } };
+
+export type UpdateUserRequestData = { id: string; data: RegistrationFormData };
+
+export interface UserFormFields extends Pick<UserDetail, 'email' | 'firstName' | 'lastName' | 'id' | 'phone'> {
+  login: string;
+  password: string;
+}

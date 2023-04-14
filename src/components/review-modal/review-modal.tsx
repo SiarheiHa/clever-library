@@ -60,17 +60,17 @@ const ReviewModal = ({ bookId, isOpen, onClose, user, enableHideLoaderRef }: Rev
   useEffect(() => {
     if (isLoading) {
       // console.log('isLoading');
-      dispatch(showLoader());
+      // dispatch(showLoader());
     } else if (isSuccess) {
       reset();
       // console.log(15);
-      dispatch(hideLoader());
+      // dispatch(hideLoader());
       dispatch(showToast({ mode: 'success', message: 'Спасибо, что нашли время оценить книгу!' }));
       onClose();
     } else if (isError) {
       reset();
       // console.log(16);
-      dispatch(hideLoader());
+      // dispatch(hideLoader());
       dispatch(showToast({ mode: 'warning', message: 'Оценка не была отправлена. Попробуйте позже!' }));
       onClose();
     }

@@ -15,6 +15,7 @@ interface ButtonProps {
   className?: string;
   type?: 'submit' | 'reset';
   testId?: string;
+  form?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -29,6 +30,7 @@ const Button: React.FC<ButtonProps> = ({
   className,
   type,
   testId,
+  form,
 }) => {
   const classes = classNames(
     styles.button,
@@ -49,6 +51,7 @@ const Button: React.FC<ButtonProps> = ({
       onClick={onClick}
       disabled={disabled}
       data-test-id={testId}
+      form={form}
     >
       {children}
     </button>

@@ -38,11 +38,11 @@ const BookingModal = ({ book, isOpen, onClose, userId }: ReviewModalProps) => {
 
   useEffect(() => {
     if (isLoadingAdd) {
-      dispatch(showLoader());
+      // dispatch(showLoader());
     } else if (isSuccessAdd) {
       resetAdd();
       // console.log(4);
-      dispatch(hideLoader());
+      // dispatch(hideLoader());
       dispatch(
         showToast({ mode: 'success', message: 'Книга забронирована. Подробности можно посмотреть на странице Профиль' })
       );
@@ -50,7 +50,7 @@ const BookingModal = ({ book, isOpen, onClose, userId }: ReviewModalProps) => {
     } else if (isErrorAdd) {
       resetAdd();
       // console.log(5);
-      dispatch(hideLoader());
+      // dispatch(hideLoader());
       dispatch(
         showToast({ mode: 'warning', message: 'Что-то пошло не так, книга не забронирована. Попробуйте позже!' })
       );
@@ -60,11 +60,11 @@ const BookingModal = ({ book, isOpen, onClose, userId }: ReviewModalProps) => {
 
   useEffect(() => {
     if (isLoadingDelete) {
-      dispatch(showLoader());
+      // dispatch(showLoader());
     } else if (isSuccessDelete) {
       resetDelete();
       // console.log(6);
-      dispatch(hideLoader());
+      // dispatch(hideLoader());
       dispatch(
         showToast({
           mode: 'success',
@@ -75,7 +75,7 @@ const BookingModal = ({ book, isOpen, onClose, userId }: ReviewModalProps) => {
     } else if (isErrorDelete) {
       resetDelete();
       // console.log(7);
-      dispatch(hideLoader());
+      // dispatch(hideLoader());
       dispatch(showToast({ mode: 'warning', message: 'Не удалось снять бронирование книги. Попробуйте позже!' }));
       onClose();
     }
@@ -83,11 +83,11 @@ const BookingModal = ({ book, isOpen, onClose, userId }: ReviewModalProps) => {
 
   useEffect(() => {
     if (isLoadingChange) {
-      dispatch(showLoader());
+      // dispatch(showLoader());
     } else if (isSuccessChange) {
       resetChange();
       // console.log(8);
-      dispatch(hideLoader());
+      // dispatch(hideLoader());
       dispatch(
         showToast({
           mode: 'success',
@@ -98,7 +98,7 @@ const BookingModal = ({ book, isOpen, onClose, userId }: ReviewModalProps) => {
     } else if (isErrorChange) {
       resetChange();
       // console.log(9);
-      dispatch(hideLoader());
+      // dispatch(hideLoader());
       dispatch(
         showToast({
           mode: 'warning',

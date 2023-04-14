@@ -63,9 +63,9 @@ const MainUserData: React.FC<Pick<UserDetail, 'avatar' | 'firstName' | 'lastName
     if (!isLoaderVisible && (isFileLoading || isAvatarUpdating)) {
       console.log(isLoaderVisible);
       console.log('show');
-      dispatch(showLoader());
+      // dispatch(showLoader());
     } else if (isLoaderVisible && !isFileLoading && !isAvatarUpdating && !isCategoryLoading) {
-      dispatch(hideLoader());
+      // dispatch(hideLoader());
       console.log('hide');
     }
   }, [dispatch, isAvatarUpdating, isCategoryLoading, isFileLoading, isLoaderVisible]);

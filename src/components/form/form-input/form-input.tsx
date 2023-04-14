@@ -7,7 +7,7 @@ import { ReactComponent as EyeClosedIcon } from '../../../assets/images/icons/ey
 import { ReactComponent as EyeOpenedIcon } from '../../../assets/images/icons/eye_opened.svg';
 import { ReactComponent as TickIcon } from '../../../assets/images/icons/tick.svg';
 import { mask } from '../../../constants';
-import { AuthFormData, RegistrationFormData, ResetPassFormData } from '../../../types/types';
+import { AuthFormData, RegistrationFormData, ResetPassFormData, UserFormFields } from '../../../types/types';
 
 import { Hint } from './hint';
 
@@ -21,17 +21,19 @@ interface FormInputOProps {
   isDirty?: boolean;
   type: 'text' | 'password' | 'number';
   hint?: string;
-  control?: Control<RegistrationFormData | AuthFormData | ResetPassFormData>;
+  control?: Control<RegistrationFormData | AuthFormData | ResetPassFormData | UserFormFields>;
   showTick?: boolean;
   onBlurHandler?: () => void;
   onChangeHandler?: () => void;
   value?: string;
   readonly?: boolean;
+  disabled?: boolean;
 }
 
 const FormInput = React.forwardRef<
   HTMLInputElement,
-  FormInputOProps & ReturnType<UseFormRegister<RegistrationFormData | AuthFormData | ResetPassFormData>>
+  FormInputOProps &
+    ReturnType<UseFormRegister<RegistrationFormData | AuthFormData | ResetPassFormData | UserFormFields>>
 >(
   (
     {
@@ -50,6 +52,7 @@ const FormInput = React.forwardRef<
       onChange,
       value,
       readonly = false,
+      disabled = false,
       ...rest
     },
     ref
@@ -110,8 +113,9 @@ const FormInput = React.forwardRef<
                     showMask={false}
                     {...field}
                     onBlur={onBlur}
-                    defaultValue={value}
+                    // defaultValue={value}
                     readOnly={readonly}
+                    disabled={disabled}
                   />
                 )}
               />
@@ -123,9 +127,9 @@ const FormInput = React.forwardRef<
                 required={true}
                 {...rest}
                 ref={ref}
-                defaultValue={value}
-                // disabled={true}
+                // defaultValue={value}
                 readOnly={readonly}
+                disabled={disabled}
                 onFocus={onFocus}
                 onBlur={onBlur}
                 onChange={
@@ -153,13 +157,15 @@ const FormInput = React.forwardRef<
             </div>
           )}
         </div>
-        <Hint
-          hint={hint}
-          error={error}
-          errorMessageRequired={errorMessageRequired}
-          errorsMatches={errorsMatches}
-          isInputFocused={isFocus}
-        />
+        {(hint || error) && (
+          <Hint
+            hint={hint}
+            error={error}
+            errorMessageRequired={errorMessageRequired}
+            errorsMatches={errorsMatches}
+            isInputFocused={isFocus}
+          />
+        )}
       </div>
     );
   }

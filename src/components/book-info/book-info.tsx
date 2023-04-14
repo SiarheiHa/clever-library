@@ -34,18 +34,18 @@ const BookInfo = () => {
   useEffect(() => {
     if (isLoading) {
       enableHideLoaderRef.current = true;
-      dispatch(showLoader());
+      // dispatch(showLoader());
     } else if (isSuccess && !isFetching && enableHideLoaderRef.current) {
       // console.log('isSuccess && !isFetching && enableHideLoaderRef.current');
       // console.log(2);
-      dispatch(hideLoader());
+      // dispatch(hideLoader());
     }
   }, [book, dispatch, isFetching, isLoading, isSuccess]);
 
   useEffect(() => {
     if (error && !isLoading) {
       // console.log(3);
-      dispatch(hideLoader());
+      // dispatch(hideLoader());
       dispatch(
         showToast({ mode: 'warning', message: 'Что-то пошло не так. Обновите страницу через некоторое время.' })
       );
