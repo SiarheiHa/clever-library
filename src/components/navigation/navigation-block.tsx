@@ -23,6 +23,7 @@ const NavigationBlock: React.FC<NavigationBlockProps> = ({ className, userContro
 
   const isLoaderVisible = useAppSelector(selectLoaderVisibility);
   const dispatch = useAppDispatch();
+  console.log('aside');
 
   useEffect(() => {
     fetchCategories('');

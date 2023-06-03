@@ -11,7 +11,8 @@ import { Toast } from '../toast';
 const Layout = () => {
   const navigate = useNavigate();
   const { userInfo } = useAppSelector(selectUserState);
-  const jwt = userInfo?.jwt;
+  // const jwt = userInfo?.jwt;
+  const jwt = true;
   const dispatch = useAppDispatch();
 
   const isSomeQueryPending = useAppSelector(
@@ -34,11 +35,14 @@ const Layout = () => {
       navigate('/auth');
     }
   }, [jwt, navigate]);
+
   if (!jwt) {
     navigate('/auth');
 
     return null;
   }
+
+  console.log('aaaaaaaaaa');
 
   return (
     <React.Fragment>

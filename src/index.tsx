@@ -24,13 +24,13 @@ root.render(
     <HashRouter>
       <Provider store={store}>
         <Routes>
-          <Route path='/' element={<LayoutStart />}>
-            <Route index={true} element={<Navigate to='/auth' />} />
+          <Route element={<LayoutStart />}>
+            {/* <Route index={true} element={<Navigate to='/auth' />} /> */}
             <Route path='/auth' element={<AuthPage />} />
             <Route path='/registration' element={<RegistrationPage />} />
             <Route path='/forgot-pass' element={<ForgotPassPage />} />
           </Route>
-          <Route element={<Layout />}>
+          <Route path='/' element={<Layout />}>
             <Route element={<LayoutMainPage />}>
               <Route path='/books/all' element={<MainPage />} />
               <Route path='/books/:category' element={<MainPage />} />
