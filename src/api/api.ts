@@ -3,10 +3,12 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { BASE_URL } from '../constants';
 import { RootState } from '../store/store';
 
+import { db } from './firebase';
+
 const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
-    baseUrl: BASE_URL,
+    baseUrl: '', // Мы не будем использовать базовый URL в Firebase Realtime Database
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).user.userInfo?.jwt;
 

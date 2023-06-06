@@ -23,7 +23,7 @@ interface MenuItemProps {
 const hasSubLinks = (item: NavItem | Category): item is Required<NavItem> => 'submenu' in item;
 
 const MenuItem: React.FC<MenuItemProps> = ({ item, isSubmenuOpen, toggleSubmenu = () => {}, testIdPrefix }) => {
-  const { error: booksError } = useGetBooksQuery('');
+  // const { error: booksError } = useGetBooksQuery('');
 
   const { name, path } = item;
   const { pathname } = useLocation();
@@ -47,10 +47,9 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, isSubmenuOpen, toggleSubmenu 
 
   const submenuClasses = classNames({ [styles.hide]: !isSubmenuOpen });
 
-  const submenu =
-    hasSubLinks(item) && !booksError ? (
-      <Submenu submenu={item.submenu} className={submenuClasses} testIdPrefix={testIdPrefix} />
-    ) : null;
+  const submenu = hasSubLinks(item) ? (
+    <Submenu submenu={item.submenu} className={submenuClasses} testIdPrefix={testIdPrefix} />
+  ) : null;
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     // exit

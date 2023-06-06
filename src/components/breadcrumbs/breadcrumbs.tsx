@@ -6,7 +6,7 @@ import { Container } from '../container';
 import styles from './breadcrumbs.module.scss';
 
 const Breadcrumbs = () => {
-  const categories = useGetCategoriesQuery('').data ?? [];
+  const categories = useGetCategoriesQuery().data ?? [];
   const { category: categoryParam, bookId } = useParams();
   const currentCategory = categories.find((category) => category.path === categoryParam);
 

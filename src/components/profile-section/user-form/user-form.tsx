@@ -128,8 +128,8 @@ const UserForm: React.FC<Pick<UserDetail, 'email' | 'firstName' | 'lastName' | '
             placeholderText='Придумайте логин для входа'
             type='text'
             onBlurHandler={() => {
-              console.log(errors);
-              console.log(getValues());
+              // console.log(errors);
+              // console.log(getValues());
               trigger('login');
             }}
             value={username}

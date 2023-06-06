@@ -13,7 +13,7 @@ const PersonBlock = ({ className }: { className?: string }) => {
   const classes = classNames(className, styles.wrapper);
   const dispatch = useAppDispatch();
 
-  console.log(data);
+  // console.log(data);
 
   const singout = () => {
     localStorage.clear();

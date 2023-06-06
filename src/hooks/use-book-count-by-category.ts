@@ -2,7 +2,7 @@ import { useGetBooksQuery, useGetCategoriesQuery } from '../api';
 
 const useBookCountByCategory = () => {
   const { data: books } = useGetBooksQuery('');
-  const { data: categories } = useGetCategoriesQuery('');
+  const { data: categories } = useGetCategoriesQuery();
 
   const booksCountObj: Record<string, number> = {};
 

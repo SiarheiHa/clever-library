@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 
 import { useGetCategoriesQuery } from '../../api';
-import { useLazyGetCategoriesQuery } from '../../api/categories-api';
 import { userControllItems } from '../../data';
 import { hideLoader, selectLoaderVisibility, showLoader, showToast, useAppDispatch, useAppSelector } from '../../store';
 import { NavItem } from '../../types/types';
@@ -18,16 +17,16 @@ interface NavigationBlockProps {
 }
 
 const NavigationBlock: React.FC<NavigationBlockProps> = ({ className, userControlls, testIdPrefix }) => {
-  const [fetchCategories, { data: categories, isError: categoriesError, isLoading, isSuccess, isUninitialized }] =
-    useLazyGetCategoriesQuery();
+  const { data: categories, isError: categoriesError, isLoading, isSuccess, isUninitialized } = useGetCategoriesQuery();
 
   const isLoaderVisible = useAppSelector(selectLoaderVisibility);
   const dispatch = useAppDispatch();
-  console.log('aside');
 
-  useEffect(() => {
-    fetchCategories('');
-  }, [fetchCategories]);
+  // useEffect(() => {
+  //   fetchCategories();
+  // }, [fetchCategories]);
+
+  // console.log(categories);
 
   useEffect(() => {
     if (categoriesError) {
@@ -39,10 +38,10 @@ const NavigationBlock: React.FC<NavigationBlockProps> = ({ className, userContro
 
   useEffect(() => {
     if (isLoading && !isLoaderVisible && !isSuccess) {
-      console.log('show1');
+      // console.log('show1');
       // dispatch(showLoader());
     } else if (!isLoading && isLoaderVisible && isUninitialized) {
-      console.log('nav block hide loader');
+      // console.log('nav block hide loader');
       // dispatch(hideLoader());
     }
   }, [dispatch, isLoaderVisible, isLoading, isSuccess, isUninitialized]);

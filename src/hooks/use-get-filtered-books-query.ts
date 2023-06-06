@@ -36,7 +36,7 @@ const filterAndSortBooks = (books: Book[], categoryName: string, sort: 'asc' | '
 const useGetFilteredBooksQuery = () => {
   const useQueryHookResult = useGetBooksQuery('');
   const { data: books } = useQueryHookResult;
-  const { data: categories } = useGetCategoriesQuery('');
+  const { data: categories } = useGetCategoriesQuery();
   const { category } = useParams();
   const sort = useAppSelector(selectSortingType);
 

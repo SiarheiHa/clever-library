@@ -27,7 +27,7 @@ const MainUserData: React.FC<Pick<UserDetail, 'avatar' | 'firstName' | 'lastName
   id,
   lastName,
 }) => {
-  const { isLoading: isCategoryLoading } = useGetCategoriesQuery('');
+  const { isLoading: isCategoryLoading } = useGetCategoriesQuery();
   const [uploadFile, { data: uploadFileData, isSuccess, reset, isLoading: isFileLoading, isError: isFileUploadError }] =
     useUploadFileMutation();
   const [updateAvatar, { isLoading: isAvatarUpdating, isError: isAvatarUpdatingError }] = useUpdateUserAvatarMutation();
@@ -35,7 +35,7 @@ const MainUserData: React.FC<Pick<UserDetail, 'avatar' | 'firstName' | 'lastName
   const dispatch = useAppDispatch();
 
   const changeAvatar = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e);
+    // console.log(e);
     if (e.target?.files?.[0]) {
       const img = e.target.files[0];
 
@@ -61,12 +61,12 @@ const MainUserData: React.FC<Pick<UserDetail, 'avatar' | 'firstName' | 'lastName
 
   useEffect(() => {
     if (!isLoaderVisible && (isFileLoading || isAvatarUpdating)) {
-      console.log(isLoaderVisible);
-      console.log('show');
+      // console.log(isLoaderVisible);
+      // console.log('show');
       // dispatch(showLoader());
     } else if (isLoaderVisible && !isFileLoading && !isAvatarUpdating && !isCategoryLoading) {
       // dispatch(hideLoader());
-      console.log('hide');
+      // console.log('hide');
     }
   }, [dispatch, isAvatarUpdating, isCategoryLoading, isFileLoading, isLoaderVisible]);
 

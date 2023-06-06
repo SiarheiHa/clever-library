@@ -22,7 +22,7 @@ const Layout = () => {
   );
 
   useEffect(() => {
-    console.log(isSomeQueryPending);
+    // console.log(isSomeQueryPending);
     if (isSomeQueryPending) {
       dispatch(showLoader());
     } else {
@@ -41,8 +41,6 @@ const Layout = () => {
 
     return null;
   }
-
-  console.log('aaaaaaaaaa');
 
   return (
     <React.Fragment>
