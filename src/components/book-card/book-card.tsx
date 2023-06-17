@@ -5,7 +5,7 @@ import { useGetCurrentUserQuery } from '../../api/current-user-api';
 import coverPlaceHolder from '../../assets/images/cat.svg';
 import { selectSearchString, useAppSelector } from '../../store';
 import { Book } from '../../types/types';
-import { getURI } from '../../utils';
+import { getCoverURItoFirebase, getURI } from '../../utils';
 import { BookButton } from '../book-button';
 import { BookingModal } from '../booking-modal';
 import { Hightlight } from '../hightlight';
@@ -33,11 +33,12 @@ const BookCard: React.FC<BookCardProps> = ({ book, variant }) => {
   };
 
   const searchString = useAppSelector(selectSearchString);
-  const { authors, image, rating, title, issueYear } = book;
+  const { authors, image, rating, title, issueYear, id } = book;
 
   const cardClasses = classNames(styles.card, styles[variant]);
 
-  const imgSrc = image?.url ? getURI(image.url) : coverPlaceHolder;
+  // const imgSrc = image?.url ? getURI(image.url) : coverPlaceHolder;
+  const imgSrc = image?.url ? getCoverURItoFirebase(id) : coverPlaceHolder;
 
   return (
     <div className={cardClasses} data-test-id='card'>

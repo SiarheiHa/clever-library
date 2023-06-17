@@ -5,7 +5,7 @@ import { useGetBookByIdQuery } from '../../api';
 import { useGetCurrentUserQuery } from '../../api/current-user-api';
 import coverPlaceHolder from '../../assets/images/cat.svg';
 import { hideLoader, showLoader, showToast, useAppDispatch } from '../../store';
-import { getURI } from '../../utils';
+import { getCoverURItoFirebase, getURI } from '../../utils';
 import { BookButton } from '../book-button';
 import { BookingModal } from '../booking-modal';
 import { Button } from '../button';
@@ -86,7 +86,7 @@ const BookInfo = () => {
     return comments.some(({ user }) => user.commentUserId === userInfo?.id);
   };
 
-  const imagesSrcArr = images && images.length ? images.map((img) => getURI(img.url)) : [coverPlaceHolder];
+  const imagesSrcArr = images && images.length ? images.map(() => getCoverURItoFirebase(id)) : [coverPlaceHolder];
 
   return (
     <Container>

@@ -1,9 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { BASE_URL } from '../constants';
 import { RootState } from '../store/store';
-
-import { db } from './firebase';
 
 const api = createApi({
   reducerPath: 'api',
