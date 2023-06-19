@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 import { hideLoader, selectUserState, showLoader, useAppDispatch, useAppSelector } from '../../store';
 import { Container } from '../container';
@@ -14,6 +14,11 @@ const Layout = () => {
   // const jwt = userInfo?.jwt;
   const jwt = true;
   const dispatch = useAppDispatch();
+  const { pathname } = useLocation();
+
+  if (pathname === '/') {
+    navigate('/books/all');
+  }
 
   const isSomeQueryPending = useAppSelector(
     (state) =>
@@ -34,7 +39,10 @@ const Layout = () => {
     if (!jwt) {
       navigate('/auth');
     }
-  }, [jwt, navigate]);
+    if (pathname === '/') {
+      navigate('/books/all');
+    }
+  }, [jwt, navigate, pathname]);
 
   if (!jwt) {
     navigate('/auth');

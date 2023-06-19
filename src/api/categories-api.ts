@@ -1,6 +1,6 @@
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { QueryReturnValue } from '@reduxjs/toolkit/dist/query/baseQueryTypes';
-import { DataSnapshot, get, onChildAdded, query, ref } from 'firebase/database';
+import { DataSnapshot, get, onValue, query, ref } from 'firebase/database';
 
 import { Category } from '../types/types';
 
@@ -10,30 +10,25 @@ import { db } from './firebase';
 const categoriesApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getCategories: builder.query<Category[], void>({
-      queryFn: async () => {
+      queryFn: () => {
         const categoriesRef = ref(db, 'categories');
 
         return new Promise<QueryReturnValue<Category[], FetchBaseQueryError>>((resolve, reject) => {
-          const categories: Category[] = [];
-
           const categoriesQuery = query(categoriesRef);
-          const categoriesListener = onChildAdded(categoriesQuery, (childSnapshot: DataSnapshot) => {
-            const category = childSnapshot.val() as Category;
 
-            categories.push(category);
-          });
-
-          // Обработка ошибок при получении данных
+          // Обработчик ошибок при получении данных
           const errorHandler = (error: Error) => {
             console.error('Ошибка при получении категорий:', error);
             reject(error);
           };
 
-          const completionHandler = () => {
-            onChildAdded(categoriesQuery, categoriesListener); // Отписка от прослушивания событий
+          const completionHandler = (snapshot: DataSnapshot) => {
+            const categories = snapshot.val();
+
             resolve({ data: categories });
           };
 
+          // Получаем данные с использованием метода get и обрабатываем результаты
           get(categoriesQuery).then(completionHandler).catch(errorHandler);
         });
       },
