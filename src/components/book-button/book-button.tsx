@@ -42,7 +42,7 @@ const BookButton: React.FC<BookCardProps> = ({ book, className, ...restProps }) 
       };
     }
     if (booking?.customerId) {
-      if (booking.customerId === currentUserId) {
+      if (String(booking.customerId) === currentUserId) {
         return {
           bordered: true,
           disabled: false,

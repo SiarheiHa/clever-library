@@ -5,9 +5,8 @@ import { UserState } from '../types/types';
 import { registerUser } from './actions';
 import { RootState } from './store';
 
-const initialState: UserState = {
+const initialState: Omit<UserState, 'userInfo'> = {
   loading: false,
-  userInfo: null,
   error: null,
   success: false,
 };
@@ -20,7 +19,6 @@ const registrationSlice = createSlice({
       state.error = null;
       state.loading = false;
       state.success = false;
-      state.userInfo = null;
     },
   },
   extraReducers: (builder) => {
@@ -29,11 +27,10 @@ const registrationSlice = createSlice({
       state.success = false;
       state.error = null;
     });
-    builder.addCase(registerUser.fulfilled, (state, action) => {
+    builder.addCase(registerUser.fulfilled, (state) => {
       state.loading = false;
       state.success = true;
       state.error = null;
-      state.userInfo = action.payload;
     });
     builder.addCase(registerUser.rejected, (state, action) => {
       state.loading = false;
@@ -45,6 +42,6 @@ const registrationSlice = createSlice({
 
 const { resetRegistrationState } = registrationSlice.actions;
 const registrationReducer = registrationSlice.reducer;
-const selectRegistration = ({ registration }: RootState) => registration;
+const selectRegistration = (state: RootState) => state.registration;
 
 export { registrationReducer, resetRegistrationState, selectRegistration };

@@ -83,7 +83,7 @@ const BookInfo = () => {
       return false;
     }
 
-    return comments.some(({ user }) => user.commentUserId === userInfo?.id);
+    return comments.some(({ user }) => String(user.commentUserId) === userInfo?.id);
   };
 
   const imagesSrcArr = images && images.length ? images.map(() => getCoverURItoFirebase(id)) : [coverPlaceHolder];

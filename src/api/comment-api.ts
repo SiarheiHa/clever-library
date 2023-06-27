@@ -27,7 +27,7 @@ export const commentApi = api.injectEndpoints({
               text,
               user: {
                 avatarUrl: avatar,
-                commentUserId,
+                commentUserId: Number(commentUserId),
                 firstName,
                 lastName,
               },

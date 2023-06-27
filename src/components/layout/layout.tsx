@@ -11,14 +11,10 @@ import { Toast } from '../toast';
 const Layout = () => {
   const navigate = useNavigate();
   const { userInfo } = useAppSelector(selectUserState);
-  // const jwt = userInfo?.jwt;
-  const jwt = true;
+  const jwt = userInfo?.jwt;
+  // const jwt = true;
   const dispatch = useAppDispatch();
   const { pathname } = useLocation();
-
-  if (pathname === '/') {
-    navigate('/books/all');
-  }
 
   const isSomeQueryPending = useAppSelector(
     (state) =>
@@ -26,6 +22,9 @@ const Layout = () => {
       Object.values(state.api.mutations).some((mutation) => mutation?.status === 'pending')
   );
 
+  if (pathname === '/') {
+    navigate('/books/all');
+  }
   useEffect(() => {
     // console.log(isSomeQueryPending);
     if (isSomeQueryPending) {

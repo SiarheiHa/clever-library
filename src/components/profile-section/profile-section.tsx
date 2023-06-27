@@ -101,8 +101,8 @@ const ProfileSection = () => {
 
   return (
     <section className={styles.profile}>
-      <MainUserData {...data} />
-      <UserForm {...data} />
+      {/* <MainUserData {...data} />
+      <UserForm {...data} /> */}
       {/* <UserBooks />  */}
     </section>
   );

@@ -140,7 +140,7 @@ export type ResetPassFormData = {
 };
 
 export interface User {
-  id: number;
+  id: string;
   username: string;
   email: string;
   provider: string;
@@ -241,12 +241,12 @@ export interface BookingAttributes {
 }
 
 export interface UserDetail extends Omit<User, 'provider'> {
-  role: Role;
-  comments: Comment[];
+  role: Role | null;
+  comments: Comment[] | null;
   avatar: string | null;
-  booking: Booking;
-  delivery: Delivery;
-  history: History;
+  booking: Booking | null;
+  delivery: Delivery | null;
+  history: History | null;
 }
 
 interface Role {

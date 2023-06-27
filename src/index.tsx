@@ -3,10 +3,6 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
-// import { initializeApp } from 'firebase/app';
-// eslint-disable-next-line import/no-extraneous-dependencies
-// import { getDatabase, onValue, ref } from 'firebase/database';
 import { Layout } from './components/layout';
 import { LayoutMainPage } from './components/layout-main-page';
 import { LayoutStart } from './components/layout-start';
@@ -20,32 +16,6 @@ import { RegistrationPage } from './pages/registration';
 import { store } from './store';
 
 import './index.css';
-
-// const firebaseConfig = {
-//   apiKey: 'AIzaSyDkqVHxlh4tsQKqoXiMueA4_tGkylbW2Xk',
-//   authDomain: 'library-7a4ac.firebaseapp.com',
-//   databaseURL: 'https://library-7a4ac-default-rtdb.europe-west1.firebasedatabase.app',
-//   projectId: 'library-7a4ac',
-//   storageBucket: 'library-7a4ac.appspot.com',
-//   messagingSenderId: '348777418437',
-//   appId: '1:348777418437:web:09a64a98b80495fbee6aac',
-// };
-
-// Initialize Firebase
-// const app = initializeApp(firebaseConfig);
-// Initialize Realtime Database and get a reference to the service
-// const database = getDatabase(app);
-
-// console.log(database);
-
-// const db = getDatabase(app);
-// const starCountRef = ref(db, 'categories/');
-
-// onValue(starCountRef, (snapshot) => {
-//   const data = snapshot.val();
-
-//   console.log(data);
-// });
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
