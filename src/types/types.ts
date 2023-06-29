@@ -165,6 +165,19 @@ export type UserState = {
   success: boolean;
 };
 
+export type AuthState = {
+  loading: boolean;
+  error: 1 | 400 | null;
+  success: boolean;
+  userAuthData: UserAuthData | null;
+};
+
+export type UserAuthData = {
+  idToken: string;
+  email: string | null;
+  uid: string;
+};
+
 export type ForgotPassState = {
   loading: boolean;
   errorMessage: string | null;

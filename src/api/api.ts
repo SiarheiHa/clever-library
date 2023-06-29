@@ -7,7 +7,7 @@ const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: '', // Мы не будем использовать базовый URL в Firebase Realtime Database
     prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as RootState).user.userInfo?.jwt;
+      const token = (getState() as RootState).user.userAuthData?.uid;
 
       if (token) {
         headers.set('authorization', `Bearer ${token}`);

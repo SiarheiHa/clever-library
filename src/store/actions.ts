@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { FirebaseError } from 'firebase/app';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, getIdToken, signInWithEmailAndPassword } from 'firebase/auth';
 import { ref, set } from 'firebase/database';
 
 import { db, firebaseAuth } from '../api/firebase';
@@ -11,6 +11,7 @@ import {
   EmailFormData,
   RegistrationFormData,
   ResetPassFormData,
+  UserAuthData,
   UserDetail,
   UserInfo,
 } from '../types/types';
@@ -63,31 +64,37 @@ const registerUser = createAsyncThunk<void, RegistrationFormData, { rejectValue:
   }
 );
 
-const auth = createAsyncThunk<UserInfo, AuthFormData, { rejectValue: 1 | 400 }>(
+const auth = createAsyncThunk<UserAuthData, AuthFormData, { rejectValue: 1 | 400 }>(
   'user/auth',
   async (data, { rejectWithValue }) => {
     try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      const response = await signInWithEmailAndPassword(firebaseAuth, data.identifier, data.password);
+
+      console.log(response);
+
+      // Получение информации о пользователе или другая логика
+      console.log(response.user);
+      const { email, uid } = response.user;
+      const idToken = await getIdToken(response.user);
+
+      return {
+        idToken,
+        email,
+        uid,
       };
-      const resp: AxiosResponse<UserInfo> = await axios.post(`${BASE_URL}/api/auth/local`, data, config);
-
-      if (resp.status === 200 && resp.data.jwt) {
-        localStorage.setItem('jwt', resp.data.jwt);
-
-        return resp.data;
-      }
-
-      return resp.data;
     } catch (error) {
-      const err = error as AxiosError;
+      const firebaseError: FirebaseError = error as FirebaseError;
+      const errorCode = firebaseError.code;
 
-      if (err.response?.status === 400) {
-        return rejectWithValue(err.response.status);
+      console.log(firebaseError);
+      console.log(errorCode);
+
+      if (errorCode === 'auth/wrong-password' || errorCode === 'auth/user-not-found') {
+        // eslint-disable-next-line consistent-return
+        return rejectWithValue(400);
       }
 
+      // eslint-disable-next-line consistent-return
       return rejectWithValue(1);
     }
   }

@@ -6,7 +6,7 @@ import { useGetBooksQuery } from '../../../api';
 import сhevronColored from '../../../assets/images/icons/chevron_colored.svg';
 import сhevron from '../../../assets/images/icons/сhevron.svg';
 import { testIds } from '../../../data';
-import { resetUserState, selectMenuMode, setMenuMode, useAppDispatch, useAppSelector } from '../../../store';
+import { logOut, selectMenuMode, setMenuMode, useAppDispatch, useAppSelector } from '../../../store';
 import { Category, NavItem } from '../../../types/types';
 import { Button } from '../../button';
 import { Submenu } from '../submenu';
@@ -58,7 +58,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, isSubmenuOpen, toggleSubmenu 
       e.preventDefault();
       localStorage.clear();
       dispatch(setMenuMode({ mode: 'close' }));
-      dispatch(resetUserState());
+      dispatch(logOut());
 
       return;
     }

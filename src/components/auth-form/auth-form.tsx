@@ -6,9 +6,9 @@ import * as yup from 'yup';
 
 import {
   hideLoader,
-  resetUserState,
+  logOut,
   selectLoaderVisibility,
-  selectUserState,
+  selectAuthState,
   showLoader,
   useAppDispatch,
   useAppSelector,
@@ -28,7 +28,7 @@ const schema = yup.object<AuthFormData>({
 
 const AuthForm = () => {
   const dispatch = useAppDispatch();
-  const { error: authError, loading } = useAppSelector(selectUserState);
+  const { error: authError, loading } = useAppSelector(selectAuthState);
   const isLoaderVisible = useAppSelector(selectLoaderVisibility);
   const {
     register,
@@ -63,7 +63,7 @@ const AuthForm = () => {
         text='Что-то пошло не так. Попробуйте ещё раз'
         buttonText='ПОВТОРИТЬ'
         onClick={() => {
-          dispatch(resetUserState());
+          dispatch(logOut());
           dispatch(auth(getValues()));
         }}
       />
@@ -79,7 +79,7 @@ const AuthForm = () => {
             {...register('identifier')}
             error={Boolean(errors.identifier || authError === 400)}
             errorMessageRequired={errors.identifier?.type === 'required' ? errors.identifier?.message : undefined}
-            placeholderText='Логин'
+            placeholderText='Email'
             type='text'
             onBlurHandler={() => trigger('identifier')}
           />
@@ -96,14 +96,14 @@ const AuthForm = () => {
           <div className={styles.forgot}>
             {authError === 400 && (
               <span className={styles.error} data-test-id='hint'>
-                Неверный логин или пароль!
+                Неверный email или пароль!
               </span>
             )}
             <Link to='/forgot-pass'>
               {authError === 400 ? (
                 <span className={styles.dark}>Восстановить?</span>
               ) : (
-                <span className={styles.gray}>Забыли логин или пароль?</span>
+                <span className={styles.gray}>Забыли пароль?</span>
               )}
             </Link>
           </div>

@@ -125,7 +125,7 @@ const UserForm: React.FC<Pick<UserDetail, 'email' | 'firstName' | 'lastName' | '
             errorMessageRequired={errors.login?.type === 'required' ? errors.login?.message : undefined}
             errorsMatches={usernameErrorMatches}
             hint='Используйте для логина латинский алфавит и цифры'
-            placeholderText='Придумайте логин для входа'
+            placeholderText='Введите ваш email'
             type='text'
             onBlurHandler={() => {
               // console.log(errors);

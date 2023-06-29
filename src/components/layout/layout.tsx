@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
-import { hideLoader, selectUserState, showLoader, useAppDispatch, useAppSelector } from '../../store';
+import { hideLoader, selectAuthState, showLoader, useAppDispatch, useAppSelector } from '../../store';
 import { Container } from '../container';
 import { Footer } from '../footer';
 import { Header } from '../header';
@@ -10,9 +10,9 @@ import { Toast } from '../toast';
 
 const Layout = () => {
   const navigate = useNavigate();
-  const { userInfo } = useAppSelector(selectUserState);
-  const jwt = userInfo?.jwt;
-  // const jwt = true;
+  const { userAuthData } = useAppSelector(selectAuthState);
+  const uid = userAuthData?.uid;
+  // const uid = true;
   const dispatch = useAppDispatch();
   const { pathname } = useLocation();
 
@@ -22,9 +22,6 @@ const Layout = () => {
       Object.values(state.api.mutations).some((mutation) => mutation?.status === 'pending')
   );
 
-  if (pathname === '/') {
-    navigate('/books/all');
-  }
   useEffect(() => {
     // console.log(isSomeQueryPending);
     if (isSomeQueryPending) {
@@ -35,18 +32,22 @@ const Layout = () => {
   }, [dispatch, isSomeQueryPending]);
 
   useEffect(() => {
-    if (!jwt) {
+    if (!uid) {
       navigate('/auth');
     }
     if (pathname === '/') {
       navigate('/books/all');
     }
-  }, [jwt, navigate, pathname]);
+  }, [uid, navigate, pathname]);
 
-  if (!jwt) {
+  if (!uid) {
     navigate('/auth');
 
     return null;
+  }
+
+  if (pathname === '/') {
+    navigate('/books/all');
   }
 
   return (

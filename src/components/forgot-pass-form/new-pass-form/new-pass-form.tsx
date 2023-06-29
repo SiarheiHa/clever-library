@@ -104,7 +104,7 @@ const NewPassForm = ({ code }: { code: string }) => {
     return (
       <ResultAuthBlock
         title='Новые данные сохранены'
-        text='Зайдите в личный кабинет, используя свои логин и новый пароль'
+        text='Зайдите в личный кабинет, используя свои email и новый пароль'
         buttonText='ВХОД'
         onClick={() => {
           dispatch(resetPassState());

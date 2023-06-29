@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import { useGetCurrentUserQuery } from '../../api/current-user-api';
 import { ReactComponent as CatAvatar } from '../../assets/images/cat-avatar.svg';
-import { resetUserState, setMenuMode, useAppDispatch } from '../../store';
+import { logOut, setMenuMode, useAppDispatch } from '../../store';
 import { getURI } from '../../utils';
 
 import styles from './person-block.module.scss';
@@ -18,7 +18,7 @@ const PersonBlock = ({ className }: { className?: string }) => {
   const singout = () => {
     localStorage.clear();
     dispatch(setMenuMode({ mode: 'close' }));
-    dispatch(resetUserState());
+    dispatch(logOut());
   };
 
   if (!data) {

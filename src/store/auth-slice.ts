@@ -1,29 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { UserState } from '../types/types';
+import { AuthState } from '../types/types';
 
 import { auth } from './actions';
 import { RootState } from './store';
 
-const initialState: UserState = {
+const initialState: AuthState = {
   loading: false,
-  userInfo: {
-    user: null,
-    jwt: localStorage.getItem('jwt'),
-  },
   error: null,
   success: false,
+  userAuthData: null,
 };
 
-const userSlice = createSlice({
-  name: 'user',
+const authSlice = createSlice({
+  name: 'auth',
   initialState,
   reducers: {
-    resetUserState(state) {
+    logOut(state) {
       state.error = null;
       state.loading = false;
       state.success = false;
-      state.userInfo = null;
+      state.userAuthData = null;
     },
   },
   extraReducers: (builder) => {
@@ -36,7 +33,7 @@ const userSlice = createSlice({
       state.loading = false;
       state.success = true;
       state.error = null;
-      state.userInfo = action.payload;
+      state.userAuthData = action.payload;
     });
     builder.addCase(auth.rejected, (state, action) => {
       state.loading = false;
@@ -46,8 +43,8 @@ const userSlice = createSlice({
   },
 });
 
-const { resetUserState } = userSlice.actions;
-const userReducer = userSlice.reducer;
-const selectUserState = ({ user }: RootState) => user;
+const { logOut } = authSlice.actions;
+const authReducer = authSlice.reducer;
+const selectAuthState = ({ user }: RootState) => user;
 
-export { userReducer, resetUserState, selectUserState };
+export { authReducer, logOut, selectAuthState };

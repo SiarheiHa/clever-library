@@ -11,7 +11,7 @@ import { passReducer } from './reset-pass-slice';
 import { searchReducer } from './search-slice';
 import { sortingReducer } from './sorting-slice';
 import { toastReducer } from './toast-slice';
-import { userReducer } from './user-slice';
+import { authReducer } from './auth-slice';
 
 export const store = configureStore({
   reducer: {
@@ -22,7 +22,7 @@ export const store = configureStore({
     registration: registrationReducer,
     sort: sortingReducer,
     search: searchReducer,
-    user: userReducer,
+    user: authReducer,
     forgot: forgotPassReducer,
     pass: passReducer,
   },

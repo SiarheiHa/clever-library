@@ -6,5 +6,5 @@ export { selectSortingType, setSortingType } from './sorting-slice';
 export { selectSearchString, setSearchString } from './search-slice';
 export { registerUser, auth, requestRefreshLink, resetPass } from './actions';
 export { selectRegistration, resetRegistrationState } from './registration-slice';
-export { selectUserState, resetUserState } from './user-slice';
+export { selectAuthState, logOut } from './auth-slice';
 export { selectPassState, resetPassState } from './reset-pass-slice';
