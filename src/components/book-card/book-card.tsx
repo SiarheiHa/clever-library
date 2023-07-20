@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import classNames from 'classnames';
 
-import { useGetCurrentUserQuery } from '../../api/current-user-api';
 import coverPlaceHolder from '../../assets/images/cat.svg';
+import { useCurrentUser } from '../../hooks';
 import { selectSearchString, useAppSelector } from '../../store';
 import { Book } from '../../types/types';
 import { getCoverURItoFirebase, getURI } from '../../utils';
@@ -20,7 +20,7 @@ interface BookCardProps {
 
 const BookCard: React.FC<BookCardProps> = ({ book, variant }) => {
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
-  const { data: userInfo } = useGetCurrentUserQuery('1');
+  const currentUser = useCurrentUser();
 
   const openBookingModal = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -58,7 +58,12 @@ const BookCard: React.FC<BookCardProps> = ({ book, variant }) => {
         <BookButton onClick={openBookingModal} className={styles.button} book={book} />
       </div>
       {bookingModalOpen && (
-        <BookingModal book={book} isOpen={bookingModalOpen} onClose={closeBookingModal} userId={Number(userInfo?.id)} />
+        <BookingModal
+          book={book}
+          isOpen={bookingModalOpen}
+          onClose={closeBookingModal}
+          userId={Number(currentUser?.id)}
+        />
       )}
     </div>
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import { useGetCurrentUserQuery } from '../../api/current-user-api';
+import { useCurrentUser } from '../../hooks';
 import { Book, BookDetail } from '../../types/types';
 import { Button } from '../button';
 
@@ -15,9 +15,9 @@ interface BookCardProps {
 }
 
 const BookButton: React.FC<BookCardProps> = ({ book, className, ...restProps }) => {
-  const { data: currentUserData } = useGetCurrentUserQuery('1');
+  const currentUser = useCurrentUser();
   const { delivery, booking } = book;
-  const currentUserId = currentUserData?.id;
+  const currentUserId = currentUser?.id;
 
   const getButtonText = () => {
     if (delivery?.handed) {

@@ -33,21 +33,19 @@ const Layout = () => {
 
   useEffect(() => {
     if (!uid) {
-      navigate('/auth');
+      navigate('/auth'); // Переместили сюда, чтобы вызывался только при первой отрисовке
     }
     if (pathname === '/') {
-      navigate('/books/all');
+      navigate('/books/all'); // Переместили сюда, чтобы вызывался только при первой отрисовке
     }
   }, [uid, navigate, pathname]);
 
   if (!uid) {
-    navigate('/auth');
-
     return null;
   }
 
   if (pathname === '/') {
-    navigate('/books/all');
+    return null;
   }
 
   return (

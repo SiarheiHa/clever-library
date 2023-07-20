@@ -1,19 +1,20 @@
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
-import { useGetCurrentUserQuery } from '../../api/current-user-api';
 import { ReactComponent as CatAvatar } from '../../assets/images/cat-avatar.svg';
-import { logOut, setMenuMode, useAppDispatch } from '../../store';
+import { useCurrentUser } from '../../hooks';
+import { logOut, selectAuthState, setMenuMode, useAppDispatch, useAppSelector } from '../../store';
 import { getURI } from '../../utils';
 
 import styles from './person-block.module.scss';
 
 const PersonBlock = ({ className }: { className?: string }) => {
-  const { data } = useGetCurrentUserQuery('1');
   const classes = classNames(className, styles.wrapper);
   const dispatch = useAppDispatch();
 
-  // console.log(data);
+  const data = useCurrentUser();
+
+  console.log(data);
 
   const singout = () => {
     localStorage.clear();
@@ -22,6 +23,8 @@ const PersonBlock = ({ className }: { className?: string }) => {
   };
 
   if (!data) {
+    console.log(11111);
+
     return null;
   }
 

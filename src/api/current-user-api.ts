@@ -1,3 +1,5 @@
+import { get, ref } from 'firebase/database';
+
 import {
   RegistrationFormData,
   UpdateAvatarRequestData,
@@ -8,13 +10,30 @@ import {
 
 import { api } from './api';
 import { Endpoint, HTTPMethod } from './api-enums';
+import { db } from './firebase';
 
 const currentUserApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getCurrentUser: builder.query<UserDetail, '1'>({
-      query: () => ({
-        url: Endpoint.ME,
-      }),
+    getCurrentUser: builder.query<UserDetail, string>({
+      async queryFn(userId) {
+        try {
+          // Определяем путь к месту, где хранятся данные текущего пользователя
+          const userDetailRef = ref(db, `userDetails/${userId}`);
+          console.log(userId);
+
+          // Получаем данные о текущем пользователе из Firebase Realtime Database
+          const snapshot = await get(userDetailRef);
+          const userDetail = snapshot.val() as UserDetail | null;
+
+          if (userDetail) {
+            return { data: userDetail };
+          }
+          throw new Error('Данные текущего пользователя не найдены.');
+        } catch (error) {
+          console.error('Ошибка при получении данных текущего пользователя из Firebase:', error);
+          throw error;
+        }
+      },
       providesTags: ['CurrentUser'],
     }),
     uploadFile: builder.mutation<UploadResponseData, FormData>({

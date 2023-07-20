@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useGetBookByIdQuery } from '../../api';
-import { useGetCurrentUserQuery } from '../../api/current-user-api';
 import coverPlaceHolder from '../../assets/images/cat.svg';
+import { useCurrentUser } from '../../hooks';
 import { hideLoader, showLoader, showToast, useAppDispatch } from '../../store';
 import { getCoverURItoFirebase, getURI } from '../../utils';
 import { BookButton } from '../book-button';
@@ -28,7 +28,7 @@ const BookInfo = () => {
 
   const dispatch = useAppDispatch();
 
-  const { data: userInfo } = useGetCurrentUserQuery('1');
+  const currentUser = useCurrentUser();
   const enableHideLoaderRef = useRef(true);
 
   useEffect(() => {
@@ -79,11 +79,11 @@ const BookInfo = () => {
     : [];
 
   const hasCurrentUserComment = () => {
-    if (!comments || !userInfo?.id) {
+    if (!comments || !currentUser?.id) {
       return false;
     }
 
-    return comments.some(({ user }) => String(user.commentUserId) === userInfo?.id);
+    return comments.some(({ user }) => String(user.commentUserId) === currentUser?.id);
   };
 
   const imagesSrcArr = images && images.length ? images.map(() => getCoverURItoFirebase(id)) : [coverPlaceHolder];
@@ -147,17 +147,22 @@ const BookInfo = () => {
           </Button>
         </div>
       </div>
-      {reviewModalOpen && userInfo && (
+      {reviewModalOpen && currentUser && (
         <ReviewModal
           bookId={id}
           isOpen={reviewModalOpen}
           onClose={closeReviewModal}
-          user={userInfo}
+          user={currentUser}
           enableHideLoaderRef={enableHideLoaderRef}
         />
       )}
       {bookingModalOpen && (
-        <BookingModal book={book} isOpen={bookingModalOpen} onClose={closeBookingModal} userId={Number(userInfo?.id)} />
+        <BookingModal
+          book={book}
+          isOpen={bookingModalOpen}
+          onClose={closeBookingModal}
+          userId={Number(currentUser?.id)}
+        />
       )}
     </Container>
   );
